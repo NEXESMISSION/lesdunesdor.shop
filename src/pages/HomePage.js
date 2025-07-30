@@ -277,11 +277,22 @@ const HomePage = () => {
           {/* Filter Sidebar */}
           <aside 
             className={`fixed top-0 left-0 h-full w-full max-w-xs bg-white p-6 shadow-xl z-40 transform transition-transform duration-300 lg:relative lg:translate-x-0 lg:col-span-3 lg:shadow-sm lg:sticky lg:h-[calc(100vh-6rem)] lg:max-h-screen overflow-y-auto ${
-                isFilterSidebarOpen ? 'translate-x-0' : '-translate-x-full'
-              }`}
+              isFilterSidebarOpen ? 'translate-x-0' : '-translate-x-full'
+            }`}
             style={{ top: "6rem" }} // 6rem = 96px, which is the header height (24 units = 96px)
             id="filter-sidebar"
           >
+            {/* Mobile Close Arrow Button */}
+            <div className="lg:hidden absolute -right-12 top-1/2 transform -translate-y-1/2">
+              <button 
+                onClick={() => setIsFilterSidebarOpen(false)}
+                className="bg-white rounded-r-lg shadow-lg p-3 text-gray-600 hover:text-gray-800 transition-colors"
+                aria-label="Close filters"
+              >
+                <i className="fas fa-chevron-left text-lg"></i>
+              </button>
+            </div>
+
             <div className="flex justify-between items-center mb-6">
               <h2 className="text-xl font-bold text-gray-800">Filtres</h2>
               <button 

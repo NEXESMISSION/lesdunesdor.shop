@@ -716,100 +716,95 @@ const AdminDashboard = () => {
                     <>
                       {/* Products Table */}
                       <div className="overflow-x-auto">
-                        <div className="px-6 py-4 border-b bg-gray-50">
-                          <p className="text-sm text-gray-600">
-                            Affichage de {paginatedProducts.length} sur {filteredProducts.length} produits
-                          </p>
-                        </div>
                         <table className="min-w-full divide-y divide-gray-200">
                           <thead className="bg-gray-50">
                             <tr>
-                              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                              <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 Produit
                               </th>
-                              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                              <th className="hidden md:table-cell px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 Catégorie
                               </th>
-                              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                              <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 Prix
                               </th>
-                              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                              <th className="hidden md:table-cell px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 Stock
                               </th>
-                              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                              <th className="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 Actions
                               </th>
                             </tr>
                           </thead>
                           <tbody className="bg-white divide-y divide-gray-200">
-                            {paginatedProducts.map((product) => (
-                              <tr key={product.id} className="hover:bg-gray-50">
-                                <td className="px-6 py-4 whitespace-nowrap">
-                                  <div className="flex items-center">
-                                    <img 
-                                      src={product.image_urls?.[0] || 'https://placehold.co/60x60/f3f4f6/9ca3af?text=Produit'} 
-                                      alt={product.name}
-                                      className="h-10 w-10 rounded-lg object-cover mr-4"
-                                    />
-                                    <div>
-                                      <div className="text-sm font-medium text-gray-900">{product.name}</div>
-                                      <div className="text-sm text-gray-500 truncate max-w-xs">
-                                        {product.description}
-                                      </div>
-                                    </div>
-                                  </div>
-                                </td>
-                                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                  {(() => {
-                                    const category = mainCategories
-                                      .flatMap(mainCat => [mainCat, ...(mainCat.subcategories || [])])
-                                      .find(cat => cat.id === product.category_id);
-                                    
-                                    if (!category) return 'Non catégorisé';
-                                    
-                                    if (category.parent_id) {
-                                      const parentCategory = mainCategories.find(cat => cat.id === category.parent_id);
-                                      return parentCategory ? `${parentCategory.name} > ${category.name}` : category.name;
-                                    }
-                                    
-                                    return category.name;
-                                  })()}
-                                </td>
-                                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                  <div>
-                                    <span className="font-bold">{product.price?.toFixed(2)} €</span>
-                                    {product.old_price && (
-                                      <div className="text-xs text-gray-500 line-through">
-                                        {product.old_price.toFixed(2)} €
-                                      </div>
-                                    )}
-                                  </div>
-                                </td>
-                                <td className="px-6 py-4 whitespace-nowrap">
-                                  <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
-                                    product.stock > 10 ? 'bg-green-100 text-green-800' :
-                                    product.stock > 0 ? 'bg-yellow-100 text-yellow-800' :
-                                    'bg-red-100 text-red-800'
-                                  }`}>
-                                    {product.stock} en stock
-                                  </span>
-                                </td>
-                                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-2">
-                                  <button
-                                    onClick={() => setProductModal({ isOpen: true, product })}
-                                    className="text-blue-600 hover:text-blue-900"
-                                  >
-                                    <i className="fas fa-edit"></i>
-                                  </button>
-                                  <button
-                                    onClick={() => handleDeleteProduct(product.id)}
-                                    className="text-red-600 hover:text-red-900"
-                                  >
-                                    <i className="fas fa-trash"></i>
-                                  </button>
+                            {paginatedProducts.length === 0 ? (
+                              <tr>
+                                <td colSpan="5" className="px-4 py-8 text-center text-gray-500">
+                                  Aucun produit trouvé
                                 </td>
                               </tr>
-                            ))}
+                            ) : (
+                              paginatedProducts.map(product => (
+                                <tr key={product.id}>
+                                  <td className="px-4 py-4 whitespace-nowrap">
+                                    <div className="flex items-center">
+                                      <div className="flex-shrink-0 h-10 w-10">
+                                        <img 
+                                          className="h-10 w-10 rounded-md object-cover" 
+                                          src={product.image_urls?.[0] || 'https://placehold.co/100x100/f3f4f6/9ca3af?text=Produit'} 
+                                          alt={product.name} 
+                                        />
+                                      </div>
+                                      <div className="ml-4">
+                                        <div className="text-sm font-medium text-gray-900">{product.name}</div>
+                                        <div className="text-sm text-gray-500 truncate max-w-xs">{product.description}</div>
+                                        <div className="md:hidden text-xs text-gray-500 mt-1">
+                                          Cat: {getCategoryName(product.category_id)} | Stock: {product.stock}
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </td>
+                                  <td className="hidden md:table-cell px-4 py-4 whitespace-nowrap">
+                                    <div className="text-sm text-gray-900">
+                                      {getCategoryName(product.category_id)}
+                                    </div>
+                                  </td>
+                                  <td className="px-4 py-4 whitespace-nowrap">
+                                    <div className="text-sm font-medium text-gray-900">{product.price?.toFixed(2)} €</div>
+                                    {product.old_price && (
+                                      <div className="text-xs text-gray-500 line-through">{product.old_price?.toFixed(2)} €</div>
+                                    )}
+                                  </td>
+                                  <td className="hidden md:table-cell px-4 py-4 whitespace-nowrap">
+                                    <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
+                                      product.stock > 10 
+                                        ? 'bg-green-100 text-green-800' 
+                                        : product.stock > 0 
+                                        ? 'bg-yellow-100 text-yellow-800' 
+                                        : 'bg-red-100 text-red-800'
+                                    }`}>
+                                      {product.stock}
+                                    </span>
+                                  </td>
+                                  <td className="px-4 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                    <div className="flex justify-end space-x-2">
+                                      <button
+                                        onClick={() => setProductModal({ isOpen: true, product })}
+                                        className="text-indigo-600 hover:text-indigo-900"
+                                      >
+                                        <i className="fas fa-edit"></i>
+                                      </button>
+                                      <button
+                                        onClick={() => handleDeleteProduct(product.id)}
+                                        className="text-red-600 hover:text-red-900"
+                                      >
+                                        <i className="fas fa-trash"></i>
+                                      </button>
+                                    </div>
+                                  </td>
+                                </tr>
+                              ))
+                            )}
                           </tbody>
                         </table>
                       </div>

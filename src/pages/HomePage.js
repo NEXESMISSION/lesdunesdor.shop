@@ -271,8 +271,8 @@ const HomePage = () => {
           {/* Filter Sidebar */}
           <aside 
             className={`fixed top-0 left-0 h-full w-full max-w-xs bg-white p-6 shadow-xl z-40 transform transition-transform duration-300 lg:relative lg:translate-x-0 lg:col-span-3 lg:shadow-sm lg:sticky lg:h-[calc(100vh-6rem)] lg:max-h-screen overflow-y-auto ${
-              isFilterSidebarOpen ? 'translate-x-0' : '-translate-x-full'
-            }`}
+                isFilterSidebarOpen ? 'translate-x-0' : '-translate-x-full'
+              }`}
             style={{ top: "6rem" }} // 6rem = 96px, which is the header height (24 units = 96px)
             id="filter-sidebar"
           >
@@ -422,7 +422,7 @@ const HomePage = () => {
               )}
             </div>
 
-            <div className="space-y-2">
+            <div className="space-y-2 sticky bottom-0 pt-4 pb-2 bg-white">
               <button
                 onClick={clearFilters}
                 className="w-full bg-gold-gradient text-black font-medium py-2 px-4 rounded-lg transition opacity-80 hover:opacity-100 shadow-sm flex items-center justify-center"

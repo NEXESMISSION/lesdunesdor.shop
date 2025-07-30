@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import { getProduct, createOrder } from '../lib/supabase';
+import { getProduct, createOrder, getProducts } from '../lib/supabase';
 
 const ProductDetailPage = () => {
   const { productId } = useParams();
@@ -14,6 +14,7 @@ const ProductDetailPage = () => {
   const [lastSubmissionTime, setLastSubmissionTime] = useState(0);
   const [activeImageIndex, setActiveImageIndex] = useState(0);
   const [quantity, setQuantity] = useState(1);
+  const [relatedProducts, setRelatedProducts] = useState([]);
   const [formData, setFormData] = useState({
     fullName: '',
     phoneNumber: '',
@@ -25,6 +26,18 @@ const ProductDetailPage = () => {
       try {
         const productData = await getProduct(productId);
         setProduct(productData);
+        
+        // Fetch related products from the same category
+        if (productData?.category_id) {
+          const allProducts = await getProducts();
+          const related = allProducts
+            .filter(p => 
+              p.id !== productData.id && 
+              p.category_id === productData.category_id
+            )
+            .slice(0, 4); // Limit to 4 related products
+          setRelatedProducts(related);
+        }
       } catch (error) {
         console.error('Error loading product:', error);
         setProduct(null);
@@ -393,6 +406,34 @@ const ProductDetailPage = () => {
             <h2 className="text-2xl font-bold text-gray-800 mb-4">Description</h2>
             <div className="space-y-6 text-gray-600">
               <p>{product.description}</p>
+            </div>
+          </div>
+        )}
+        
+        {/* Related Products Section */}
+        {relatedProducts.length > 0 && (
+          <div className="mt-16">
+            <h2 className="text-2xl font-bold text-gray-800 mb-6">Produits similaires</h2>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              {relatedProducts.map(relatedProduct => (
+                <Link 
+                  to={`/product/${relatedProduct.id}`} 
+                  key={relatedProduct.id}
+                  className="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow"
+                >
+                  <div className="aspect-square overflow-hidden">
+                    <img 
+                      src={relatedProduct.image_urls?.[0] || 'https://placehold.co/400x400/f3f4f6/9ca3af?text=Produit'} 
+                      alt={relatedProduct.name} 
+                      className="w-full h-full object-cover" 
+                    />
+                  </div>
+                  <div className="p-3">
+                    <h3 className="text-sm font-medium text-gray-800 line-clamp-2">{relatedProduct.name}</h3>
+                    <p className="text-sm font-bold text-solid-gold mt-2">{relatedProduct.price?.toFixed(2)} €</p>
+                  </div>
+                </Link>
+              ))}
             </div>
           </div>
         )}

@@ -114,7 +114,7 @@ const HomePage = () => {
   };
 
   const handleCategoryFilter = (categoryId) => {
-    // If clicking the same category, toggle it off
+    // If clicking the same category again, clear the filter
     if (selectedCategory === categoryId) {
       setSelectedCategory('');
       return;
@@ -277,22 +277,11 @@ const HomePage = () => {
           {/* Filter Sidebar */}
           <aside 
             className={`fixed top-0 left-0 h-full w-full max-w-xs bg-white p-6 shadow-xl z-40 transform transition-transform duration-300 lg:relative lg:translate-x-0 lg:col-span-3 lg:shadow-sm lg:sticky lg:h-[calc(100vh-6rem)] lg:max-h-screen overflow-y-auto ${
-              isFilterSidebarOpen ? 'translate-x-0' : '-translate-x-full'
-            }`}
+                isFilterSidebarOpen ? 'translate-x-0' : '-translate-x-full'
+              }`}
             style={{ top: "6rem" }} // 6rem = 96px, which is the header height (24 units = 96px)
             id="filter-sidebar"
           >
-            {/* Mobile Close Arrow Button */}
-            <div className="lg:hidden absolute -right-12 top-1/2 transform -translate-y-1/2">
-              <button 
-                onClick={() => setIsFilterSidebarOpen(false)}
-                className="bg-white rounded-r-lg shadow-lg p-3 text-gray-600 hover:text-gray-800 transition-colors"
-                aria-label="Close filters"
-              >
-                <i className="fas fa-chevron-left text-lg"></i>
-              </button>
-            </div>
-
             <div className="flex justify-between items-center mb-6">
               <h2 className="text-xl font-bold text-gray-800">Filtres</h2>
               <button 
@@ -302,6 +291,14 @@ const HomePage = () => {
                 <i className="fas fa-times text-2xl"></i>
               </button>
             </div>
+            
+            {/* Mobile Close Arrow Button - Visible only on mobile */}
+            <button
+              className="lg:hidden fixed top-1/2 -right-8 transform -translate-y-1/2 bg-white rounded-r-lg shadow-md p-2 text-gray-600 hover:text-gray-800"
+              onClick={() => setIsFilterSidebarOpen(false)}
+            >
+              <i className="fas fa-chevron-left text-xl"></i>
+            </button>
 
             {/* Price Range Filter - Moved to top */}
             <div className="mb-6 bg-gray-50 rounded-lg p-3">
@@ -310,10 +307,7 @@ const HomePage = () => {
                 onClick={() => setIsPriceRangeExpanded(!isPriceRangeExpanded)}
               >
                 <h3 className="font-semibold text-gray-700">Gamme de Prix</h3>
-                <button 
-                  className="text-gray-500 hover:text-gray-700 focus:outline-none"
-                  aria-label={isPriceRangeExpanded ? "Collapse price range" : "Expand price range"}
-                >
+                <button className="text-gray-500 hover:text-gray-700 focus:outline-none">
                   <i className={`fas ${isPriceRangeExpanded ? 'fa-chevron-up' : 'fa-chevron-down'} text-xs`}></i>
                 </button>
               </div>
@@ -362,10 +356,7 @@ const HomePage = () => {
                 onClick={() => setIsCategoriesExpanded(!isCategoriesExpanded)}
               >
                 <h3 className="font-semibold text-gray-700">Catégories</h3>
-                <button 
-                  className="text-gray-500 hover:text-gray-700 focus:outline-none"
-                  aria-label={isCategoriesExpanded ? "Collapse categories" : "Expand categories"}
-                >
+                <button className="text-gray-500 hover:text-gray-700 focus:outline-none">
                   <i className={`fas ${isCategoriesExpanded ? 'fa-chevron-up' : 'fa-chevron-down'} text-xs`}></i>
                 </button>
               </div>
@@ -407,15 +398,11 @@ const HomePage = () => {
                           )}
                         </button>
                         
-                        {/* Expand/Collapse Button - Only show if has subcategories */}
+                        {/* Expand/Collapse Button */}
                         {mainCategory.subcategories && mainCategory.subcategories.length > 0 && (
                           <button
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              toggleCategoryExpanded(mainCategory.id);
-                            }}
+                            onClick={() => toggleCategoryExpanded(mainCategory.id)}
                             className="ml-1 p-2 text-gray-400 hover:text-gray-600 transition-colors"
-                            aria-label={expandedCategories[mainCategory.id] ? "Collapse category" : "Expand category"}
                           >
                             <i className={`fas ${expandedCategories[mainCategory.id] ? 'fa-chevron-up' : 'fa-chevron-down'} text-xs`}></i>
                           </button>

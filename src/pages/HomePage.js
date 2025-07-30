@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import HeroCarousel from '../components/HeroCarousel';
@@ -209,6 +210,49 @@ const HomePage = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
+      <Helmet>
+        <title>Les Dunes d'Or | Collection Exclusive de Produits de Luxe</title>
+        <meta name="description" content="Découvrez notre collection exclusive de produits de luxe et design. Livraison dans toute la Tunisie." />
+        <meta name="keywords" content="produits de luxe, design tunisie, bijoux tunisie, mobilier haut de gamme, accessoires luxe" />
+        <link rel="canonical" href="https://lesdunesdor.shop/" />
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "WebSite",
+            "name": "Les Dunes d'Or",
+            "url": "https://lesdunesdor.shop/",
+            "potentialAction": {
+              "@type": "SearchAction",
+              "target": "https://lesdunesdor.shop/search?q={search_term_string}",
+              "query-input": "required name=search_term_string"
+            }
+          })}
+        </script>
+        {/* Structured data for product list */}
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "ItemList",
+            "itemListElement": sortedProducts.slice(0, 10).map((product, index) => ({
+              "@type": "ListItem",
+              "position": index + 1,
+              "item": {
+                "@type": "Product",
+                "name": product.name,
+                "description": product.description,
+                "image": product.image_urls?.[0] || "",
+                "url": `https://lesdunesdor.shop/product/${product.id}`,
+                "offers": {
+                  "@type": "Offer",
+                  "price": product.price,
+                  "priceCurrency": "EUR",
+                  "availability": product.stock > 0 ? "https://schema.org/InStock" : "https://schema.org/OutOfStock"
+                }
+              }
+            }))
+          })}
+        </script>
+      </Helmet>
       <Header />
 
       {/* Hero Section */}

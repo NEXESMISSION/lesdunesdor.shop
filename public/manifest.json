@@ -1,6 +1,7 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Les Dunes d'Or",
+  "name": "Les Dunes d'Or | Produits de Luxe et Design",
+  "description": "Découvrez notre collection exclusive de produits de luxe et design en Tunisie",
   "icons": [
     {
       "src": "favicon.ico",
@@ -20,6 +21,6 @@
   ],
   "start_url": ".",
   "display": "standalone",
-  "theme_color": "#000000",
+  "theme_color": "#AA771C",
   "background_color": "#ffffff"
 }

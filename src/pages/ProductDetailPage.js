@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { getProduct, createOrder } from '../lib/supabase';
@@ -142,6 +143,44 @@ const ProductDetailPage = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
+      <Helmet>
+        <title>{product.name} - Les Dunes d'Or</title>
+        <meta name="description" content={product.description?.substring(0, 160) || "Découvrez ce produit exclusif de Les Dunes d'Or"} />
+        <meta name="keywords" content={`${product.name}, produits luxe, design tunisie, les dunes d'or`} />
+        <link rel="canonical" href={`https://lesdunesdor.shop/product/${product.id}`} />
+        <meta property="og:title" content={`${product.name} - Les Dunes d'Or`} />
+        <meta property="og:description" content={product.description?.substring(0, 160) || "Découvrez ce produit exclusif de Les Dunes d'Or"} />
+        <meta property="og:image" content={hasImages ? productImages[0] : 'https://lesdunesdor.shop/og-image.jpg'} />
+        <meta property="og:url" content={`https://lesdunesdor.shop/product/${product.id}`} />
+        <meta property="og:type" content="product" />
+        <meta property="og:site_name" content="Les Dunes d'Or" />
+        
+        {/* Product structured data */}
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Product",
+            "name": product.name,
+            "image": hasImages ? productImages.map(img => img) : ['https://lesdunesdor.shop/og-image.jpg'],
+            "description": product.description,
+            "sku": `LD-${product.id}`,
+            "mpn": `LD-${product.id}`,
+            "brand": {
+              "@type": "Brand",
+              "name": "Les Dunes d'Or"
+            },
+            "offers": {
+              "@type": "Offer",
+              "url": `https://lesdunesdor.shop/product/${product.id}`,
+              "priceCurrency": "EUR",
+              "price": product.price,
+              "priceValidUntil": new Date(new Date().setFullYear(new Date().getFullYear() + 1)).toISOString().split('T')[0],
+              "itemCondition": "https://schema.org/NewCondition",
+              "availability": product.stock > 0 ? "https://schema.org/InStock" : "https://schema.org/OutOfStock"
+            }
+          })}
+        </script>
+      </Helmet>
       <Header />
 
       {/* Main Content */}

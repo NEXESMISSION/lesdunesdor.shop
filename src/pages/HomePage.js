@@ -292,175 +292,177 @@ const HomePage = () => {
           
           {/* Filter Sidebar */}
           <aside 
-            className={`fixed top-0 left-0 h-full w-full max-w-xs bg-white p-6 shadow-xl z-40 transform transition-transform duration-300 lg:relative lg:translate-x-0 lg:col-span-3 lg:shadow-sm lg:sticky lg:h-[calc(100vh-6rem)] lg:max-h-screen overflow-y-auto ${
+            className={`fixed top-0 left-0 h-full w-full max-w-xs bg-white shadow-xl z-40 transform transition-transform duration-300 lg:relative lg:translate-x-0 lg:col-span-3 lg:shadow-sm lg:sticky lg:h-[calc(100vh-6rem)] lg:max-h-screen overflow-y-auto ${
                 isFilterSidebarOpen ? 'translate-x-0' : '-translate-x-full'
               }`}
             style={{ top: "6rem" }} // 6rem = 96px, which is the header height (24 units = 96px)
             id="filter-sidebar"
           >
-            <div className="flex justify-between items-center mb-6">
-              <h2 className="text-xl font-bold text-gray-800">Filtres</h2>
-              <button 
-                className="lg:hidden text-gray-500 hover:text-gray-800"
-                onClick={() => setIsFilterSidebarOpen(false)}
-              >
-                <i className="fas fa-times text-2xl"></i>
-              </button>
-            </div>
-            
-            {/* Mobile Close Arrow Button - Visible only on mobile */}
-            <button
-              className="lg:hidden fixed top-1/2 -right-4 transform -translate-y-1/2 bg-white rounded-r-lg shadow-lg p-3 text-gray-600 hover:text-gray-800 border border-l-0"
-              onClick={() => setIsFilterSidebarOpen(false)}
-              style={{ zIndex: 45 }}
-            >
-              <i className="fas fa-chevron-left text-lg"></i>
-            </button>
-
-            {/* Price Range Filter - Moved to top */}
-            <div className="mb-6 bg-gray-50 rounded-lg p-3">
-              <div 
-                className="flex justify-between items-center cursor-pointer" 
-                onClick={() => setIsPriceRangeExpanded(!isPriceRangeExpanded)}
-              >
-                <h3 className="font-semibold text-gray-700">Gamme de Prix</h3>
-                <button className="text-gray-500 hover:text-gray-700 focus:outline-none">
-                  <i className={`fas ${isPriceRangeExpanded ? 'fa-chevron-up' : 'fa-chevron-down'} text-xs`}></i>
+            <div className="p-6">
+              <div className="flex justify-between items-center mb-6">
+                <h2 className="text-xl font-bold text-gray-800">Filtres</h2>
+                <button 
+                  className="lg:hidden text-gray-500 hover:text-gray-800"
+                  onClick={() => setIsFilterSidebarOpen(false)}
+                >
+                  <i className="fas fa-times text-2xl"></i>
                 </button>
               </div>
               
-              {isPriceRangeExpanded && (
-                <div className="mt-4">
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="text-sm font-medium text-gray-700">Prix Maximum: {priceFilter} TND</span>
-                  </div>
-                  <div className="relative">
-                    <input 
-                      type="range" 
-                      min="0" 
-                      max="1000" 
-                      value={priceFilter}
-                      onChange={(e) => setPriceFilter(e.target.value)}
-                      className="w-full slider-gold" 
-                    />
-                    <div className="flex justify-between text-xs text-gray-500 mt-1">
-                      <span>0 TND</span>
-                      <span>500 TND</span>
-                      <span>1000 TND</span>
+              {/* Mobile Close Arrow Button - Always visible and centered */}
+              <button
+                className="lg:hidden fixed top-1/2 left-80 transform -translate-y-1/2 bg-white rounded-r-lg shadow-lg p-3 text-gray-600 hover:text-gray-800 border border-l-0"
+                onClick={() => setIsFilterSidebarOpen(false)}
+                style={{ zIndex: 50 }}
+              >
+                <i className="fas fa-chevron-left text-lg"></i>
+              </button>
+
+              {/* Price Range Filter - Moved to top */}
+              <div className="mb-6 bg-gray-50 rounded-lg p-3">
+                <div 
+                  className="flex justify-between items-center cursor-pointer" 
+                  onClick={() => setIsPriceRangeExpanded(!isPriceRangeExpanded)}
+                >
+                  <h3 className="font-semibold text-gray-700">Gamme de Prix</h3>
+                  <button className="text-gray-500 hover:text-gray-700 focus:outline-none">
+                    <i className={`fas ${isPriceRangeExpanded ? 'fa-chevron-up' : 'fa-chevron-down'} text-xs`}></i>
+                  </button>
+                </div>
+                
+                {isPriceRangeExpanded && (
+                  <div className="mt-4">
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-sm font-medium text-gray-700">Prix Maximum: {priceFilter} TND</span>
                     </div>
-                  </div>
-                  <div className="flex justify-between mt-3">
-                    <div className="relative flex items-center">
-                      <span className="absolute left-3 text-gray-500">TND</span>
+                    <div className="relative">
                       <input 
-                        type="number" 
+                        type="range" 
                         min="0" 
                         max="1000" 
                         value={priceFilter}
-                        onChange={(e) => setPriceFilter(Math.min(1000, Math.max(0, e.target.value)))}
-                        className="w-24 pl-7 py-1 border border-gray-300 rounded-md text-sm" 
+                        onChange={(e) => setPriceFilter(e.target.value)}
+                        className="w-full slider-gold" 
                       />
+                      <div className="flex justify-between text-xs text-gray-500 mt-1">
+                        <span>0 TND</span>
+                        <span>500 TND</span>
+                        <span>1000 TND</span>
+                      </div>
+                    </div>
+                    <div className="flex justify-between mt-3">
+                      <div className="relative flex items-center">
+                        <span className="absolute left-3 text-gray-500">TND</span>
+                        <input 
+                          type="number" 
+                          min="0" 
+                          max="1000" 
+                          value={priceFilter}
+                          onChange={(e) => setPriceFilter(Math.min(1000, Math.max(0, e.target.value)))}
+                          className="w-24 pl-7 py-1 border border-gray-300 rounded-md text-sm" 
+                        />
+                      </div>
                     </div>
                   </div>
-                </div>
-              )}
-            </div>
-
-            {/* Categories Filter - Moved below price range */}
-            <div className="mb-6 bg-gray-50 rounded-lg p-3">
-              <div 
-                className="flex justify-between items-center cursor-pointer" 
-                onClick={() => setIsCategoriesExpanded(!isCategoriesExpanded)}
-              >
-                <h3 className="font-semibold text-gray-700">Catégories</h3>
-                <button className="text-gray-500 hover:text-gray-700 focus:outline-none">
-                  <i className={`fas ${isCategoriesExpanded ? 'fa-chevron-up' : 'fa-chevron-down'} text-xs`}></i>
-                </button>
+                )}
               </div>
-              
-              {isCategoriesExpanded && (
-                <div className="mt-4 space-y-2">
-                  {/* All Categories Button */}
-                  <button
-                    onClick={() => handleCategoryFilter('')}
-                    className={`w-full flex items-center text-left font-medium transition-colors p-2 rounded-lg ${
-                      selectedCategory === '' 
-                        ? 'bg-solid-gold text-white' 
-                        : 'text-gray-600 hover:bg-gray-100'
-                    }`}
-                  >
-                    <i className="fas fa-th fa-fw mr-2"></i>
-                    <span>Toutes les catégories</span>
-                  </button>
 
-                  {/* Main Categories with Subcategories */}
-                  {mainCategories.map((mainCategory) => (
-                    <div key={mainCategory.id} className="space-y-1">
-                      {/* Main Category */}
-                      <div className="flex items-center">
-                        <button
-                          onClick={() => handleMainCategoryClick(mainCategory)}
-                          className={`flex-1 flex items-center text-left font-medium transition-colors p-2 rounded-lg ${
-                            selectedCategory === mainCategory.id.toString() 
-                              ? 'bg-solid-gold text-white' 
-                              : 'text-gray-600 hover:bg-gray-100'
-                          }`}
-                        >
-                          <i className="fas fa-folder fa-fw mr-2"></i>
-                          <span>{mainCategory.name}</span>
-                          {mainCategory.subcategories?.length > 0 && (
-                            <span className="ml-1 text-xs opacity-80">
-                              ({mainCategory.subcategories.length})
-                            </span>
-                          )}
-                        </button>
-                        
-                        {/* Expand/Collapse Button */}
-                        {mainCategory.subcategories && mainCategory.subcategories.length > 0 && (
+              {/* Categories Filter - Moved below price range */}
+              <div className="mb-6 bg-gray-50 rounded-lg p-3">
+                <div 
+                  className="flex justify-between items-center cursor-pointer" 
+                  onClick={() => setIsCategoriesExpanded(!isCategoriesExpanded)}
+                >
+                  <h3 className="font-semibold text-gray-700">Catégories</h3>
+                  <button className="text-gray-500 hover:text-gray-700 focus:outline-none">
+                    <i className={`fas ${isCategoriesExpanded ? 'fa-chevron-up' : 'fa-chevron-down'} text-xs`}></i>
+                  </button>
+                </div>
+                
+                {isCategoriesExpanded && (
+                  <div className="mt-4 space-y-2">
+                    {/* All Categories Button */}
+                    <button
+                      onClick={() => handleCategoryFilter('')}
+                      className={`w-full flex items-center text-left font-medium transition-colors p-2 rounded-lg ${
+                        selectedCategory === '' 
+                          ? 'bg-solid-gold text-white' 
+                          : 'text-gray-600 hover:bg-gray-100'
+                      }`}
+                    >
+                      <i className="fas fa-th fa-fw mr-2"></i>
+                      <span>Toutes les catégories</span>
+                    </button>
+
+                    {/* Main Categories with Subcategories */}
+                    {mainCategories.map((mainCategory) => (
+                      <div key={mainCategory.id} className="space-y-1">
+                        {/* Main Category */}
+                        <div className="flex items-center">
                           <button
-                            onClick={() => toggleCategoryExpanded(mainCategory.id)}
-                            className="ml-1 p-2 text-gray-400 hover:text-gray-600 transition-colors"
+                            onClick={() => handleMainCategoryClick(mainCategory)}
+                            className={`flex-1 flex items-center text-left font-medium transition-colors p-2 rounded-lg ${
+                              selectedCategory === mainCategory.id.toString() 
+                                ? 'bg-solid-gold text-white' 
+                                : 'text-gray-600 hover:bg-gray-100'
+                            }`}
                           >
-                            <i className={`fas ${expandedCategories[mainCategory.id] ? 'fa-chevron-up' : 'fa-chevron-down'} text-xs`}></i>
+                            <i className="fas fa-folder fa-fw mr-2"></i>
+                            <span>{mainCategory.name}</span>
+                            {mainCategory.subcategories?.length > 0 && (
+                              <span className="ml-1 text-xs opacity-80">
+                                ({mainCategory.subcategories.length})
+                              </span>
+                            )}
                           </button>
+                          
+                          {/* Expand/Collapse Button */}
+                          {mainCategory.subcategories && mainCategory.subcategories.length > 0 && (
+                            <button
+                              onClick={() => toggleCategoryExpanded(mainCategory.id)}
+                              className="ml-1 p-2 text-gray-400 hover:text-gray-600 transition-colors"
+                            >
+                              <i className={`fas ${expandedCategories[mainCategory.id] ? 'fa-chevron-up' : 'fa-chevron-down'} text-xs`}></i>
+                            </button>
+                          )}
+                        </div>
+
+                        {/* Subcategories */}
+                        {(expandedCategories[mainCategory.id] || selectedCategory === mainCategory.id.toString()) && mainCategory.subcategories && (
+                          <div className="ml-4 space-y-1">
+                            {mainCategory.subcategories.map((subcategory) => (
+                              <button
+                                key={subcategory.id}
+                                onClick={() => handleCategoryFilter(subcategory.id.toString())}
+                                className={`w-full flex items-center text-left text-sm transition-colors p-2 rounded-lg ${
+                                  selectedCategory === subcategory.id.toString() 
+                                    ? 'bg-solid-gold text-white' 
+                                    : selectedCategory === mainCategory.id.toString()
+                                    ? 'text-gray-700 bg-yellow-50 border border-yellow-100' // Highlight when parent is selected
+                                    : 'text-gray-500 hover:bg-gray-50'
+                                }`}
+                              >
+                                <i className="fas fa-tag fa-fw mr-2"></i>
+                                <span>{subcategory.name}</span>
+                              </button>
+                            ))}
+                          </div>
                         )}
                       </div>
+                    ))}
+                  </div>
+                )}
+              </div>
 
-                      {/* Subcategories */}
-                      {(expandedCategories[mainCategory.id] || selectedCategory === mainCategory.id.toString()) && mainCategory.subcategories && (
-                        <div className="ml-4 space-y-1">
-                          {mainCategory.subcategories.map((subcategory) => (
-                            <button
-                              key={subcategory.id}
-                              onClick={() => handleCategoryFilter(subcategory.id.toString())}
-                              className={`w-full flex items-center text-left text-sm transition-colors p-2 rounded-lg ${
-                                selectedCategory === subcategory.id.toString() 
-                                  ? 'bg-solid-gold text-white' 
-                                  : selectedCategory === mainCategory.id.toString()
-                                  ? 'text-gray-700 bg-yellow-50 border border-yellow-100' // Highlight when parent is selected
-                                  : 'text-gray-500 hover:bg-gray-50'
-                              }`}
-                            >
-                              <i className="fas fa-tag fa-fw mr-2"></i>
-                              <span>{subcategory.name}</span>
-                            </button>
-                          ))}
-                        </div>
-                      )}
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-
-            <div className="space-y-2 sticky bottom-0 pt-4 pb-2 bg-white">
-              <button
-                onClick={clearFilters}
-                className="w-full bg-gold-gradient text-black font-medium py-2 px-4 rounded-lg transition opacity-80 hover:opacity-100 shadow-sm flex items-center justify-center"
-              >
-                <i className="fas fa-times-circle mr-2"></i>
-                Effacer les Filtres
-              </button>
+              <div className="space-y-2 sticky bottom-0 pt-4 pb-2 bg-white">
+                <button
+                  onClick={clearFilters}
+                  className="w-full bg-gold-gradient text-black font-medium py-2 px-4 rounded-lg transition opacity-80 hover:opacity-100 shadow-sm flex items-center justify-center"
+                >
+                  <i className="fas fa-times-circle mr-2"></i>
+                  Effacer les Filtres
+                </button>
+              </div>
             </div>
           </aside>
 

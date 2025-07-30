@@ -43,7 +43,12 @@ const ProductDetailPage = () => {
   };
 
   const handleQuantityChange = (e) => {
-    setQuantity(parseInt(e.target.value) || 1);
+    const newValue = parseInt(e.target.value);
+    if (!isNaN(newValue) && newValue > 0) {
+      setQuantity(newValue);
+    } else {
+      setQuantity(1);
+    }
   };
 
   const calculateTotal = () => {
@@ -286,17 +291,33 @@ const ProductDetailPage = () => {
                 <label htmlFor="quantity" className="block text-sm font-medium text-gray-700">
                   Quantité
                 </label>
-                <input 
-                  type="number" 
-                  name="quantity" 
-                  id="quantity" 
-                  min="1" 
-                  max={product.stock || 999}
-                  value={quantity}
-                  onChange={handleQuantityChange}
-                  className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm form-input" 
-                  required 
-                />
+                <div className="flex items-center mt-1">
+                  <button 
+                    type="button"
+                    onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                    className="px-3 py-2 bg-gray-200 rounded-l-md hover:bg-gray-300 focus:outline-none"
+                  >
+                    <i className="fas fa-minus"></i>
+                  </button>
+                  <input 
+                    type="number" 
+                    name="quantity" 
+                    id="quantity" 
+                    min="1" 
+                    max={product.stock || 999}
+                    value={quantity}
+                    onChange={handleQuantityChange}
+                    className="w-16 text-center px-3 py-2 bg-white border-y border-gray-300 focus:outline-none focus:ring-1 focus:ring-solid-gold" 
+                    required 
+                  />
+                  <button 
+                    type="button"
+                    onClick={() => setQuantity(Math.min(product.stock || 999, quantity + 1))}
+                    className="px-3 py-2 bg-gray-200 rounded-r-md hover:bg-gray-300 focus:outline-none"
+                  >
+                    <i className="fas fa-plus"></i>
+                  </button>
+                </div>
                 {product.stock && product.stock < 10 && (
                   <p className="text-sm text-orange-600 mt-1">
                     Plus que {product.stock} en stock !

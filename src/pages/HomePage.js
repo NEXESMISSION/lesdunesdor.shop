@@ -114,16 +114,6 @@ const HomePage = () => {
   };
 
   const handleCategoryFilter = (categoryId) => {
-    // If clicking the same category again, just toggle its expanded state but keep it selected
-    if (selectedCategory === categoryId) {
-      // If it's a main category with subcategories, toggle its expanded state
-      const selectedMainCategory = mainCategories.find(cat => cat.id.toString() === categoryId);
-      if (selectedMainCategory && selectedMainCategory.subcategories?.length > 0) {
-        toggleCategoryExpanded(selectedMainCategory.id);
-      }
-      return;
-    }
-    
     setSelectedCategory(categoryId);
     
     // If it's a main category, expand it to show subcategories
@@ -132,6 +122,28 @@ const HomePage = () => {
       setExpandedCategories(prev => ({
         ...prev,
         [selectedMainCategory.id]: true
+      }));
+    }
+  };
+
+  // Separate function for handling main category clicks (for expanding/collapsing)
+  const handleMainCategoryClick = (mainCategory) => {
+    // If the category is already selected and expanded, hide subcategories and clear selection
+    if (selectedCategory === mainCategory.id.toString() && expandedCategories[mainCategory.id]) {
+      setExpandedCategories(prev => ({
+        ...prev,
+        [mainCategory.id]: false
+      }));
+      setSelectedCategory(''); // Clear the selection
+      return;
+    }
+    
+    // Otherwise, select the category and expand it
+    setSelectedCategory(mainCategory.id.toString());
+    if (mainCategory.subcategories?.length > 0) {
+      setExpandedCategories(prev => ({
+        ...prev,
+        [mainCategory.id]: true
       }));
     }
   };
@@ -297,16 +309,13 @@ const HomePage = () => {
             </div>
             
             {/* Mobile Close Arrow Button - Visible only on mobile */}
-            {isFilterSidebarOpen && (
-              <div className="lg:hidden fixed top-1/2 right-0 transform -translate-y-1/2 z-50">
-                <button
-                  className="bg-white shadow-lg rounded-r-lg px-2 py-6 text-gray-600 hover:text-gray-800 border border-gray-200 border-l-0"
-                  onClick={() => setIsFilterSidebarOpen(false)}
-                >
-                  <i className="fas fa-chevron-left text-xl"></i>
-                </button>
-              </div>
-            )}
+            <button
+              className="lg:hidden fixed top-1/2 -right-4 transform -translate-y-1/2 bg-white rounded-r-lg shadow-lg p-3 text-gray-600 hover:text-gray-800 border border-l-0"
+              onClick={() => setIsFilterSidebarOpen(false)}
+              style={{ zIndex: 45 }}
+            >
+              <i className="fas fa-chevron-left text-lg"></i>
+            </button>
 
             {/* Price Range Filter - Moved to top */}
             <div className="mb-6 bg-gray-50 rounded-lg p-3">
@@ -390,7 +399,7 @@ const HomePage = () => {
                       {/* Main Category */}
                       <div className="flex items-center">
                         <button
-                          onClick={() => handleCategoryFilter(mainCategory.id.toString())}
+                          onClick={() => handleMainCategoryClick(mainCategory)}
                           className={`flex-1 flex items-center text-left font-medium transition-colors p-2 rounded-lg ${
                             selectedCategory === mainCategory.id.toString() 
                               ? 'bg-solid-gold text-white' 

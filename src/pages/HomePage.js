@@ -106,7 +106,20 @@ const HomePage = () => {
     }
   };
 
+  const toggleCategoryExpanded = (categoryId) => {
+    setExpandedCategories(prev => ({
+      ...prev,
+      [categoryId]: !prev[categoryId]
+    }));
+  };
+
   const handleCategoryFilter = (categoryId) => {
+    // If clicking the same category, toggle it off
+    if (selectedCategory === categoryId) {
+      setSelectedCategory('');
+      return;
+    }
+    
     setSelectedCategory(categoryId);
     
     // If it's a main category, expand it to show subcategories
@@ -117,13 +130,6 @@ const HomePage = () => {
         [selectedMainCategory.id]: true
       }));
     }
-  };
-
-  const toggleCategoryExpanded = (categoryId) => {
-    setExpandedCategories(prev => ({
-      ...prev,
-      [categoryId]: !prev[categoryId]
-    }));
   };
 
   const clearFilters = () => {
@@ -293,7 +299,10 @@ const HomePage = () => {
                 onClick={() => setIsPriceRangeExpanded(!isPriceRangeExpanded)}
               >
                 <h3 className="font-semibold text-gray-700">Gamme de Prix</h3>
-                <button className="text-gray-500 hover:text-gray-700 focus:outline-none">
+                <button 
+                  className="text-gray-500 hover:text-gray-700 focus:outline-none"
+                  aria-label={isPriceRangeExpanded ? "Collapse price range" : "Expand price range"}
+                >
                   <i className={`fas ${isPriceRangeExpanded ? 'fa-chevron-up' : 'fa-chevron-down'} text-xs`}></i>
                 </button>
               </div>
@@ -342,7 +351,10 @@ const HomePage = () => {
                 onClick={() => setIsCategoriesExpanded(!isCategoriesExpanded)}
               >
                 <h3 className="font-semibold text-gray-700">Catégories</h3>
-                <button className="text-gray-500 hover:text-gray-700 focus:outline-none">
+                <button 
+                  className="text-gray-500 hover:text-gray-700 focus:outline-none"
+                  aria-label={isCategoriesExpanded ? "Collapse categories" : "Expand categories"}
+                >
                   <i className={`fas ${isCategoriesExpanded ? 'fa-chevron-up' : 'fa-chevron-down'} text-xs`}></i>
                 </button>
               </div>
@@ -384,11 +396,15 @@ const HomePage = () => {
                           )}
                         </button>
                         
-                        {/* Expand/Collapse Button */}
+                        {/* Expand/Collapse Button - Only show if has subcategories */}
                         {mainCategory.subcategories && mainCategory.subcategories.length > 0 && (
                           <button
-                            onClick={() => toggleCategoryExpanded(mainCategory.id)}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              toggleCategoryExpanded(mainCategory.id);
+                            }}
                             className="ml-1 p-2 text-gray-400 hover:text-gray-600 transition-colors"
+                            aria-label={expandedCategories[mainCategory.id] ? "Collapse category" : "Expand category"}
                           >
                             <i className={`fas ${expandedCategories[mainCategory.id] ? 'fa-chevron-up' : 'fa-chevron-down'} text-xs`}></i>
                           </button>

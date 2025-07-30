@@ -218,35 +218,38 @@ const ProductModal = ({ isOpen, onClose, product, onSuccess }) => {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Prix (€) *
+              <div className="mb-4">
+                <label htmlFor="price" className="block text-sm font-medium text-gray-700">
+                  Prix (TND) *
                 </label>
                 <input
                   type="number"
+                  step="0.01"
+                  min="0"
+                  id="price"
                   name="price"
                   value={formData.price}
                   onChange={handleInputChange}
-                  step="0.01"
-                  min="0"
-                  className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-blue-500 focus:border-blue-500"
+                  className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                   required
                 />
               </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Ancien Prix (€)
+              
+              <div className="mb-4">
+                <label htmlFor="old_price" className="block text-sm font-medium text-gray-700">
+                  Ancien Prix (TND)
                 </label>
                 <input
                   type="number"
-                  name="old_price"
-                  value={formData.old_price}
-                  onChange={handleInputChange}
                   step="0.01"
                   min="0"
-                  className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-blue-500 focus:border-blue-500"
+                  id="old_price"
+                  name="old_price"
+                  value={formData.old_price || ''}
+                  onChange={handleInputChange}
+                  className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                 />
+                <p className="text-sm text-gray-500 mt-1">Laissez vide s'il n'y a pas de prix réduit</p>
               </div>
 
               <div>
@@ -264,19 +267,22 @@ const ProductModal = ({ isOpen, onClose, product, onSuccess }) => {
               </div>
             </div>
 
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Prix de Livraison (€)
+            <div className="mb-4">
+              <label htmlFor="delivery_price" className="block text-sm font-medium text-gray-700">
+                Prix de Livraison (TND)
               </label>
               <input
                 type="number"
-                name="delivery_price"
-                value={formData.delivery_price}
-                onChange={handleInputChange}
                 step="0.01"
                 min="0"
-                className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-blue-500 focus:border-blue-500"
+                id="delivery_price"
+                name="delivery_price"
+                value={formData.delivery_price || ''}
+                onChange={handleInputChange}
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                placeholder="7.00"
               />
+              <p className="text-sm text-gray-500 mt-1">Laissez vide pour utiliser le prix par défaut (7.00)</p>
             </div>
 
             <div>

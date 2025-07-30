@@ -301,7 +301,7 @@ const HomePage = () => {
               {isPriceRangeExpanded && (
                 <div className="mt-4">
                   <div className="flex items-center justify-between mb-2">
-                    <span className="text-sm font-medium text-gray-700">Prix Maximum: {priceFilter} €</span>
+                    <span className="text-sm font-medium text-gray-700">Prix Maximum: {priceFilter} TND</span>
                   </div>
                   <div className="relative">
                     <input 
@@ -313,14 +313,14 @@ const HomePage = () => {
                       className="w-full slider-gold" 
                     />
                     <div className="flex justify-between text-xs text-gray-500 mt-1">
-                      <span>0 €</span>
-                      <span>500 €</span>
-                      <span>1000 €</span>
+                      <span>0 TND</span>
+                      <span>500 TND</span>
+                      <span>1000 TND</span>
                     </div>
                   </div>
                   <div className="flex justify-between mt-3">
                     <div className="relative flex items-center">
-                      <span className="absolute left-3 text-gray-500">€</span>
+                      <span className="absolute left-3 text-gray-500">TND</span>
                       <input 
                         type="number" 
                         min="0" 
@@ -534,11 +534,11 @@ const HomePage = () => {
                         <div>
                           <div className="flex items-center space-x-2">
                             <span className="text-base md:text-lg font-bold text-solid-gold">
-                              {product.price?.toFixed(2)} €
+                              {product.price?.toFixed(2)} TND
                             </span>
                             {product.old_price && (
                               <span className="text-xs text-gray-400 line-through">
-                                {product.old_price.toFixed(2)} €
+                                {product.old_price.toFixed(2)} TND
                               </span>
                             )}
                           </div>

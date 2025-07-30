@@ -109,13 +109,12 @@ const OrderModal = ({ isOpen, onClose, order, onSuccess }) => {
                 </div>
               </div>
 
-              <div>
-                <h3 className="text-lg font-semibold text-gray-800 mb-3">Détails de la Commande</h3>
-                <div className="space-y-2">
-                  <p><strong>Date:</strong> {formatDate(order.created_at)}</p>
-                  <p><strong>Total:</strong> {order.total_amount?.toFixed(2)} €</p>
-                  <p><strong>ID:</strong> #{order.id}</p>
-                </div>
+              <div className="mb-4">
+                <h4 className="font-semibold text-gray-700 mb-2">Détails de la Commande</h4>
+                <p><strong>ID:</strong> #{order.id}</p>
+                <p><strong>Date:</strong> {new Date(order.created_at).toLocaleString('fr-FR')}</p>
+                <p><strong>Total:</strong> {order.total_amount?.toFixed(2)} TND</p>
+                <p><strong>Statut:</strong> {order.status}</p>
               </div>
             </div>
 
@@ -130,9 +129,9 @@ const OrderModal = ({ isOpen, onClose, order, onSuccess }) => {
                       <p><strong>Quantité:</strong> {order.form_data.quantity || 1}</p>
                     </div>
                     <div>
-                      <p><strong>Prix unitaire:</strong> {order.form_data.unit_price?.toFixed(2)} €</p>
-                      <p><strong>Sous-total:</strong> {order.form_data.subtotal?.toFixed(2)} €</p>
-                      <p><strong>Livraison:</strong> {order.form_data.delivery_price?.toFixed(2)} €</p>
+                      <p><strong>Prix unitaire:</strong> {order.form_data.unit_price?.toFixed(2)} TND</p>
+                      <p><strong>Sous-total:</strong> {order.form_data.subtotal?.toFixed(2)} TND</p>
+                      <p><strong>Livraison:</strong> {order.form_data.delivery_price?.toFixed(2)} TND</p>
                     </div>
                   </div>
                 </div>

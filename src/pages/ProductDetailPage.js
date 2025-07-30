@@ -247,11 +247,11 @@ const ProductDetailPage = () => {
             {/* Prices and Discount */}
             <div className="flex flex-wrap items-baseline mb-4">
               <p className="text-3xl font-bold text-solid-gold">
-                {product.price?.toFixed(2)} €
+                {product.price?.toFixed(2)} TND
               </p>
               {product.old_price && (
                 <p className="text-xl text-gray-500 line-through ml-2">
-                  {product.old_price.toFixed(2)} €
+                  {product.old_price.toFixed(2)} TND
                 </p>
               )}
               {discount > 0 && (
@@ -358,19 +358,19 @@ const ProductDetailPage = () => {
               <div className="pt-4 border-t mt-6">
                 <div className="flex justify-between text-gray-600">
                   <span>Prix unitaire:</span>
-                  <span>{product.price?.toFixed(2)} €</span>
+                  <span>{product.price?.toFixed(2)} TND</span>
                 </div>
                 <div className="flex justify-between text-gray-600">
                   <span>Sous-total:</span>
-                  <span>{subtotal.toFixed(2)} €</span>
+                  <span>{subtotal.toFixed(2)} TND</span>
                 </div>
                 <div className="flex justify-between text-gray-600 mt-2">
                   <span>Frais de livraison:</span>
-                  <span>{(product.delivery_price || 7.00).toFixed(2)} €</span>
+                  <span>{(product.delivery_price || 7.00).toFixed(2)} TND</span>
                 </div>
                 <div className="flex justify-between text-gray-800 font-bold text-xl mt-2">
                   <span>Total:</span>
-                  <span>{total.toFixed(2)} €</span>
+                  <span>{total.toFixed(2)} TND</span>
                 </div>
               </div>
 
@@ -430,7 +430,7 @@ const ProductDetailPage = () => {
                   </div>
                   <div className="p-3">
                     <h3 className="text-sm font-medium text-gray-800 line-clamp-2">{relatedProduct.name}</h3>
-                    <p className="text-sm font-bold text-solid-gold mt-2">{relatedProduct.price?.toFixed(2)} €</p>
+                    <p className="text-sm font-bold text-solid-gold mt-2">{relatedProduct.price?.toFixed(2)} TND</p>
                   </div>
                 </Link>
               ))}

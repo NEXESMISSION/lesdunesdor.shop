@@ -511,7 +511,7 @@ const AdminDashboard = () => {
                     </div>
                     <div className="ml-4">
                       <h3 className="text-sm font-medium text-gray-500">Ventes Totales</h3>
-                      <p className="text-2xl font-bold text-gray-800">{dashboardStats.totalSales.toFixed(2)} €</p>
+                      <p className="text-2xl font-bold text-gray-800">{dashboardStats.totalSales.toFixed(2)} TND</p>
                     </div>
                   </div>
                 </div>
@@ -577,7 +577,7 @@ const AdminDashboard = () => {
                           </p>
                         </div>
                         <div className="text-right">
-                          <p className="font-bold text-gray-800">{order.total_amount?.toFixed(2)} €</p>
+                          <p className="font-bold text-gray-800">{order.total_amount?.toFixed(2)} TND</p>
                           <span className={`text-xs px-2 py-1 rounded-full ${
                             order.status === 'Nouvelle' ? 'bg-blue-100 text-blue-800' :
                             order.status === 'En traitement' ? 'bg-yellow-100 text-yellow-800' :
@@ -789,9 +789,9 @@ const AdminDashboard = () => {
                                     </div>
                                   </td>
                                   <td className="px-4 py-4 whitespace-nowrap">
-                                    <div className="text-sm font-medium text-gray-900">{product.price?.toFixed(2)} €</div>
+                                    <div className="text-sm font-medium text-gray-900">{product.price?.toFixed(2)} TND</div>
                                     {product.old_price && (
-                                      <div className="text-xs text-gray-500 line-through">{product.old_price?.toFixed(2)} €</div>
+                                      <div className="text-xs text-gray-500 line-through">{product.old_price?.toFixed(2)} TND</div>
                                     )}
                                   </td>
                                   <td className="hidden md:table-cell px-4 py-4 whitespace-nowrap">
@@ -1050,7 +1050,7 @@ const AdminDashboard = () => {
                                         </div>
                                       </td>
                                       <td className="px-6 py-4 whitespace-nowrap text-sm font-bold text-gray-900">
-                                        {order.total_amount?.toFixed(2)} €
+                                        {order.total_amount?.toFixed(2)} TND
                                       </td>
                                       <td className="px-6 py-4 whitespace-nowrap">
                                         <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${

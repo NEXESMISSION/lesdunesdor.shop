@@ -290,9 +290,23 @@ const HomePage = () => {
       <div id="product-grid-section" className="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8 mt-8 mb-16">
         <div className="lg:grid lg:grid-cols-12 lg:gap-8">
           
+          {/* Mobile Close Arrow Button - At the edge of the filter box, centered vertically */}
+          {isFilterSidebarOpen && (
+            <button
+              className="lg:hidden fixed top-1/2 transform -translate-y-1/2 bg-red-500 text-white rounded-full shadow-lg w-12 h-12 flex items-center justify-center hover:bg-red-600 transition-colors"
+              onClick={() => setIsFilterSidebarOpen(false)}
+              style={{ 
+                left: '20rem', // Exactly at the edge of the w-80 sidebar
+                zIndex: 99999 // Highest z-index to float on top of everything
+              }}
+            >
+              <i className="fas fa-chevron-left text-lg"></i>
+            </button>
+          )}
+
           {/* Filter Sidebar */}
           <aside 
-            className={`fixed top-0 left-0 h-full w-full max-w-xs bg-white shadow-xl z-40 transform transition-transform duration-300 lg:relative lg:translate-x-0 lg:col-span-3 lg:shadow-sm lg:sticky lg:h-[calc(100vh-6rem)] lg:max-h-screen overflow-y-auto ${
+            className={`fixed top-0 left-0 h-full w-80 bg-white shadow-xl z-40 transform transition-transform duration-300 lg:relative lg:translate-x-0 lg:col-span-3 lg:shadow-sm lg:sticky lg:h-[calc(100vh-6rem)] lg:max-h-screen overflow-y-auto overflow-x-hidden ${
                 isFilterSidebarOpen ? 'translate-x-0' : '-translate-x-full'
               }`}
             style={{ top: "6rem" }} // 6rem = 96px, which is the header height (24 units = 96px)
@@ -309,15 +323,6 @@ const HomePage = () => {
                 </button>
               </div>
               
-              {/* Mobile Close Arrow Button - Always visible and centered */}
-              <button
-                className="lg:hidden fixed top-1/2 left-80 transform -translate-y-1/2 bg-white rounded-r-lg shadow-lg p-3 text-gray-600 hover:text-gray-800 border border-l-0"
-                onClick={() => setIsFilterSidebarOpen(false)}
-                style={{ zIndex: 50 }}
-              >
-                <i className="fas fa-chevron-left text-lg"></i>
-              </button>
-
               {/* Price Range Filter - Moved to top */}
               <div className="mb-6 bg-gray-50 rounded-lg p-3">
                 <div 
@@ -351,15 +356,15 @@ const HomePage = () => {
                       </div>
                     </div>
                     <div className="flex justify-between mt-3">
-                      <div className="relative flex items-center">
-                        <span className="absolute left-3 text-gray-500">TND</span>
+                      <div className="relative flex items-center w-32">
+                        <span className="absolute left-2 text-gray-500 text-xs">TND</span>
                         <input 
                           type="number" 
                           min="0" 
                           max="1000" 
                           value={priceFilter}
                           onChange={(e) => setPriceFilter(Math.min(1000, Math.max(0, e.target.value)))}
-                          className="w-24 pl-7 py-1 border border-gray-300 rounded-md text-sm" 
+                          className="w-full pl-10 pr-2 py-1 border border-gray-300 rounded-md text-sm" 
                         />
                       </div>
                     </div>

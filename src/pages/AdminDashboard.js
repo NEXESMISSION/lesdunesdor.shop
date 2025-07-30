@@ -248,6 +248,25 @@ const AdminDashboard = () => {
     return products.filter(product => product.category_id === categoryId).length;
   };
 
+  // Get category name from category ID
+  const getCategoryName = (categoryId) => {
+    if (!categoryId) return 'Non catégorisé';
+    
+    // Search in all categories (main categories and subcategories)
+    const allCategories = mainCategories.flatMap(cat => [cat, ...(cat.subcategories || [])]);
+    const category = allCategories.find(cat => cat.id === categoryId);
+    
+    if (!category) return 'Non catégorisé';
+    
+    // If it's a subcategory, show "Parent > Child" format
+    if (category.parent_id) {
+      const parentCategory = allCategories.find(cat => cat.id === category.parent_id);
+      return parentCategory ? `${parentCategory.name} > ${category.name}` : category.name;
+    }
+    
+    return category.name;
+  };
+
   // Filter and pagination functions
   const getFilteredProducts = () => {
     let filtered = products.filter(product => {

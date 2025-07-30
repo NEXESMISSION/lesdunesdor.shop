@@ -114,9 +114,13 @@ const HomePage = () => {
   };
 
   const handleCategoryFilter = (categoryId) => {
-    // If clicking the same category again, clear the filter
+    // If clicking the same category again, just toggle its expanded state but keep it selected
     if (selectedCategory === categoryId) {
-      setSelectedCategory('');
+      // If it's a main category with subcategories, toggle its expanded state
+      const selectedMainCategory = mainCategories.find(cat => cat.id.toString() === categoryId);
+      if (selectedMainCategory && selectedMainCategory.subcategories?.length > 0) {
+        toggleCategoryExpanded(selectedMainCategory.id);
+      }
       return;
     }
     
@@ -293,12 +297,16 @@ const HomePage = () => {
             </div>
             
             {/* Mobile Close Arrow Button - Visible only on mobile */}
-            <button
-              className="lg:hidden fixed top-1/2 -right-8 transform -translate-y-1/2 bg-white rounded-r-lg shadow-md p-2 text-gray-600 hover:text-gray-800"
-              onClick={() => setIsFilterSidebarOpen(false)}
-            >
-              <i className="fas fa-chevron-left text-xl"></i>
-            </button>
+            {isFilterSidebarOpen && (
+              <div className="lg:hidden fixed top-1/2 right-0 transform -translate-y-1/2 z-50">
+                <button
+                  className="bg-white shadow-lg rounded-r-lg px-2 py-6 text-gray-600 hover:text-gray-800 border border-gray-200 border-l-0"
+                  onClick={() => setIsFilterSidebarOpen(false)}
+                >
+                  <i className="fas fa-chevron-left text-xl"></i>
+                </button>
+              </div>
+            )}
 
             {/* Price Range Filter - Moved to top */}
             <div className="mb-6 bg-gray-50 rounded-lg p-3">

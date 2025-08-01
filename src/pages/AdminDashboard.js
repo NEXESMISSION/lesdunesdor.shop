@@ -637,7 +637,7 @@ const AdminDashboard = () => {
                 <h2 className="text-xl sm:text-2xl font-bold text-gray-800">Gestion des Produits</h2>
                 <button
                   onClick={() => setProductModal({ isOpen: true, product: null })}
-                  className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors w-full sm:w-auto"
+                  className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors w-full sm:w-auto flex items-center justify-center"
                 >
                   <i className="fas fa-plus mr-2"></i>
                   Ajouter un Produit
@@ -656,7 +656,7 @@ const AdminDashboard = () => {
                       placeholder="Nom ou description..."
                       value={productFilters.search}
                       onChange={(e) => setProductFilters({ ...productFilters, search: e.target.value })}
-                      className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-blue-500 focus:border-blue-500"
+                      className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-blue-500 focus:border-blue-500 text-base"
                     />
                   </div>
                   
@@ -666,7 +666,7 @@ const AdminDashboard = () => {
                     <select
                       value={productFilters.category}
                       onChange={(e) => setProductFilters({ ...productFilters, category: e.target.value })}
-                      className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-blue-500 focus:border-blue-500"
+                      className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-blue-500 focus:border-blue-500 text-base"
                     >
                       <option value="">Toutes les catégories</option>
                       {mainCategories.map((mainCategory) => (
@@ -688,7 +688,7 @@ const AdminDashboard = () => {
                     <select
                       value={productFilters.stock}
                       onChange={(e) => setProductFilters({ ...productFilters, stock: e.target.value })}
-                      className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-blue-500 focus:border-blue-500"
+                      className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-blue-500 focus:border-blue-500 text-base"
                     >
                       <option value="all">Tous les stocks</option>
                       <option value="inStock">En stock</option>
@@ -705,7 +705,7 @@ const AdminDashboard = () => {
                       setProductFilters({ search: '', category: '', stock: 'all' });
                       setProductPagination({ ...productPagination, currentPage: 1 });
                     }}
-                    className="text-gray-600 hover:text-gray-800 text-sm"
+                    className="text-gray-600 hover:text-gray-800 text-sm flex items-center"
                   >
                     <i className="fas fa-times mr-1"></i>
                     Effacer les filtres
@@ -721,7 +721,7 @@ const AdminDashboard = () => {
                   
                   if (products.length === 0) {
                     return (
-                      <div className="text-center py-16">
+                      <div className="text-center py-16 px-4">
                         <div className="text-gray-400 mb-4">
                           <i className="fas fa-box-open text-6xl"></i>
                         </div>
@@ -731,7 +731,7 @@ const AdminDashboard = () => {
                         </p>
                         <button
                           onClick={() => setProductModal({ isOpen: true, product: null })}
-                          className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
+                          className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 w-full sm:w-auto"
                         >
                           Ajouter un Produit
                         </button>
@@ -741,7 +741,7 @@ const AdminDashboard = () => {
                   
                   if (filteredProducts.length === 0) {
                     return (
-                      <div className="text-center py-16">
+                      <div className="text-center py-16 px-4">
                         <div className="text-gray-400 mb-4">
                           <i className="fas fa-search text-6xl"></i>
                         </div>
@@ -786,12 +786,12 @@ const AdminDashboard = () => {
                               </tr>
                             ) : (
                               paginatedProducts.map(product => (
-                                <tr key={product.id}>
-                                  <td className="px-3 sm:px-4 py-4 whitespace-nowrap">
+                                <tr key={product.id} className="hover:bg-gray-50">
+                                  <td className="px-3 sm:px-4 py-4">
                                     <div className="flex items-center">
-                                      <div className="flex-shrink-0 h-10 w-10">
+                                      <div className="flex-shrink-0 h-12 w-12 sm:h-10 sm:w-10">
                                         <img 
-                                          className="h-10 w-10 rounded-md object-cover" 
+                                          className="h-12 w-12 sm:h-10 sm:w-10 rounded-md object-cover" 
                                           src={product.image_urls?.[0] || 'https://placehold.co/100x100/f3f4f6/9ca3af?text=Produit'} 
                                           alt={product.name} 
                                         />
@@ -799,8 +799,20 @@ const AdminDashboard = () => {
                                       <div className="ml-3 sm:ml-4 min-w-0 flex-1">
                                         <div className="text-sm font-medium text-gray-900 truncate">{product.name}</div>
                                         <div className="text-sm text-gray-500 truncate max-w-xs">{product.description}</div>
-                                        <div className="md:hidden text-xs text-gray-500 mt-1">
-                                          Cat: {getCategoryName(product.category_id)} | Stock: {product.stock}
+                                        <div className="md:hidden text-xs text-gray-500 mt-1 space-y-1">
+                                          <div>Cat: {getCategoryName(product.category_id)}</div>
+                                          <div className="flex items-center space-x-2">
+                                            <span>Stock:</span>
+                                            <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
+                                              product.stock > 10 
+                                                ? 'bg-green-100 text-green-800' 
+                                                : product.stock > 0 
+                                                ? 'bg-yellow-100 text-yellow-800' 
+                                                : 'bg-red-100 text-red-800'
+                                            }`}>
+                                              {product.stock}
+                                            </span>
+                                          </div>
                                         </div>
                                       </div>
                                     </div>
@@ -831,14 +843,14 @@ const AdminDashboard = () => {
                                     <div className="flex justify-end space-x-2">
                                       <button
                                         onClick={() => setProductModal({ isOpen: true, product })}
-                                        className="text-indigo-600 hover:text-indigo-900 p-1"
+                                        className="text-indigo-600 hover:text-indigo-900 p-2 rounded-md hover:bg-indigo-50 transition-colors"
                                         title="Modifier"
                                       >
                                         <i className="fas fa-edit"></i>
                                       </button>
                                       <button
                                         onClick={() => handleDeleteProduct(product.id)}
-                                        className="text-red-600 hover:text-red-900 p-1"
+                                        className="text-red-600 hover:text-red-900 p-2 rounded-md hover:bg-red-50 transition-colors"
                                         title="Supprimer"
                                       >
                                         <i className="fas fa-trash"></i>
@@ -866,7 +878,7 @@ const AdminDashboard = () => {
                                   currentPage: Math.max(1, productPagination.currentPage - 1) 
                                 })}
                                 disabled={productPagination.currentPage === 1}
-                                className="px-3 py-1 border border-gray-300 rounded-md text-sm text-gray-600 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
+                                className="px-3 py-2 border border-gray-300 rounded-md text-sm text-gray-600 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                               >
                                 <i className="fas fa-chevron-left"></i> Précédent
                               </button>
@@ -876,7 +888,7 @@ const AdminDashboard = () => {
                                   currentPage: Math.min(totalPages, productPagination.currentPage + 1) 
                                 })}
                                 disabled={productPagination.currentPage === totalPages}
-                                className="px-3 py-1 border border-gray-300 rounded-md text-sm text-gray-600 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
+                                className="px-3 py-2 border border-gray-300 rounded-md text-sm text-gray-600 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                               >
                                 Suivant <i className="fas fa-chevron-right"></i>
                               </button>

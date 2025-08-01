@@ -536,15 +536,6 @@ const HomePage = () => {
           <main className="lg:col-span-9">
             {/* Sorting and View Options */}
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6 bg-white p-4 rounded-lg shadow-sm">
-              <p className="text-sm text-gray-600 flex-shrink-0">
-                Affichage de <span className="font-bold">{paginatedProducts.length}</span> produits
-                {selectedCategories['Toutes'] && selectedCategories['Toutes'] === false && (
-                  <span className="ml-2 text-gold-custom">
-                    dans "Toutes les catégories"
-                  </span>
-                )}
-              </p>
-              
               <div className="flex items-center flex-wrap justify-end gap-2 sm:gap-4 w-full sm:w-auto">
                 <div className="flex items-center gap-2 order-1 sm:order-2 w-full sm:w-auto">
                   {/* View controls */}
@@ -577,10 +568,10 @@ const HomePage = () => {
                     <option value="newest">Trier par Nouveautés</option>
                   </select>
                   <button 
-                    className="lg:hidden text-gray-600 p-2 border rounded-md flex items-center"
+                    className="lg:hidden text-gray-600 p-1.5 rounded-md flex items-center text-sm"
                     onClick={() => setIsFilterSidebarOpen(true)}
                   >
-                    <Icon path="M10.5 6h9.75M10.5 6a1.5 1.5 0 11-3 0m3 0a1.5 1.5 0 10-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-9.75 0h9.75" className="w-5 h-5 mr-2" />
+                    <i className="fas fa-filter w-4 h-4 mr-1.5"></i>
                     Filtres
                   </button>
                 </div>

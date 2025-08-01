@@ -68,41 +68,20 @@ const HeroCarousel = ({ onExploreClick }) => {
         <div className={`transform transition-all duration-700 ease-out ${
           isTransitioning ? 'translate-y-2 opacity-80' : 'translate-y-0 opacity-100'
         }`}>
-          <h1 className="text-2xl md:text-4xl font-bold mb-2 md:mb-4 leading-tight">
+          <h1 className="text-xl md:text-2xl lg:text-3xl font-bold mb-2 md:mb-4 leading-tight">
             Notre Collection Exclusive
           </h1>
-          <p className="mt-2 md:mt-4 text-sm md:text-lg max-w-xs md:max-w-xl mb-4 md:mb-8 leading-relaxed">
+          <p className="mt-2 md:mt-4 text-xs md:text-sm lg:text-base max-w-xs md:max-w-xl mb-4 md:mb-8 leading-relaxed">
             Découvrez des produits d'exception, où le luxe rencontre le design.
           </p>
           <button 
             onClick={onExploreClick}
-            className="bg-gold-gradient text-black font-medium text-sm md:text-base py-2 px-4 md:py-3 md:px-6 rounded-lg shadow-md transition-all duration-300 transform hover:scale-105 hover:shadow-lg"
+            className="bg-gold-gradient text-black font-medium text-xs md:text-sm lg:text-base py-2 px-4 md:py-3 md:px-6 rounded-lg shadow-md transition-all duration-300 transform hover:scale-105 hover:shadow-lg"
           >
             <i className="fas fa-gem mr-1 md:mr-2"></i>
             Explorer la Collection
           </button>
         </div>
-      </div>
-
-      {/* Image Indicators */}
-      <div className="absolute bottom-3 md:bottom-6 left-1/2 transform -translate-x-1/2 flex space-x-1 md:space-x-2 z-20">
-        {heroImagePairs.map((_, index) => (
-          <button
-            key={index}
-            onClick={() => {
-              setIsTransitioning(true);
-              setTimeout(() => {
-                setCurrentImageIndex(index);
-                setIsTransitioning(false);
-              }, 250);
-            }}
-            className={`w-2 h-2 md:w-3 md:h-3 rounded-full transition-all duration-300 ${
-              index === currentImageIndex 
-                ? 'bg-white scale-125 shadow-lg' 
-                : 'bg-white bg-opacity-50 hover:bg-opacity-75'
-            }`}
-          />
-        ))}
       </div>
 
       {/* Subtle Animation Overlay */}

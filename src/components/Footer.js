@@ -5,7 +5,7 @@ const Footer = () => {
   const currentYear = new Date().getFullYear();
   
   return (
-    <footer className="bg-gray-900 text-gray-300">
+    <footer className="text-gray-400" style={{ backgroundColor: '#121212' }}>
       <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* Company Info */}
@@ -18,15 +18,15 @@ const Footer = () => {
               />
               <h3 className="text-lg font-semibold text-white">Meubles D'Or</h3>
             </div>
-            <p className="mb-4 text-sm">
+            <p className="mb-4 text-sm text-gray-400">
               Découvrez notre collection exclusive de mobilier et d'accessoires d'intérieur de luxe. 
               Artisanat d'exception et design intemporel.
             </p>
             <div className="flex space-x-4">
-              <a href="https://facebook.com" className="text-gray-400 hover:text-white transition-colors">
+              <a href="https://facebook.com" className="text-gray-500 hover:text-white transition-colors">
                 <i className="fab fa-facebook-f"></i>
               </a>
-              <a href="https://instagram.com" className="text-gray-400 hover:text-white transition-colors">
+              <a href="https://instagram.com" className="text-gray-500 hover:text-white transition-colors">
                 <i className="fab fa-instagram"></i>
               </a>
             </div>
@@ -59,15 +59,15 @@ const Footer = () => {
             <h3 className="text-lg font-semibold text-white mb-4">Contact</h3>
             <ul className="space-y-2 text-sm">
               <li className="flex items-start">
-                <i className="fas fa-phone-alt mt-1 mr-2 text-solid-gold"></i>
-                <span>+216 58 415 520</span>
+                <i className="fas fa-phone-alt mt-1 mr-2 text-gold"></i>
+                <span className="text-gray-400">+216 58 415 520</span>
               </li>
             </ul>
           </div>
         </div>
         
         <div className="border-t border-gray-800 mt-8 pt-8 text-sm text-center">
-          <p>© {currentYear} Meubles D'Or. Tous Droits Réservés.</p>
+          <p className="text-gray-500">© {currentYear} Meubles D'Or. Tous Droits Réservés.</p>
         </div>
       </div>
     </footer>

@@ -672,7 +672,7 @@ const HomePage = () => {
                       <span className="text-xs text-gray-500">
                         {getCategoryDisplayName(product.category_id?.toString())}
                       </span>
-                      <h3 className="text-sm md:text-base font-semibold text-gray-800 mt-1 mb-2 line-clamp-2">
+                      <h3 className="text-sm font-semibold text-gray-800 mt-1 mb-2 line-clamp-2">
                         {product.name}
                       </h3>
                       <p className="text-xs text-gray-600 mb-3 line-clamp-2">
@@ -682,7 +682,7 @@ const HomePage = () => {
                       <div className="flex items-center justify-between">
                         <div>
                           <div className="flex items-center space-x-2">
-                            <span className="text-base md:text-lg font-bold text-solid-gold">
+                            <span className="text-sm md:text-base font-bold text-solid-gold">
                               {product.price?.toFixed(2)} TND
                             </span>
                             {product.old_price && (
@@ -698,7 +698,7 @@ const HomePage = () => {
                         
                         <Link
                           to={`/product/${product.id}`}
-                          className="bg-solid-gold text-white px-3 py-1.5 rounded-lg text-xs font-medium hover:bg-yellow-600 transition-colors duration-200"
+                          className="bg-solid-gold text-white px-2 py-1 rounded-lg text-xs font-medium hover:bg-yellow-600 transition-colors duration-200"
                         >
                           Voir
                         </Link>

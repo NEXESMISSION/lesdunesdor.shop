@@ -24,6 +24,7 @@ const ProductDetailPage = () => {
     phoneNumber: '',
     address: ''
   });
+  const [showSoldOutPopup, setShowSoldOutPopup] = useState(false);
 
   useEffect(() => {
     const loadProduct = async () => {
@@ -75,6 +76,13 @@ const ProductDetailPage = () => {
       document.removeEventListener('keydown', handleKeyDown);
     };
   }, [isImageModalOpen, modalImageIndex]);
+
+  // Show sold out popup when product has 0 stock
+  useEffect(() => {
+    if (product && product.stock === 0) {
+      setShowSoldOutPopup(true);
+    }
+  }, [product]);
 
   const handleInputChange = (e) => {
     setFormData({
@@ -259,6 +267,14 @@ const ProductDetailPage = () => {
 
   return (
     <div className="min-h-screen bg-gray-50" key={productId}>
+      <style>{`
+        .text-gold-custom {
+          color: #d4af37;
+        }
+        .hover\\:text-gold-600:hover {
+          color: #b8941f;
+        }
+      `}</style>
       <Helmet>
         <title>{product.name} - Meubles D'Or</title>
         <meta name="description" content={product.description?.substring(0, 160) || "Découvrez ce produit exclusif de Meubles D'Or"} />
@@ -749,6 +765,44 @@ const ProductDetailPage = () => {
                 ))}
               </div>
             )}
+          </div>
+        </div>
+      )}
+
+      {/* Sold Out Popup */}
+      {showSoldOutPopup && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-lg shadow-xl max-w-md w-full mx-4">
+            <div className="p-6 text-center">
+              <div className="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-red-100 mb-4">
+                <i className="fas fa-exclamation-triangle text-3xl text-red-600"></i>
+              </div>
+              <h3 className="text-xl font-bold text-gray-800 mb-2">
+                Produit Épuisé
+              </h3>
+              <p className="text-gray-600 mb-6">
+                Ce produit est actuellement en rupture de stock. Veuillez patienter ou nous contacter pour plus d'informations.
+              </p>
+              <div className="space-y-3">
+                <div className="bg-gray-50 rounded-lg p-3">
+                  <p className="text-sm text-gray-700 mb-1">
+                    <strong>Appelez-nous :</strong>
+                  </p>
+                  <a 
+                    href="tel:+21658415520" 
+                    className="text-lg font-bold text-black hover:text-gray-700 transition-colors"
+                  >
+                    +216 58 415 520
+                  </a>
+                </div>
+                <button 
+                  onClick={() => setShowSoldOutPopup(false)}
+                  className="w-full bg-gray-200 text-gray-800 font-semibold py-3 px-4 rounded-lg hover:bg-gray-300 transition-colors"
+                >
+                  Fermer
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       )}

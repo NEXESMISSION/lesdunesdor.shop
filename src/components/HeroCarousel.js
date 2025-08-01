@@ -105,33 +105,6 @@ const HeroCarousel = ({ onExploreClick }) => {
         ))}
       </div>
 
-      {/* Navigation Arrows */}
-      <button
-        onClick={() => {
-          setIsTransitioning(true);
-          setTimeout(() => {
-            setCurrentImageIndex(currentImageIndex === 0 ? heroImagePairs.length - 1 : currentImageIndex - 1);
-            setIsTransitioning(false);
-          }, 250);
-        }}
-        className="absolute left-2 md:left-4 top-1/2 transform -translate-y-1/2 text-white hover:text-solid-gold transition-colors duration-300 z-20 bg-black bg-opacity-30 hover:bg-opacity-50 rounded-full p-1 md:p-3"
-      >
-        <i className="fas fa-chevron-left text-sm md:text-xl"></i>
-      </button>
-      
-      <button
-        onClick={() => {
-          setIsTransitioning(true);
-          setTimeout(() => {
-            setCurrentImageIndex(currentImageIndex === heroImagePairs.length - 1 ? 0 : currentImageIndex + 1);
-            setIsTransitioning(false);
-          }, 250);
-        }}
-        className="absolute right-2 md:right-4 top-1/2 transform -translate-y-1/2 text-white hover:text-solid-gold transition-colors duration-300 z-20 bg-black bg-opacity-30 hover:bg-opacity-50 rounded-full p-1 md:p-3"
-      >
-        <i className="fas fa-chevron-right text-sm md:text-xl"></i>
-      </button>
-
       {/* Subtle Animation Overlay */}
       <div className={`absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-5 transform transition-transform duration-1000 ${
         isTransitioning ? 'translate-x-full' : '-translate-x-full'

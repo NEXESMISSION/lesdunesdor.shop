@@ -47,28 +47,82 @@ export const getCurrentUser = async () => {
 // =====================================================
 // PRODUCTS FUNCTIONS
 // =====================================================
+
+// Cache for products to avoid unnecessary requests
+let productsCache = null;
+let productsCacheTime = 0;
+const CACHE_DURATION = 5 * 60 * 1000; // 5 minutes
+
+// Cache for categories
+let categoriesCache = null;
+let categoriesCacheTime = 0;
+
+// Function to clear all caches
+export const clearCache = () => {
+  productsCache = null;
+  productsCacheTime = 0;
+  categoriesCache = null;
+  categoriesCacheTime = 0;
+};
+
+// Function to clear specific cache
+export const clearProductsCache = () => {
+  productsCache = null;
+  productsCacheTime = 0;
+};
+
+export const clearCategoriesCache = () => {
+  categoriesCache = null;
+  categoriesCacheTime = 0;
+};
+
 export const getProducts = async () => {
   try {
+    // Check cache first
+    const now = Date.now();
+    if (productsCache && (now - productsCacheTime) < CACHE_DURATION) {
+      return productsCache;
+    }
+
     const { data, error } = await supabase
       .from('products')
       .select(`
-        *,
-        categories(
-          id, 
-          name, 
-          parent_id
-        )
+        id,
+        name,
+        description,
+        price,
+        old_price,
+        stock,
+        image_urls,
+        category_id,
+        created_at
       `)
       .order('created_at', { ascending: false })
+      .limit(1000); // Limit to prevent excessive data loading
     
     if (error) {
-      console.error('Error fetching products:', error)
-      throw error
+      console.error('Error fetching products:', error);
+      // Return cached data if available, even if expired
+      if (productsCache) {
+        console.warn('Using cached products due to fetch error');
+        return productsCache;
+      }
+      throw error;
     }
-    return data || []
+
+    // Update cache
+    productsCache = data || [];
+    productsCacheTime = now;
+    
+    return data || [];
   } catch (error) {
-    console.error('getProducts error:', error)
-    return []
+    console.error('getProducts error:', error);
+    // Return cached data if available
+    if (productsCache) {
+      console.warn('Using cached products due to error');
+      return productsCache;
+    }
+    return [];
   }
 }
 
@@ -77,7 +131,15 @@ export const getProduct = async (id) => {
     const { data, error } = await supabase
       .from('products')
       .select(`
-        *,
+        id,
+        name,
+        description,
+        price,
+        old_price,
+        stock,
+        image_urls,
+        category_id,
+        created_at,
         categories(
           id, 
           name, 
@@ -88,13 +150,13 @@ export const getProduct = async (id) => {
       .single()
     
     if (error) {
-      console.error('Error fetching product:', error)
-      throw error
+      console.error('Error fetching product:', error);
+      throw error;
     }
     return data
   } catch (error) {
-    console.error('getProduct error:', error)
-    throw error
+    console.error('getProduct error:', error);
+    throw error;
   }
 }
 
@@ -155,23 +217,45 @@ export const deleteProduct = async (id) => {
 }
 
 // =====================================================
-// CATEGORIES FUNCTIONS (WITH SUBCATEGORIES)
+// CATEGORIES FUNCTIONS
 // =====================================================
+
 export const getCategories = async () => {
   try {
+    // Check cache first
+    const now = Date.now();
+    if (categoriesCache && (now - categoriesCacheTime) < CACHE_DURATION) {
+      return categoriesCache;
+    }
+
     const { data, error } = await supabase
       .from('categories')
-      .select('*')
+      .select('id, name, parent_id')
       .order('name', { ascending: true })
     
     if (error) {
-      console.error('Error fetching categories:', error)
-      throw error
+      console.error('Error fetching categories:', error);
+      // Return cached data if available
+      if (categoriesCache) {
+        console.warn('Using cached categories due to fetch error');
+        return categoriesCache;
+      }
+      throw error;
     }
-    return data || []
+
+    // Update cache
+    categoriesCache = data || [];
+    categoriesCacheTime = now;
+    
+    return data || [];
   } catch (error) {
-    console.error('getCategories error:', error)
-    return []
+    console.error('getCategories error:', error);
+    // Return cached data if available
+    if (categoriesCache) {
+      console.warn('Using cached categories due to error');
+      return categoriesCache;
+    }
+    return [];
   }
 }
 
@@ -336,8 +420,6 @@ export const createOrder = async (orderData) => {
     const { data, error } = await supabase
       .from('orders')
       .insert([orderData])
-      .select()
-      .single()
     
     if (error) {
       console.error('Error creating order:', error)
@@ -408,49 +490,131 @@ export const updateOrderStatus = async (id, status) => {
 }
 
 // =====================================================
-// REALTIME SUBSCRIPTIONS
+// REAL-TIME SUBSCRIPTIONS (OPTIMIZED)
 // =====================================================
+
+let subscriptionChannels = new Map();
+
 export const subscribeToProducts = (callback) => {
-  return supabase
-    .channel('products-changes')
-    .on('postgres_changes', 
-      { 
-        event: '*', 
-        schema: 'public', 
-        table: 'products' 
-      }, 
-      callback
-    )
-    .subscribe()
+  try {
+    // Unsubscribe from existing channel if it exists
+    if (subscriptionChannels.has('products')) {
+      subscriptionChannels.get('products').unsubscribe();
+    }
+
+    const channel = supabase
+      .channel('products-changes')
+      .on('postgres_changes', 
+        { 
+          event: '*', 
+          schema: 'public', 
+          table: 'products' 
+        }, 
+        (payload) => {
+          // Clear cache when data changes
+          clearProductsCache();
+          // Throttle callback to prevent excessive re-renders
+          setTimeout(() => callback(payload), 100);
+        }
+      )
+      .subscribe((status) => {
+        if (status === 'SUBSCRIBED') {
+          console.log('Products subscription active');
+        } else if (status === 'CHANNEL_ERROR') {
+          console.error('Products subscription error');
+        }
+      });
+
+    subscriptionChannels.set('products', channel);
+    return channel;
+  } catch (error) {
+    console.error('Error setting up products subscription:', error);
+    return null;
+  }
 }
 
 export const subscribeToOrders = (callback) => {
-  return supabase
-    .channel('orders-changes')
-    .on('postgres_changes', 
-      { 
-        event: '*', 
-        schema: 'public', 
-        table: 'orders' 
-      }, 
-      callback
-    )
-    .subscribe()
+  try {
+    if (subscriptionChannels.has('orders')) {
+      subscriptionChannels.get('orders').unsubscribe();
+    }
+
+    const channel = supabase
+      .channel('orders-changes')
+      .on('postgres_changes', 
+        { 
+          event: '*', 
+          schema: 'public', 
+          table: 'orders' 
+        }, 
+        (payload) => {
+          setTimeout(() => callback(payload), 100);
+        }
+      )
+      .subscribe((status) => {
+        if (status === 'SUBSCRIBED') {
+          console.log('Orders subscription active');
+        } else if (status === 'CHANNEL_ERROR') {
+          console.error('Orders subscription error');
+        }
+      });
+
+    subscriptionChannels.set('orders', channel);
+    return channel;
+  } catch (error) {
+    console.error('Error setting up orders subscription:', error);
+    return null;
+  }
 }
 
 export const subscribeToCategories = (callback) => {
-  return supabase
-    .channel('categories-changes')
-    .on('postgres_changes', 
-      { 
-        event: '*', 
-        schema: 'public', 
-        table: 'categories' 
-      }, 
-      callback
-    )
-    .subscribe()
+  try {
+    if (subscriptionChannels.has('categories')) {
+      subscriptionChannels.get('categories').unsubscribe();
+    }
+
+    const channel = supabase
+      .channel('categories-changes')
+      .on('postgres_changes', 
+        { 
+          event: '*', 
+          schema: 'public', 
+          table: 'categories' 
+        }, 
+        (payload) => {
+          // Clear cache when categories change
+          clearCategoriesCache();
+          setTimeout(() => callback(payload), 100);
+        }
+      )
+      .subscribe((status) => {
+        if (status === 'SUBSCRIBED') {
+          console.log('Categories subscription active');
+        } else if (status === 'CHANNEL_ERROR') {
+          console.error('Categories subscription error');
+        }
+      });
+
+    subscriptionChannels.set('categories', channel);
+    return channel;
+  } catch (error) {
+    console.error('Error setting up categories subscription:', error);
+    return null;
+  }
 }
+
+// Function to unsubscribe from all channels
+export const unsubscribeAll = () => {
+  subscriptionChannels.forEach((channel, key) => {
+    try {
+      channel.unsubscribe();
+      console.log(`Unsubscribed from ${key} channel`);
+    } catch (error) {
+      console.error(`Error unsubscribing from ${key} channel:`, error);
+    }
+  });
+  subscriptionChannels.clear();
+};
 
 // =====================================================
 // DASHBOARD ANALYTICS

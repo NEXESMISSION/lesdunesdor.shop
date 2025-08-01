@@ -11,14 +11,16 @@ const LandingPage = () => {
 
     // Furniture and home decor images (updated with new URLs)
     const furnitureImages = [
-        'https://persistent-harlequin-ujxpexfwbp.edgeone.app/469084626_122174868134250548_2975654777674222801_n.jpg',
-        'https://persistent-harlequin-ujxpexfwbp.edgeone.app/469084650_122174857334250548_231732444313980576_n.jpg',
-        'https://persistent-harlequin-ujxpexfwbp.edgeone.app/469113297_122174855732250548_6525420541625637313_n.jpg',
-        'https://persistent-harlequin-ujxpexfwbp.edgeone.app/469123823_122174855840250548_2072990956534221544_n.jpg',
-        'https://persistent-harlequin-ujxpexfwbp.edgeone.app/469256026_122174857520250548_1274654823924891549_n.jpg',
-        'https://persistent-harlequin-ujxpexfwbp.edgeone.app/469451088_122174868128250548_2321412941780524835_n.jpg',
-        'https://persistent-harlequin-ujxpexfwbp.edgeone.app/469507968_122174857952250548_6952797865101045703_n.jpg',
-        'https://persistent-harlequin-ujxpexfwbp.edgeone.app/469513912_122174868062250548_3080077122788198805_n.jpg'
+        'https://i.ibb.co/Z1BxN70Z/468996288-122174857880250548-3886560443513509818-n.jpg',
+        'https://i.ibb.co/cpVJ0kf/469058104-122174868068250548-4887715905826584636-n.jpg',
+        'https://i.ibb.co/1YKJHn1X/469084626-122174868134250548-2975654777674222801-n.jpg',
+        'https://i.ibb.co/svtSBrqG/469084650-122174857334250548-231732444313980576-n.jpg',
+        'https://i.ibb.co/pj7CjV02/469113297-122174855732250548-6525420541625637313-n.jpg',
+        'https://i.ibb.co/3YVd6RZb/469123823-122174855840250548-2072990956534221544-n.jpg',
+        'https://i.ibb.co/0j497wTF/469256026-122174857520250548-1274654823924891549-n.jpg',
+        'https://i.ibb.co/N2W0KqBK/469451088-122174868128250548-2321412941780524835-n.jpg',
+        'https://i.ibb.co/tw0gRqZ6/469507968-122174857952250548-6952797865101045703-n.jpg',
+        'https://i.ibb.co/HprF5RWc/469513912-122174868062250548-3080077122788198805-n.jpg'
     ];
 
     // Function to get a random image that hasn't been used in the last 2 images
@@ -43,6 +45,9 @@ const LandingPage = () => {
     };
 
     useEffect(() => {
+        // Scroll to top when page loads
+        window.scrollTo(0, 0);
+        
         // Preload images
         furnitureImages.forEach(src => { new Image().src = src; });
 
@@ -142,6 +147,119 @@ const LandingPage = () => {
                     transition: opacity 1.5s ease-in-out;
                     z-index: 1;
                 }
+
+                .arrow-bounce {
+                    animation: arrowBounce 2s infinite;
+                }
+
+                @keyframes arrowBounce {
+                    0%, 20%, 50%, 80%, 100% {
+                        transform: translateY(0);
+                    }
+                    40% {
+                        transform: translateY(-10px);
+                    }
+                    60% {
+                        transform: translateY(-5px);
+                    }
+                }
+
+                .logo-shine {
+                    position: relative;
+                    display: inline-block;
+                }
+
+                .logo-glow {
+                    animation: logoGlow 3s ease-in-out infinite;
+                    filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.3));
+                }
+
+                @keyframes logoGlow {
+                    0%, 100% {
+                        filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.3));
+                    }
+                    50% {
+                        filter: drop-shadow(0 0 30px rgba(255, 255, 255, 0.6)) drop-shadow(0 0 40px rgba(255, 255, 255, 0.4));
+                    }
+                }
+
+                .lens-flare {
+                    position: absolute;
+                    top: 20%;
+                    right: 15%;
+                    width: 200px;
+                    height: 200px;
+                    background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 30%, transparent 70%);
+                    border-radius: 50%;
+                    pointer-events: none;
+                    z-index: 5;
+                    animation: lensFlare 8s ease-in-out infinite;
+                }
+
+                .lens-flare::before {
+                    content: '';
+                    position: absolute;
+                    top: -50px;
+                    left: -50px;
+                    width: 300px;
+                    height: 300px;
+                    background: radial-gradient(circle, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.03) 40%, transparent 80%);
+                    border-radius: 50%;
+                    animation: lensFlareInner 6s ease-in-out infinite reverse;
+                }
+
+                .lens-flare::after {
+                    content: '';
+                    position: absolute;
+                    top: 30px;
+                    left: 30px;
+                    width: 100px;
+                    height: 100px;
+                    background: radial-gradient(circle, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.05) 50%, transparent 100%);
+                    border-radius: 50%;
+                    animation: lensFlareCore 4s ease-in-out infinite;
+                }
+
+                @keyframes lensFlare {
+                    0%, 100% {
+                        opacity: 0.3;
+                        transform: scale(1) rotate(0deg);
+                    }
+                    25% {
+                        opacity: 0.6;
+                        transform: scale(1.1) rotate(90deg);
+                    }
+                    50% {
+                        opacity: 0.4;
+                        transform: scale(0.9) rotate(180deg);
+                    }
+                    75% {
+                        opacity: 0.7;
+                        transform: scale(1.05) rotate(270deg);
+                    }
+                }
+
+                @keyframes lensFlareInner {
+                    0%, 100% {
+                        opacity: 0.2;
+                        transform: scale(1) rotate(0deg);
+                    }
+                    50% {
+                        opacity: 0.5;
+                        transform: scale(1.2) rotate(180deg);
+                    }
+                }
+
+                @keyframes lensFlareCore {
+                    0%, 100% {
+                        opacity: 0.4;
+                        transform: scale(1);
+                    }
+                    50% {
+                        opacity: 0.8;
+                        transform: scale(1.3);
+                    }
+                }
             `}</style>
 
             {/* HERO SECTION */}
@@ -158,10 +276,24 @@ const LandingPage = () => {
                     style={{ backgroundSize: 'cover', backgroundPosition: 'center', opacity: 0 }}
                 ></div>
                 
-                <div className="absolute inset-0 bg-black/40 z-10"></div>
+                <div className="absolute inset-0 bg-black/75 z-10"></div>
+                
+                {/* Lens Flare Effect */}
+                <div className="lens-flare"></div>
                 
                 {/* Hero Content */}
-                <div ref={heroContentRef} className="relative z-20 p-4 sm:p-6 max-w-4xl mx-auto scroll-animate is-visible">
+                <div ref={heroContentRef} className="relative z-20 p-4 sm:p-6 max-w-4xl mx-auto scroll-animate is-visible" style={{ marginTop: '2rem' }}>
+                    {/* Logo */}
+                    <div className="mb-6 sm:mb-8 md:mb-10 flex justify-center">
+                        <div className="logo-shine">
+                            <img 
+                                src="/meubledor-logo.png" 
+                                alt="Meubles D'Or Logo" 
+                                className="h-16 sm:h-20 md:h-24 lg:h-28 xl:h-32 w-auto object-contain"
+                            />
+                        </div>
+                    </div>
+                    
                     <h1 className="font-playfair font-bold text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl tracking-tight">
                         Meubles D'Or
                     </h1>
@@ -174,6 +306,30 @@ const LandingPage = () => {
                     >
                         Découvrir Notre Collection
                     </button>
+                </div>
+
+                {/* Animated Down Arrow */}
+                <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-20">
+                    <div className="arrow-bounce">
+                        <svg 
+                            className="w-8 h-8 text-white opacity-80 hover:opacity-100 transition-opacity duration-300 cursor-pointer" 
+                            fill="none" 
+                            stroke="currentColor" 
+                            viewBox="0 0 24 24"
+                            onClick={() => {
+                                document.getElementById('who-we-are-section')?.scrollIntoView({ 
+                                    behavior: 'smooth' 
+                                });
+                            }}
+                        >
+                            <path 
+                                strokeLinecap="round" 
+                                strokeLinejoin="round" 
+                                strokeWidth="2" 
+                                d="M19 14l-7 7m0 0l-7-7m7 7V3"
+                            />
+                        </svg>
+                    </div>
                 </div>
             </header>
 

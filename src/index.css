@@ -5,6 +5,9 @@
 /* Google Fonts: Inter */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
+/* Google Fonts: Serif fonts for product names */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Merriweather:wght@300;400;700&display=swap');
+
 /* Font Awesome for Icons */
 @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css');
 
@@ -14,6 +17,22 @@ body {
   margin: 0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+/* Serif Font Classes */
+.font-serif {
+  font-family: 'Playfair Display', serif;
+}
+
+.font-serif-alt {
+  font-family: 'Merriweather', serif;
+}
+
+/* Product name specific styling */
+.product-name-serif {
+  font-family: 'Playfair Display', serif;
+  font-weight: 600;
+  letter-spacing: -0.02em;
 }
 
 /* Product Card Hover Effects */

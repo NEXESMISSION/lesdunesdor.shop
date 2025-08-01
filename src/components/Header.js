@@ -30,6 +30,16 @@ const Header = () => {
           </div>
           <nav className="hidden md:flex items-center space-x-8">
             <Link 
+              to="/store" 
+              className={`transition ${
+                isActivePage('/store') 
+                  ? 'font-semibold text-solid-gold' 
+                  : 'text-gray-600 hover:text-gold'
+              }`}
+            >
+              Accueil
+            </Link>
+            <Link 
               to="/" 
               className={`transition ${
                 isActivePage('/') 
@@ -37,7 +47,7 @@ const Header = () => {
                   : 'text-gray-600 hover:text-gold'
               }`}
             >
-              Accueil
+              Landing Page
             </Link>
           </nav>
           <button 
@@ -52,6 +62,17 @@ const Header = () => {
         {isMobileMenuOpen && (
           <div className="md:hidden pb-4">
             <Link 
+              to="/store" 
+              className={`block py-2 px-4 rounded ${
+                isActivePage('/store') 
+                  ? 'font-semibold text-solid-gold bg-gray-50' 
+                  : 'text-gray-600 hover:text-gold hover:bg-gray-50'
+              }`}
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              Accueil
+            </Link>
+            <Link 
               to="/" 
               className={`block py-2 px-4 rounded ${
                 isActivePage('/') 
@@ -60,7 +81,7 @@ const Header = () => {
               }`}
               onClick={() => setIsMobileMenuOpen(false)}
             >
-              Accueil
+              Landing Page
             </Link>
           </div>
         )}

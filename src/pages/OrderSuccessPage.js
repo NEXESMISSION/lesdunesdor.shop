@@ -7,9 +7,12 @@ const OrderSuccessPage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Auto redirect to home page after 5 seconds
+    // Scroll to top when page loads
+    window.scrollTo(0, 0);
+    
+    // Auto redirect to store page after 5 seconds
     const timer = setTimeout(() => {
-      navigate('/');
+      navigate('/store');
     }, 5000);
 
     return () => clearTimeout(timer);
@@ -33,7 +36,7 @@ const OrderSuccessPage = () => {
           </p>
           <div className="space-y-4">
             <Link 
-              to="/" 
+              to="/store" 
               className="w-full bg-gold-gradient text-black font-bold py-3 px-6 rounded-lg shadow-lg inline-block transition-transform transform hover:scale-105"
             >
               Retourner à la boutique

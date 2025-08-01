@@ -17,7 +17,7 @@ const Header = () => {
       <div className="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
           <div className="flex-shrink-0">
-            <Link to="/" className="flex items-center group">
+            <Link to="/store" className="flex items-center group">
               <img 
                 src="/meubledor-logo.png" 
                 alt="Meubles D'Or Logo" 

@@ -477,7 +477,21 @@ const HomePage = () => {
                   className="flex justify-between items-center cursor-pointer" 
                   onClick={() => setIsCategoriesExpanded(!isCategoriesExpanded)}
                 >
-                  <h3 className="font-semibold text-gray-700">Catégories</h3>
+                  <div className="flex items-center gap-2">
+                    <h3 className="font-semibold text-gray-700">Catégories</h3>
+                    {selectedCategory && (
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          clearFilters();
+                        }}
+                        className="text-sm text-red-500 hover:text-red-700 transition-colors bg-red-50 hover:bg-red-100 rounded-full p-1"
+                        title="Effacer les filtres"
+                      >
+                        <i className="fas fa-times-circle"></i>
+                      </button>
+                    )}
+                  </div>
                   <button className="text-gray-500 hover:text-gray-700 focus:outline-none transition-colors duration-200">
                     <i className={`fas ${isCategoriesExpanded ? 'fa-chevron-up' : 'fa-chevron-down'} text-xs transition-transform duration-200`}></i>
                   </button>
@@ -563,13 +577,6 @@ const HomePage = () => {
               </div>
 
               <div className="space-y-2 sticky bottom-0 pt-4 pb-2 bg-white">
-                <button
-                  onClick={clearFilters}
-                  className="w-full bg-gold-gradient text-black font-medium py-2 px-4 rounded-lg transition-all duration-200 opacity-80 hover:opacity-100 shadow-sm hover:shadow-md flex items-center justify-center"
-                >
-                  <i className="fas fa-times-circle mr-2"></i>
-                  Effacer les Filtres
-                </button>
               </div>
             </div>
           </aside>

@@ -11,14 +11,14 @@ const LandingPage = () => {
 
     // Furniture and home decor images (updated with new URLs)
     const furnitureImages = [
-        'https://passing-orange-smgxjce9p7.edgeone.app/469256026_122174857520250548_1274654823924891549_n.jpg',
-        'https://passing-orange-smgxjce9p7.edgeone.app/469113297_122174855732250548_6525420541625637313_n.jpg',
-        'https://passing-orange-smgxjce9p7.edgeone.app/469123823_122174855840250548_2072990956534221544_n.jpg',
-        'https://passing-orange-smgxjce9p7.edgeone.app/469451088_122174868128250548_2321412941780524835_n.jpg',
-        'https://passing-orange-smgxjce9p7.edgeone.app/469513912_122174868062250548_3080077122788198805_n.jpg',
-        'https://passing-orange-smgxjce9p7.edgeone.app/469084626_122174868134250548_2975654777674222801_n.jpg',
-        'https://passing-orange-smgxjce9p7.edgeone.app/469084650_122174857334250548_231732444313980576_n.jpg',
-        'https://passing-orange-smgxjce9p7.edgeone.app/469507968_122174857952250548_6952797865101045703_n.jpg'
+        'https://persistent-harlequin-ujxpexfwbp.edgeone.app/469084626_122174868134250548_2975654777674222801_n.jpg',
+        'https://persistent-harlequin-ujxpexfwbp.edgeone.app/469084650_122174857334250548_231732444313980576_n.jpg',
+        'https://persistent-harlequin-ujxpexfwbp.edgeone.app/469113297_122174855732250548_6525420541625637313_n.jpg',
+        'https://persistent-harlequin-ujxpexfwbp.edgeone.app/469123823_122174855840250548_2072990956534221544_n.jpg',
+        'https://persistent-harlequin-ujxpexfwbp.edgeone.app/469256026_122174857520250548_1274654823924891549_n.jpg',
+        'https://persistent-harlequin-ujxpexfwbp.edgeone.app/469451088_122174868128250548_2321412941780524835_n.jpg',
+        'https://persistent-harlequin-ujxpexfwbp.edgeone.app/469507968_122174857952250548_6952797865101045703_n.jpg',
+        'https://persistent-harlequin-ujxpexfwbp.edgeone.app/469513912_122174868062250548_3080077122788198805_n.jpg'
     ];
 
     // Function to get a random image that hasn't been used in the last 2 images

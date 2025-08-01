@@ -35,6 +35,16 @@ body {
   background-position: right center;
 }
 
+/* Darker Gold Gradient for Better Text Visibility */
+.bg-gold-gradient-dark {
+  background: linear-gradient(100deg, #C27A18, #D08F23, #FBD152, #FBD557, #C27A18);
+  background-size: 200% 200%;
+  transition: background-position 0.5s ease;
+}
+.bg-gold-gradient-dark:hover {
+  background-position: right center;
+}
+
 /* Custom Range Slider with Gold Gradient */
 input[type="range"], .slider-gold {
   -webkit-appearance: none;

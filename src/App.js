@@ -4,6 +4,7 @@ import LandingPage from './pages/LandingPage';
 import HomePage from './pages/HomePage';
 import ProductDetailPage from './pages/ProductDetailPage';
 import OrderSuccessPage from './pages/OrderSuccessPage';
+import ContactPage from './pages/ContactPage';
 import AdminLoginPage from './pages/AdminLoginPage';
 import AdminDashboard from './pages/AdminDashboard';
 import ProtectedRoute from './components/ProtectedRoute';
@@ -19,6 +20,7 @@ function App() {
           <Route path="/store" element={<HomePage />} />
           <Route path="/product/:productId" element={<ProductDetailPage />} />
           <Route path="/order-success" element={<OrderSuccessPage />} />
+          <Route path="/contact" element={<ContactPage />} />
           
           {/* Admin routes */}
           <Route path="/admin/login" element={<AdminLoginPage />} />

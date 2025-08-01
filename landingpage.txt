@@ -1,182 +1,174 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Les Dunes d'Or - Welcome</title>
+    <title>Meubles D'Or - Élégance Intemporelle</title>
+    
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Lato:wght@300;400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    
     <style>
+        /* Custom styles for the new design */
         body {
-            font-family: 'Lato', sans-serif;
-            background-color: #FDFBF5;
+            font-family: 'Inter', sans-serif;
+            background-color: #121212; /* A deep, rich charcoal */
+            color: #E5E5E5; /* A soft white for readability */
         }
         .font-playfair {
             font-family: 'Playfair Display', serif;
         }
         
-        /* --- Styles for the sticky scroll transition --- */
-        .sticky-section {
-            position: sticky;
-            top: 0;
-            width: 100%;
-            min-height: 100vh;
+        /* Gold accent color */
+        .text-gold {
+            color: #D4AF37;
         }
-        .content-wrapper {
-            will-change: transform, opacity, filter;
-            transition: transform 0.1s linear, opacity 0.1s linear, filter 0.1s linear;
+        .bg-gold {
+            background-color: #D4AF37;
+        }
+        .border-gold {
+            border-color: #D4AF37;
         }
 
-        /* --- Styles for the background image slideshow --- */
-        .bg-layer {
-            position: absolute;
-            inset: 0;
-            width: 100%;
-            height: 100%;
-            background-size: cover;
-            background-position: center;
-            transition: opacity 1.5s ease-in-out;
-            z-index: 1;
+        /* Hero text shadow for better readability */
+        .text-shadow-custom {
+            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.7);
+        }
+        
+        /* Scroll-triggered animations */
+        .scroll-animate {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+            will-change: opacity, transform;
+        }
+        .scroll-animate.is-visible {
+            opacity: 1;
+            transform: translateY(0);
         }
     </style>
 </head>
-<body class="text-gray-800">
+<body class="antialiased">
 
-    <!-- Section 1: Hero -->
-    <section id="hero-section" class="sticky-section flex items-center justify-center text-center text-white overflow-hidden">
-        <!-- Background Image Layers for Slideshow -->
-        <div id="bg-layer-1" class="bg-layer"></div>
-        <div id="bg-layer-2" class="bg-layer" style="opacity: 0;"></div>
+    <!-- HERO SECTION -->
+    <header class="relative min-h-screen w-full flex items-center justify-center text-center text-white overflow-hidden">
+        <!-- Background Image with a lighter overlay -->
+        <div class="absolute inset-0 z-0">
+            <div class="absolute inset-0 bg-black/40 z-10"></div>
+            <img src="https://i.ibb.co/0pRnHYYP/469507968-122174857952250548-6952797865101045703-n.jpg" 
+                 alt="Luxurious interior setting" 
+                 class="w-full h-full object-cover scale-105 animate-kenburns">
+        </div>
         
-        <div class="absolute inset-0 bg-black/40 z-10"></div>
-        
-        <div class="content-wrapper relative z-20 p-8 flex flex-col items-center">
-            <h1 class="font-playfair text-6xl md:text-8xl lg:text-9xl font-bold tracking-tight text-white">
-                Les Dunes d'Or
-            </h1>
-            <p class="mt-4 text-xl md:text-2xl font-light tracking-wider max-w-2xl text-white">
-                Discover Timeless Elegance &mdash; Where Luxury Meets the Shore.
+        <!-- Hero Content -->
+        <div class="relative z-20 p-6 max-w-4xl mx-auto scroll-animate is-visible">
+            <h1 class="font-playfair font-bold text-5xl md:text-7xl lg:text-8xl tracking-tight text-shadow-custom">Meubles D'Or</h1>
+            <p class="mt-4 text-lg md:text-xl font-light tracking-wider text-white/90 max-w-2xl mx-auto text-shadow-custom">
+                Élégance Intemporelle pour Votre Intérieur — Où le Luxe Rencontre le Confort.
             </p>
-            <a href="#store" class="mt-12 inline-block">
-                <button class="bg-white/10 backdrop-blur-sm border border-white/30 text-white font-bold text-lg tracking-widest uppercase px-12 py-4 rounded-lg transition-all duration-300 ease-in-out hover:bg-white/20 hover:border-white/50 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-white/50">
-                    Enter The Store
-                </button>
+            <a href="#why-us-section" class="mt-12 inline-block bg-white text-black font-bold tracking-widest uppercase px-10 py-4 rounded-md transition-all duration-300 ease-in-out hover:bg-gray-200 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-gray-300 shadow-lg">
+                Découvrir
             </a>
         </div>
-    </section>
+    </header>
 
-    <!-- Section 2: Why Choose Us -->
-    <section id="why-us-section" class="sticky-section flex items-center justify-center bg-[#FDFBF5]">
-        <div class="content-wrapper container mx-auto px-6 lg:px-8">
-            <div class="text-center">
-                <h2 class="font-playfair text-4xl md:text-5xl font-bold text-gray-900">Why Choose Us</h2>
-                <p class="mt-4 text-lg text-gray-600 max-w-3xl mx-auto">We are dedicated to curating an unparalleled collection of items that embody sophistication, quality, and timeless style.</p>
-            </div>
-            <div class="mt-16 grid grid-cols-1 md:grid-cols-3 gap-12 text-center">
-                <div class="flex flex-col items-center">
-                    <div class="w-20 h-20 bg-amber-100/50 rounded-full flex items-center justify-center"><svg class="w-10 h-10 text-amber-800" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M5 3v4M3 5h4M4 17v4M2 19h4M17 3v4M16 5h4M19 17v4M18 19h4M12 9a3 3 0 100 6 3 3 0 000-6z"></path></svg></div>
-                    <h3 class="font-playfair text-2xl font-bold mt-6">Exquisite Quality</h3>
-                    <p class="mt-2 text-gray-600">Every piece is crafted with the finest materials and meticulous attention to detail.</p>
-                </div>
-                <div class="flex flex-col items-center">
-                    <div class="w-20 h-20 bg-amber-100/50 rounded-full flex items-center justify-center"><svg class="w-10 h-10 text-amber-800" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg></div>
-                    <h3 class="font-playfair text-2xl font-bold mt-6">Timeless Design</h3>
-                    <p class="mt-2 text-gray-600">We believe in style that transcends seasons, offering you elegance that will last a lifetime.</p>
-                </div>
-                <div class="flex flex-col items-center">
-                    <div class="w-20 h-20 bg-amber-100/50 rounded-full flex items-center justify-center"><svg class="w-10 h-10 text-amber-800" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0c0 2.21-1.79 4-4 4s-4-1.79-4-4 1.79-4 4-4 4 1.79 4 4zM2 12h2m16 0h2"></path></svg></div>
-                    <h3 class="font-playfair text-2xl font-bold mt-6">Personalized Service</h3>
-                    <p class="mt-2 text-gray-600">Our dedicated team is here to provide an exceptional and personal shopping experience.</p>
-                </div>
-            </div>
-        </div>
-    </section>
+    <main>
+        <!-- WHY US SECTION -->
+        <section id="why-us-section" class="py-24 md:py-32 bg-[#1a1a1a]">
+            <div class="container mx-auto px-6 lg:px-8">
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-16 items-center">
+                    <!-- Section Title -->
+                    <div class="lg:col-span-1 scroll-animate">
+                        <h2 class="font-playfair text-4xl md:text-5xl font-bold text-white leading-tight">L'Excellence de Meubles D'Or</h2>
+                        <div class="w-24 h-1 bg-gold mt-6 mb-8"></div>
+                        <p class="text-lg text-gray-400 leading-relaxed">
+                            Découvrez pourquoi les connaisseurs nous choisissent pour transformer leurs intérieurs.
+                        </p>
+                    </div>
 
-    <!-- Section 3: Who We Are -->
-    <section id="who-we-are-section" class="sticky-section flex items-center justify-center bg-white">
-        <div class="content-wrapper container mx-auto px-6 lg:px-8">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-                <div class="relative">
-                    <img src="https://images.unsplash.com/photo-1587302912303-3a7076931938?q=80&w=1887&auto=format&fit=crop" alt="Elegant product display" class="rounded-lg shadow-xl w-full h-[400px] lg:h-[500px] object-cover">
-                </div>
-                <div class="max-w-lg">
-                    <h2 class="font-playfair text-4xl md:text-5xl font-bold text-gray-900">The Essence of Elegance</h2>
-                    <p class="mt-6 text-lg text-gray-600 leading-relaxed">
-                        At Les Dunes d'Or, we believe that true luxury is found in the details. It's in the soft touch of a rare fabric, the glint of perfectly polished metal, the subtle fragrance that evokes a cherished memory. Our collection is not merely an assortment of objects, but a carefully curated gallery of experiences waiting to be discovered. Each piece is chosen for its ability to inspire, to comfort, and to become a timeless part of your personal story.
-                    </p>
-                </div>
-            </div>
-        </div>
-    </section>
+                    <!-- Feature Cards -->
+                    <div class="lg:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <!-- Feature Card 1 -->
+                        <div class="border border-gray-700/50 p-8 rounded-lg scroll-animate" style="transition-delay: 150ms;">
+                            <svg class="w-10 h-10 text-gold mb-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M4 17v4M2 19h4M17 3v4M16 5h4M19 17v4M18 19h4M12 9a3 3 0 100 6 3 3 0 000-6z"></path></svg>
+                            <h3 class="font-playfair text-2xl font-bold text-white mb-3">Artisanat d'Exception</h3>
+                            <p class="text-gray-400 leading-relaxed">Chaque pièce est créée par des artisans passionnés avec des matériaux nobles.</p>
+                        </div>
 
-    <!-- Footer -->
-    <footer class="bg-gray-900 text-white relative z-10">
-        <div class="border-t border-gray-700/50">
-            <div class="container mx-auto py-12 px-6 lg:px-8 text-center">
-                <p>&copy; 2024 Les Dunes d'Or. All Rights Reserved.</p>
+                        <!-- Feature Card 2 -->
+                        <div class="border border-gray-700/50 p-8 rounded-lg scroll-animate" style="transition-delay: 250ms;">
+                            <svg class="w-10 h-10 text-gold mb-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg>
+                            <h3 class="font-playfair text-2xl font-bold text-white mb-3">Design Intemporel</h3>
+                            <p class="text-gray-400 leading-relaxed">Nos créations transcendent les modes pour une élégance durable.</p>
+                        </div>
+                    </div>
+                </div>
             </div>
+        </section>
+
+        <!-- WHO WE ARE SECTION -->
+        <section id="who-we-are-section" class="py-24 md:py-32 bg-[#121212]">
+            <div class="container mx-auto px-6 lg:px-8">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                    <!-- Image -->
+                    <div class="scroll-animate">
+                        <img src="https://i.ibb.co/bMcnj7wP/469058104-122174868068250548-4887715905826584636-n.jpg" 
+                             alt="Elegant furniture display in a showroom" 
+                             class="rounded-lg w-full h-auto object-cover">
+                    </div>
+                    <!-- Text Content -->
+                    <div class="scroll-animate" style="transition-delay: 150ms;">
+                        <h2 class="font-playfair text-4xl md:text-5xl font-bold text-white leading-tight">L'Art de Vivre</h2>
+                         <div class="w-24 h-1 bg-gold mt-6 mb-8"></div>
+                        <p class="text-lg text-gray-300 leading-relaxed">
+                            Chez Meubles D'Or, votre intérieur est le reflet de votre âme. Notre collection est une galerie d'expériences en attente d'être découvertes.
+                        </p>
+                        <p class="mt-4 text-gray-400 leading-relaxed">
+                            Chaque pièce est choisie pour inspirer, réconforter et devenir une partie intemporelle de votre histoire. Transformez votre espace en un sanctuaire d'élégance et de confort.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-black text-white">
+        <div class="container mx-auto py-12 px-6 lg:px-8 text-center border-t border-gray-800">
+            <p class="text-gray-500">&copy; 2025 Meubles D'Or. Tous Droits Réservés.</p>
         </div>
     </footer>
 
     <script>
-        // --- Image Slideshow Logic ---
-        const images = [
-            'https://images.unsplash.com/photo-1473496169904-658ba7c44d8a?q=80&w=2070&auto=format&fit=crop',
-            'https://images.unsplash.com/photo-1598554747476-38428a3c99b5?q=80&w=1887&auto=format&fit=crop',
-            'https://images.unsplash.com/photo-1555982339-653e8d44c1ab?q=80&w=1887&auto=format&fit=crop',
-            'https://images.unsplash.com/photo-1620799140408-edc6d5f9650d?q=80&w=1972&auto=format&fit=crop',
-            'https://images.unsplash.com/photo-1588702547919-26089e690ecc?q=80&w=2070&auto=format&fit=crop',
-            'https://images.unsplash.com/photo-1523170335258-f5ed11844a49?q=80&w=2080&auto=format&fit=crop',
-            'https://images.unsplash.com/photo-1512496015851-a90138ba7a6a?q=80&w=1887&auto=format&fit=crop',
-            'https://images.unsplash.com/photo-1616738343113-d4543d0473df?q=80&w=1887&auto=format&fit=crop',
-            'https://images.unsplash.com/photo-1594223274512-ad4803739b7c?q=80&w=1887&auto=format&fit=crop',
-            'https://images.unsplash.com/photo-1543163521-1bf539c55dd2?q=80&w=1760&auto=format&fit=crop'
-        ];
+        // JavaScript for scroll animations
+        document.addEventListener('DOMContentLoaded', () => {
+            const animatedElements = document.querySelectorAll('.scroll-animate');
 
-        images.forEach(src => { new Image().src = src; });
+            if ('IntersectionObserver' in window) {
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('is-visible');
+                            observer.unobserve(entry.target);
+                        }
+                    });
+                }, {
+                    threshold: 0.1
+                });
 
-        const bgLayer1 = document.getElementById('bg-layer-1');
-        const bgLayer2 = document.getElementById('bg-layer-2');
-        let currentImageIndex = 0;
-
-        bgLayer1.style.backgroundImage = `url(${images[currentImageIndex]})`;
-
-        setInterval(() => {
-            currentImageIndex = (currentImageIndex + 1) % images.length;
-            const nextImage = images[currentImageIndex];
-            const activeLayer = bgLayer1.style.opacity == '0' ? bgLayer1 : bgLayer2;
-            const hiddenLayer = bgLayer1.style.opacity == '0' ? bgLayer2 : bgLayer1;
-
-            activeLayer.style.backgroundImage = `url(${nextImage})`;
-            activeLayer.style.opacity = '1';
-            hiddenLayer.style.opacity = '0';
-        }, 3000);
-
-        // --- Sticky Scroll Animation Logic ---
-        window.addEventListener('scroll', () => {
-            const heroContent = document.querySelector('#hero-section .content-wrapper');
-            const whyUsContent = document.querySelector('#why-us-section .content-wrapper');
-            
-            const scrollY = window.scrollY;
-            const vh = window.innerHeight;
-
-            const heroProgress = Math.min(1, scrollY / vh);
-            heroContent.style.opacity = 1 - heroProgress * 1.5;
-            heroContent.style.filter = `blur(${heroProgress * 20}px)`;
-            heroContent.style.transform = `scale(${1 - heroProgress * 0.1})`;
-
-            const whyUsScrollStart = vh;
-            if (scrollY > whyUsScrollStart) {
-                const whyUsProgress = Math.min(1, (scrollY - whyUsScrollStart) / vh);
-                whyUsContent.style.opacity = 1 - whyUsProgress * 1.5;
-                whyUsContent.style.filter = `blur(${whyUsProgress * 20}px)`;
-                whyUsContent.style.transform = `scale(${1 - whyUsProgress * 0.1})`;
+                animatedElements.forEach(el => {
+                    observer.observe(el);
+                });
             } else {
-                whyUsContent.style.opacity = 1;
-                whyUsContent.style.filter = 'blur(0px)';
-                whyUsContent.style.transform = 'scale(1)';
+                // Fallback for older browsers
+                animatedElements.forEach(el => {
+                    el.classList.add('is-visible');
+                });
             }
         });
     </script>

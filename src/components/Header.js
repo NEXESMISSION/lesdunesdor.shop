@@ -17,8 +17,11 @@ const Header = () => {
       <div className="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-24">
           <div className="flex-shrink-0">
-            <Link to="/">
-              <img src="/dunes.png" alt="Les Dunes Logo" className="h-16 w-auto" />
+            <Link to="/" className="flex items-center">
+              <img src="/dunes.png" alt="Meubles D'Or Logo" className="h-16 w-auto" />
+              <span className="ml-3 text-xl font-bold text-gray-800" style={{ fontFamily: 'Playfair Display, serif' }}>
+                Meubles D'Or
+              </span>
             </Link>
           </div>
           <nav className="hidden md:flex items-center space-x-8">
@@ -48,8 +51,8 @@ const Header = () => {
               to="/" 
               className={`block py-2 px-4 rounded ${
                 isActivePage('/') 
-                  ? 'bg-amber-50 font-semibold text-solid-gold' 
-                  : 'text-gray-600 hover:bg-gray-100'
+                  ? 'font-semibold text-solid-gold bg-gray-50' 
+                  : 'text-gray-600 hover-text-gold hover-bg-gray-50'
               }`}
               onClick={() => setIsMobileMenuOpen(false)}
             >

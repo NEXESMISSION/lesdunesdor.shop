@@ -6,12 +6,10 @@ const LandingPage = () => {
     const bgLayer1Ref = useRef(null);
     const bgLayer2Ref = useRef(null);
     const heroContentRef = useRef(null);
-    const whyUsContentRef = useRef(null);
-    const artDeVivreImageRef = useRef(null);
     const [usedImages, setUsedImages] = useState([]);
     const [artDeVivreImageIndex, setArtDeVivreImageIndex] = useState(0);
 
-    // Furniture and home decor images
+    // Furniture and home decor images (same as before)
     const furnitureImages = [
         'https://i.ibb.co/6ctYNnRc/469113297-122174855732250548-6525420541625637313-n.jpg',
         'https://i.ibb.co/Cg58nP5/469123823-122174855840250548-2072990956534221544-n.jpg',
@@ -28,20 +26,16 @@ const LandingPage = () => {
 
     // Function to get a random image that hasn't been used in the last 2 images
     const getRandomImage = () => {
-        // Get the last used image to avoid showing it again immediately
         const lastUsedImage = usedImages[usedImages.length - 1];
-        
-        // Filter out the last used image to prevent consecutive repeats
         const availableImages = furnitureImages.filter(img => img !== lastUsedImage);
         
-        // If we've used most images, reset the used images array but still avoid the last one
         if (availableImages.length <= 1) {
             setUsedImages([]);
             return furnitureImages[Math.floor(Math.random() * furnitureImages.length)];
         }
         
         const randomImage = availableImages[Math.floor(Math.random() * availableImages.length)];
-        setUsedImages(prev => [...prev, randomImage]); // Add the new image to the used list
+        setUsedImages(prev => [...prev, randomImage]);
         return randomImage;
     };
 
@@ -49,12 +43,13 @@ const LandingPage = () => {
         // Preload images
         furnitureImages.forEach(src => { new Image().src = src; });
 
-        let currentImageIndex = 0;
+        // Set initial hero background image
         const initialImage = getRandomImage();
         if (bgLayer1Ref.current) {
             bgLayer1Ref.current.style.backgroundImage = `url(${initialImage})`;
         }
 
+        // Hero slideshow
         const slideshowInterval = setInterval(() => {
             const nextImage = getRandomImage();
             const activeLayer = bgLayer1Ref.current?.style.opacity === '0' ? bgLayer1Ref.current : bgLayer2Ref.current;
@@ -65,261 +60,225 @@ const LandingPage = () => {
                 activeLayer.style.opacity = '1';
                 hiddenLayer.style.opacity = '0';
             }
-        }, 4000); // Increased to 4 seconds for better viewing
+        }, 4000);
 
         // Art de Vivre image slideshow
         const artDeVivreInterval = setInterval(() => {
             setArtDeVivreImageIndex(prev => (prev + 1) % furnitureImages.length);
-        }, 2000); // Change every 2 seconds
+        }, 3000);
 
-        // Sticky scroll animation logic
-        const handleScroll = () => {
-            const scrollY = window.scrollY;
-            const vh = window.innerHeight;
-            const isMobile = window.innerWidth < 768; // Disable all animations on mobile
-
-            if (heroContentRef.current) {
-                if (isMobile) {
-                    // On mobile: keep everything static
-                    heroContentRef.current.style.opacity = 1;
-                    heroContentRef.current.style.filter = 'blur(0px)';
-                    heroContentRef.current.style.transform = 'scale(1)';
-                } else {
-                    // On desktop: delay the blur effect significantly
-                    const heroProgress = Math.min(1, (scrollY - vh * 0.5) / (vh * 0.8));
-                    if (heroProgress > 0) {
-                        heroContentRef.current.style.opacity = 1 - heroProgress * 0.8;
-                        heroContentRef.current.style.filter = `blur(${heroProgress * 8}px)`;
-                        heroContentRef.current.style.transform = `scale(${1 - heroProgress * 0.05})`;
-                    } else {
-                        heroContentRef.current.style.opacity = 1;
-                        heroContentRef.current.style.filter = 'blur(0px)';
-                        heroContentRef.current.style.transform = 'scale(1)';
-                    }
-                }
-            }
-
-            if (whyUsContentRef.current) {
-                if (isMobile) {
-                    // On mobile: keep everything static
-                    whyUsContentRef.current.style.opacity = 1;
-                    whyUsContentRef.current.style.filter = 'blur(0px)';
-                    whyUsContentRef.current.style.transform = 'scale(1)';
-                } else {
-                    // On desktop: delay the blur effect significantly
-                    const whyUsScrollStart = vh * 1.5; // Start much later
-                    if (scrollY > whyUsScrollStart) {
-                        const whyUsProgress = Math.min(1, (scrollY - whyUsScrollStart) / (vh * 0.8));
-                        whyUsContentRef.current.style.opacity = 1 - whyUsProgress * 0.8;
-                        whyUsContentRef.current.style.filter = `blur(${whyUsProgress * 8}px)`;
-                        whyUsContentRef.current.style.transform = `scale(${1 - whyUsProgress * 0.05})`;
-                    } else {
-                        whyUsContentRef.current.style.opacity = 1;
-                        whyUsContentRef.current.style.filter = 'blur(0px)';
-                        whyUsContentRef.current.style.transform = 'scale(1)';
-                    }
-                }
-            }
+        // Scroll animations using Intersection Observer
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
         };
 
-        window.addEventListener('scroll', handleScroll);
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all scroll-animate elements
+        const animatedElements = document.querySelectorAll('.scroll-animate');
+        animatedElements.forEach(el => observer.observe(el));
 
         return () => {
             clearInterval(slideshowInterval);
             clearInterval(artDeVivreInterval);
-            window.removeEventListener('scroll', handleScroll);
+            observer.disconnect();
         };
     }, []);
 
     return (
-        <div className="text-gray-800" style={{ fontFamily: 'Lato, sans-serif', backgroundColor: '#FDFBF5' }}>
-            {/* Section 1: Hero */}
-            <section id="hero-section" className="w-full min-h-screen flex items-center justify-center text-center text-white overflow-hidden">
+        <div className="antialiased" style={{ 
+            fontFamily: 'Inter, sans-serif', 
+            backgroundColor: '#121212',
+            color: '#E5E5E5'
+        }}>
+            {/* Custom Styles */}
+            <style>{`
+                .font-playfair {
+                    font-family: 'Playfair Display', serif;
+                }
+                
+                .text-gold {
+                    color: #D4AF37;
+                }
+                .bg-gold {
+                    background-color: #D4AF37;
+                }
+                .border-gold {
+                    border-color: #D4AF37;
+                }
+
+                .text-shadow-custom {
+                    text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.7);
+                }
+                
+                .scroll-animate {
+                    opacity: 0;
+                    transform: translateY(40px);
+                    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+                    will-change: opacity, transform;
+                }
+                .scroll-animate.is-visible {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+
+                .bg-layer {
+                    position: absolute;
+                    inset: 0;
+                    width: 100%;
+                    height: 100%;
+                    background-size: cover;
+                    background-position: center;
+                    transition: opacity 1.5s ease-in-out;
+                    z-index: 1;
+                }
+            `}</style>
+
+            {/* HERO SECTION */}
+            <header className="relative min-h-screen w-full flex items-center justify-center text-center text-white overflow-hidden">
                 {/* Background Image Layers for Slideshow */}
                 <div 
                     ref={bgLayer1Ref}
-                    className="absolute inset-0 w-full h-full bg-cover bg-center transition-opacity duration-[1500ms] ease-in-out z-[1]"
+                    className="bg-layer"
                     style={{ backgroundSize: 'cover', backgroundPosition: 'center' }}
                 ></div>
                 <div 
                     ref={bgLayer2Ref}
-                    className="absolute inset-0 w-full h-full bg-cover bg-center transition-opacity duration-[1500ms] ease-in-out z-[1]"
+                    className="bg-layer"
                     style={{ backgroundSize: 'cover', backgroundPosition: 'center', opacity: 0 }}
                 ></div>
                 
                 <div className="absolute inset-0 bg-black/40 z-10"></div>
                 
-                <div 
-                    ref={heroContentRef}
-                    className="relative z-20 p-4 sm:p-8 flex flex-col items-center"
-                    style={{ 
-                        willChange: 'transform, opacity, filter',
-                        transition: 'transform 0.1s linear, opacity 0.1s linear, filter 0.1s linear'
-                    }}
-                >
-                    <h1 className="font-playfair text-4xl sm:text-6xl md:text-8xl lg:text-9xl font-bold tracking-tight text-white text-center" style={{ fontFamily: 'Playfair Display, serif' }}>
+                {/* Hero Content */}
+                <div ref={heroContentRef} className="relative z-20 p-6 max-w-4xl mx-auto scroll-animate is-visible">
+                    <h1 className="font-playfair font-bold text-5xl md:text-7xl lg:text-8xl tracking-tight text-shadow-custom">
                         Meubles D'Or
                     </h1>
-                    <p className="mt-2 sm:mt-4 text-base sm:text-xl md:text-2xl font-light tracking-wider max-w-2xl text-white text-center px-4">
-                        Élégance Intemporelle pour Votre Intérieur &mdash; Où le Luxe Rencontre le Confort.
+                    <p className="mt-4 text-lg md:text-xl font-light tracking-wider text-white/90 max-w-2xl mx-auto text-shadow-custom">
+                        Élégance Intemporelle pour Votre Intérieur — Où le Luxe Rencontre le Confort.
                     </p>
                     <button 
                         onClick={() => navigate('/store')}
-                        className="mt-6 sm:mt-12 bg-white text-black font-bold text-sm sm:text-lg tracking-widest uppercase px-6 sm:px-12 py-3 sm:py-4 rounded-lg transition-all duration-300 ease-in-out hover:bg-gray-100 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-white/50 shadow-lg border-2 border-white"
+                        className="mt-12 inline-block bg-white text-black font-bold tracking-widest uppercase px-10 py-4 rounded-md transition-all duration-300 ease-in-out hover:bg-gray-200 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-gray-300 shadow-lg"
                     >
                         Découvrir Notre Collection
                     </button>
                 </div>
-            </section>
+            </header>
 
-            {/* Section 2: Why Choose Us - Redesigned */}
-            <section id="why-us-section" className="w-full min-h-screen flex items-center justify-center bg-gradient-to-br from-amber-50 via-white to-amber-50 py-16 sm:py-20 lg:py-24">
-                <div 
-                    ref={whyUsContentRef}
-                    className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20"
-                    style={{ 
-                        willChange: 'transform, opacity, filter',
-                        transition: 'transform 0.1s linear, opacity 0.1s linear, filter 0.1s linear'
-                    }}
-                >
-                    <div className="text-center mb-16 sm:mb-20 lg:mb-24">
-                        <h2 className="font-playfair text-4xl sm:text-5xl md:text-6xl font-bold text-gray-900 mb-6 sm:mb-8" style={{ fontFamily: 'Playfair Display, serif' }}>
-                            L'Excellence de Meubles D'Or
-                        </h2>
-                        <div className="w-24 h-1 bg-gradient-to-r from-amber-400 to-amber-600 mx-auto mb-8"></div>
-                        <p className="text-lg sm:text-xl lg:text-2xl text-gray-600 max-w-4xl mx-auto px-4 leading-relaxed font-light">
-                            Découvrez pourquoi les connaisseurs choisissent Meubles D'Or pour transformer leurs intérieurs
-                        </p>
-                    </div>
-                    
-                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 sm:gap-12 lg:gap-16">
-                        {/* Feature 1 */}
-                        <div className="group relative bg-white rounded-2xl p-8 sm:p-10 shadow-lg hover:shadow-2xl transition-all duration-500 ease-in-out transform hover:-translate-y-2 border border-gray-100">
-                            <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-                                <div className="w-16 h-16 bg-gradient-to-br from-amber-400 to-amber-600 rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
-                                    <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <main>
+                {/* WHY US SECTION */}
+                <section id="why-us-section" className="py-24 md:py-32" style={{ backgroundColor: '#1a1a1a' }}>
+                    <div className="container mx-auto px-6 lg:px-8">
+                        <div className="grid grid-cols-1 lg:grid-cols-3 gap-16 items-center">
+                            {/* Section Title */}
+                            <div className="lg:col-span-1 scroll-animate">
+                                <h2 className="font-playfair text-4xl md:text-5xl font-bold text-white leading-tight">
+                                    L'Excellence de Meubles D'Or
+                                </h2>
+                                <div className="w-24 h-1 bg-gold mt-6 mb-8"></div>
+                                <p className="text-lg text-gray-400 leading-relaxed">
+                                    Découvrez pourquoi les connaisseurs nous choisissent pour transformer leurs intérieurs.
+                                </p>
+                            </div>
+
+                            {/* Feature Cards */}
+                            <div className="lg:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-8">
+                                {/* Feature Card 1 */}
+                                <div className="border border-gray-700/50 p-8 rounded-lg scroll-animate" style={{ transitionDelay: '150ms' }}>
+                                    <svg className="w-10 h-10 text-gold mb-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 3v4M3 5h4M4 17v4M2 19h4M17 3v4M16 5h4M19 17v4M18 19h4M12 9a3 3 0 100 6 3 3 0 000-6z"></path>
                                     </svg>
+                                    <h3 className="font-playfair text-2xl font-bold text-white mb-3">Artisanat d'Exception</h3>
+                                    <p className="text-gray-400 leading-relaxed">
+                                        Chaque pièce est créée par des artisans passionnés avec des matériaux nobles.
+                                    </p>
                                 </div>
-                            </div>
-                            <div className="text-center pt-8">
-                                <h3 className="font-playfair text-2xl sm:text-3xl font-bold text-gray-900 mb-4" style={{ fontFamily: 'Playfair Display, serif' }}>
-                                    Artisanat d'Exception
-                                </h3>
-                                <p className="text-gray-600 leading-relaxed text-sm sm:text-base">
-                                    Chaque pièce est créée par des artisans passionnés utilisant des techniques traditionnelles et des matériaux nobles sélectionnés avec soin.
-                                </p>
-                            </div>
-                        </div>
 
-                        {/* Feature 2 */}
-                        <div className="group relative bg-white rounded-2xl p-8 sm:p-10 shadow-lg hover:shadow-2xl transition-all duration-500 ease-in-out transform hover:-translate-y-2 border border-gray-100">
-                            <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-                                <div className="w-16 h-16 bg-gradient-to-br from-amber-400 to-amber-600 rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
-                                    <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                {/* Feature Card 2 */}
+                                <div className="border border-gray-700/50 p-8 rounded-lg scroll-animate" style={{ transitionDelay: '250ms' }}>
+                                    <svg className="w-10 h-10 text-gold mb-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
                                     </svg>
+                                    <h3 className="font-playfair text-2xl font-bold text-white mb-3">Design Intemporel</h3>
+                                    <p className="text-gray-400 leading-relaxed">
+                                        Nos créations transcendent les modes pour une élégance durable.
+                                    </p>
                                 </div>
-                            </div>
-                            <div className="text-center pt-8">
-                                <h3 className="font-playfair text-2xl sm:text-3xl font-bold text-gray-900 mb-4" style={{ fontFamily: 'Playfair Display, serif' }}>
-                                    Design Intemporel
-                                </h3>
-                                <p className="text-gray-600 leading-relaxed text-sm sm:text-base">
-                                    Nos créations transcendent les modes éphémères pour vous offrir une élégance qui s'harmonise avec tous les styles et toutes les époques.
-                                </p>
-                            </div>
-                        </div>
 
-                        {/* Feature 3 */}
-                        <div className="group relative bg-white rounded-2xl p-8 sm:p-10 shadow-lg hover:shadow-2xl transition-all duration-500 ease-in-out transform hover:-translate-y-2 border border-gray-100">
-                            <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-                                <div className="w-16 h-16 bg-gradient-to-br from-amber-400 to-amber-600 rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
-                                    <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                {/* Feature Card 3 */}
+                                <div className="border border-gray-700/50 p-8 rounded-lg scroll-animate" style={{ transitionDelay: '350ms' }}>
+                                    <svg className="w-10 h-10 text-gold mb-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0c0 2.21-1.79 4-4 4s-4-1.79-4-4 1.79-4 4-4 4 1.79 4 4zM2 12h2m16 0h2"></path>
                                     </svg>
+                                    <h3 className="font-playfair text-2xl font-bold text-white mb-3">Service Sur Mesure</h3>
+                                    <p className="text-gray-400 leading-relaxed">
+                                        Notre équipe d'experts vous accompagne dans chaque étape.
+                                    </p>
+                                </div>
+
+                                {/* Feature Card 4 */}
+                                <div className="border border-gray-700/50 p-8 rounded-lg scroll-animate" style={{ transitionDelay: '450ms' }}>
+                                    <svg className="w-10 h-10 text-gold mb-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                    </svg>
+                                    <h3 className="font-playfair text-2xl font-bold text-white mb-3">Garantie Qualité</h3>
+                                    <p className="text-gray-400 leading-relaxed">
+                                        Engagement envers la qualité et la durabilité exceptionnelle.
+                                    </p>
                                 </div>
                             </div>
-                            <div className="text-center pt-8">
-                                <h3 className="font-playfair text-2xl sm:text-3xl font-bold text-gray-900 mb-4" style={{ fontFamily: 'Playfair Display, serif' }}>
-                                    Service Sur Mesure
-                                </h3>
-                                <p className="text-gray-600 leading-relaxed text-sm sm:text-base">
-                                    Notre équipe d'experts vous accompagne dans chaque étape, de la conception à l'installation, pour créer l'espace de vos rêves.
+                        </div>
+                    </div>
+                </section>
+
+                {/* WHO WE ARE SECTION */}
+                <section id="who-we-are-section" className="py-24 md:py-32" style={{ backgroundColor: '#121212' }}>
+                    <div className="container mx-auto px-6 lg:px-8">
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                            {/* Image */}
+                            <div className="scroll-animate">
+                                <img 
+                                    src={furnitureImages[artDeVivreImageIndex]} 
+                                    alt="Elegant furniture display in a showroom" 
+                                    className="rounded-lg w-full h-[400px] lg:h-[500px] object-cover transition-all duration-1000 ease-in-out"
+                                    style={{ 
+                                        opacity: 1,
+                                        transform: 'scale(1)',
+                                        transition: 'opacity 0.5s ease-in-out, transform 0.5s ease-in-out'
+                                    }}
+                                />
+                            </div>
+                            {/* Text Content */}
+                            <div className="scroll-animate" style={{ transitionDelay: '150ms' }}>
+                                <h2 className="font-playfair text-4xl md:text-5xl font-bold text-white leading-tight">
+                                    L'Art de Vivre
+                                </h2>
+                                <div className="w-24 h-1 bg-gold mt-6 mb-8"></div>
+                                <p className="text-lg text-gray-300 leading-relaxed">
+                                    Chez Meubles D'Or, votre intérieur est le reflet de votre âme. Notre collection est une galerie d'expériences en attente d'être découvertes.
+                                </p>
+                                <p className="mt-4 text-gray-400 leading-relaxed">
+                                    Chaque pièce est choisie pour inspirer, réconforter et devenir une partie intemporelle de votre histoire. Transformez votre espace en un sanctuaire d'élégance et de confort.
                                 </p>
                             </div>
                         </div>
                     </div>
+                </section>
+            </main>
 
-                    {/* Additional Features Row */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-12 mt-16 sm:mt-20">
-                        <div className="bg-gradient-to-r from-amber-50 to-white rounded-2xl p-8 sm:p-10 border border-amber-100">
-                            <div className="flex items-center mb-6">
-                                <div className="w-12 h-12 bg-amber-100 rounded-full flex items-center justify-center mr-4">
-                                    <svg className="w-6 h-6 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                                    </svg>
-                                </div>
-                                <h4 className="font-playfair text-xl font-bold text-gray-900" style={{ fontFamily: 'Playfair Display, serif' }}>
-                                    Garantie Qualité
-                                </h4>
-                            </div>
-                            <p className="text-gray-600 leading-relaxed">
-                                Tous nos meubles bénéficient d'une garantie exceptionnelle, témoignant de notre engagement envers la qualité et la durabilité.
-                            </p>
-                        </div>
-
-                        <div className="bg-gradient-to-r from-amber-50 to-white rounded-2xl p-8 sm:p-10 border border-amber-100">
-                            <div className="flex items-center mb-6">
-                                <div className="w-12 h-12 bg-amber-100 rounded-full flex items-center justify-center mr-4">
-                                    <svg className="w-6 h-6 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
-                                    </svg>
-                                </div>
-                                <h4 className="font-playfair text-xl font-bold text-gray-900" style={{ fontFamily: 'Playfair Display, serif' }}>
-                                    Livraison Rapide
-                                </h4>
-                            </div>
-                            <p className="text-gray-600 leading-relaxed">
-                                Service de livraison et d'installation professionnel pour une expérience sans souci, partout au Maroc.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            {/* Section 3: Who We Are */}
-            <section id="who-we-are-section" className="w-full min-h-screen flex items-center justify-center bg-white py-16 sm:py-20 lg:py-24 mb-16 sm:mb-20 lg:mb-24">
-                <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20" style={{ willChange: 'transform, opacity, filter', transition: 'transform 0.1s linear, opacity 0.1s linear, filter 0.1s linear' }}>
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 sm:gap-16 lg:gap-20 items-center">
-                        <div className="relative mb-8 sm:mb-0">
-                            <img 
-                                src={furnitureImages[artDeVivreImageIndex]} 
-                                alt="Elegant furniture display" 
-                                className="rounded-lg shadow-xl w-full h-[400px] lg:h-[500px] object-cover transition-all duration-1000 ease-in-out" 
-                                style={{ 
-                                    opacity: 1,
-                                    transform: 'scale(1)',
-                                    transition: 'opacity 0.5s ease-in-out, transform 0.5s ease-in-out'
-                                }}
-                            />
-                        </div>
-                        <div className="max-w-lg space-y-6 sm:space-y-8">
-                            <h2 className="font-playfair text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-6 sm:mb-8" style={{ fontFamily: 'Playfair Display, serif' }}>L'Art de Vivre</h2>
-                            <p className="text-base sm:text-lg text-gray-600 leading-relaxed">
-                                Chez Meubles D'Or, nous croyons que votre intérieur est le reflet de votre âme. Notre collection de mobilier et d'accessoires d'intérieur n'est pas simplement un assortiment d'objets, mais une galerie soigneusement organisée d'expériences en attente d'être découvertes. Chaque table, chaque chaise, chaque accessoire est choisi pour sa capacité à inspirer, à réconforter et à devenir une partie intemporelle de votre histoire personnelle. Transformez votre espace en un sanctuaire d'élégance et de confort.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            {/* Footer */}
-            <footer className="bg-black text-white relative z-10">
-                <div className="border-t border-gray-700/50">
-                    <div className="container mx-auto py-8 sm:py-12 px-4 sm:px-6 lg:px-8 text-center">
-                        <p className="text-sm sm:text-base">&copy; {new Date().getFullYear()} Meubles D'Or. Tous Droits Réservés.</p>
-                    </div>
+            {/* FOOTER */}
+            <footer className="bg-black text-white">
+                <div className="container mx-auto py-12 px-6 lg:px-8 text-center border-t border-gray-800">
+                    <p className="text-gray-500">&copy; {new Date().getFullYear()} Meubles D'Or. Tous Droits Réservés.</p>
                 </div>
             </footer>
         </div>

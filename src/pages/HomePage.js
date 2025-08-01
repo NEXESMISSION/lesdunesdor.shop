@@ -661,7 +661,7 @@ const HomePage = () => {
                       transform: isFiltering ? 'scale(0.98)' : 'scale(1)'
                     }}
                   >
-                    <Link to={`/product/${product.id}`} className="block aspect-square overflow-hidden">
+                    <Link to={`/product/${product.id}`} className="block aspect-square overflow-hidden rounded-xl">
                       <img 
                         src={product.image_urls?.[0] || 'https://placehold.co/400x400/f3f4f6/9ca3af?text=Produit'} 
                         alt={product.name} 

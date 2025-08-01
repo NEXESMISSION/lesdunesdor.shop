@@ -286,7 +286,7 @@ const ProductDetailPage = () => {
           <div className="order-2 lg:order-1">
             {/* Thumbnails on top - show even for single images */}
             {hasImages && (
-              <div className="flex space-x-3 overflow-x-auto pb-4 mb-6 scroll-smooth">
+              <div className="flex space-x-4 overflow-x-auto pb-4 mb-6 scroll-smooth">
                 {productImages.map((image, index) => (
                   <div 
                     key={index}
@@ -295,7 +295,7 @@ const ProductDetailPage = () => {
                     <img 
                       src={image} 
                       alt={`Vignette ${index + 1}`} 
-                      className={`w-24 h-24 object-cover rounded-lg cursor-pointer border-3 transition-all duration-300 ease-in-out shadow-md hover:shadow-lg ${
+                      className={`w-24 h-24 object-cover rounded-xl cursor-pointer border-3 transition-all duration-300 ease-in-out shadow-md hover:shadow-lg ${
                         activeImageIndex === index 
                           ? 'border-amber-500 shadow-amber-200 scale-105 ring-2 ring-amber-300' 
                           : 'border-gray-200 hover:border-gray-300 hover:scale-105'
@@ -317,7 +317,7 @@ const ProductDetailPage = () => {
             
             {/* Main Image */}
             <div className="mb-4 relative">
-              <div className="aspect-square bg-gray-100 rounded-lg overflow-hidden shadow-lg">
+              <div className="aspect-square bg-gray-100 rounded-xl overflow-hidden shadow-lg">
                 <img 
                   src={hasImages ? productImages[activeImageIndex] : 'https://placehold.co/600x600/f3f4f6/9ca3af?text=Produit'} 
                   alt="Image Principale du Produit" 
@@ -550,7 +550,7 @@ const ProductDetailPage = () => {
                   key={relatedProduct.id}
                   className="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow"
                 >
-                  <div className="aspect-square overflow-hidden">
+                  <div className="aspect-square overflow-hidden rounded-xl">
                     <img 
                       src={relatedProduct.image_urls?.[0] || 'https://placehold.co/400x400/f3f4f6/9ca3af?text=Produit'} 
                       alt={relatedProduct.name} 

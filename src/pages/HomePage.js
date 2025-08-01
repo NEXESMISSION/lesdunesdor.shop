@@ -395,7 +395,7 @@ const HomePage = () => {
                             />
                             <label htmlFor={`cat-${sub.name}`} className="ml-3 flex justify-between items-center w-full text-sm text-gray-600">
                               {sub.name}
-                              <span className="text-xs bg-gold-custom bg-opacity-20 text-gold-custom font-semibold px-2 py-0.5 rounded-full">
+                              <span className="text-xs bg-gray-200 text-gray-700 font-semibold px-2 py-0.5 rounded-full">
                                 {subcategoryProductCount}
                               </span>
                             </label>

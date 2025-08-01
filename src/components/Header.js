@@ -15,15 +15,15 @@ const Header = () => {
   return (
     <header className="bg-white shadow-sm sticky top-0 z-50">
       <div className="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-24">
+        <div className="flex items-center justify-between h-20">
           <div className="flex-shrink-0">
             <Link to="/" className="flex items-center group">
               <img 
-                src="/meubledor logo.png" 
+                src="/meubledor-logo.png" 
                 alt="Meubles D'Or Logo" 
-                className="h-20 w-auto transition-transform duration-300 group-hover:scale-105" 
+                className="h-14 w-auto transition-transform duration-300 group-hover:scale-105" 
               />
-              <span className="ml-4 text-2xl font-bold text-gray-800 hidden sm:block" style={{ fontFamily: 'Playfair Display, serif' }}>
+              <span className="ml-3 text-lg font-bold text-gray-800 hidden sm:block" style={{ fontFamily: 'Playfair Display, serif' }}>
                 Meubles D'Or
               </span>
             </Link>

@@ -58,7 +58,7 @@ const AdminLoginPage = () => {
           <div className="flex justify-center mb-8">
             <Link to="/">
               <img 
-                src="/meubledor logo.png" 
+                src="/meubledor-logo.png" 
                 alt="Meubles D'Or Logo" 
                 className="h-16 w-auto" 
               />

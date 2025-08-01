@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import LandingPage from './pages/LandingPage';
 import HomePage from './pages/HomePage';
 import ProductDetailPage from './pages/ProductDetailPage';
 import OrderSuccessPage from './pages/OrderSuccessPage';
@@ -14,7 +15,8 @@ function App() {
       <div className="App">
         <Routes>
           {/* Public routes */}
-          <Route path="/" element={<HomePage />} />
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/store" element={<HomePage />} />
           <Route path="/product/:productId" element={<ProductDetailPage />} />
           <Route path="/order-success" element={<OrderSuccessPage />} />
           

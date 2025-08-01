@@ -4,6 +4,7 @@ import { createProduct, updateProduct, getCategories } from '../lib/supabase';
 const ProductModal = ({ isOpen, onClose, product, onSuccess }) => {
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [categoriesLoading, setCategoriesLoading] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
     description: '',
@@ -41,10 +42,16 @@ const ProductModal = ({ isOpen, onClose, product, onSuccess }) => {
 
   const loadCategories = async () => {
     try {
+      setCategoriesLoading(true);
+      console.log('Loading categories for product modal...');
       const data = await getCategories();
+      console.log('Categories loaded:', data);
       setCategories(data || []);
     } catch (error) {
       console.error('Error loading categories:', error);
+      alert('Erreur lors du chargement des catégories: ' + error.message);
+    } finally {
+      setCategoriesLoading(false);
     }
   };
 
@@ -114,7 +121,7 @@ const ProductModal = ({ isOpen, onClose, product, onSuccess }) => {
     }
   };
 
-  // Group categories by main category
+  // Group categories by main category with better error handling
   const groupedCategories = categories.reduce((groups, category) => {
     if (category.parent_id === null) {
       // Main category
@@ -128,10 +135,20 @@ const ProductModal = ({ isOpen, onClose, product, onSuccess }) => {
       // Subcategory
       const parentId = category.parent_id;
       if (!groups[parentId]) {
-        groups[parentId] = {
-          main: { id: parentId, name: 'Loading...' },
-          subcategories: []
-        };
+        // Find the parent category in the loaded categories
+        const parentCategory = categories.find(cat => cat.id === parentId);
+        if (parentCategory) {
+          groups[parentId] = {
+            main: parentCategory,
+            subcategories: []
+          };
+        } else {
+          // If parent not found, create a temporary entry
+          groups[parentId] = {
+            main: { id: parentId, name: 'Catégorie Parent' },
+            subcategories: []
+          };
+        }
       }
       groups[parentId].subcategories.push(category);
     }
@@ -169,6 +186,7 @@ const ProductModal = ({ isOpen, onClose, product, onSuccess }) => {
                   onChange={handleInputChange}
                   className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-blue-500 focus:border-blue-500"
                   required
+                  placeholder="Tapis Kairouan, Babouche artisanale, Fouta Sousse..."
                 />
               </div>
 
@@ -181,9 +199,17 @@ const ProductModal = ({ isOpen, onClose, product, onSuccess }) => {
                   value={formData.category_id}
                   onChange={handleInputChange}
                   className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-blue-500 focus:border-blue-500"
+                  disabled={categoriesLoading}
                 >
-                  <option value="">Sélectionner une catégorie</option>
-                  {Object.values(groupedCategories).map((group) => (
+                  <option value="">
+                    {categoriesLoading ? 'Chargement des catégories...' : 'Sélectionner une catégorie'}
+                  </option>
+                  {!categoriesLoading && categories.length === 0 && (
+                    <option value="" disabled>
+                      Aucune catégorie disponible
+                    </option>
+                  )}
+                  {!categoriesLoading && Object.values(groupedCategories).map((group) => (
                     <optgroup key={group.main.id} label={group.main.name}>
                       {/* Main category option */}
                       <option value={group.main.id}>
@@ -198,9 +224,22 @@ const ProductModal = ({ isOpen, onClose, product, onSuccess }) => {
                     </optgroup>
                   ))}
                 </select>
-                <p className="text-xs text-gray-500 mt-1">
-                  Choisissez une sous-catégorie de préférence pour plus de précision
-                </p>
+                {categoriesLoading && (
+                  <p className="text-xs text-blue-500 mt-1">
+                    <i className="fas fa-spinner fa-spin mr-1"></i>
+                    Chargement des catégories...
+                  </p>
+                )}
+                {!categoriesLoading && categories.length === 0 && (
+                  <p className="text-xs text-red-500 mt-1">
+                    Aucune catégorie trouvée. Veuillez créer des catégories d'abord.
+                  </p>
+                )}
+                {!categoriesLoading && categories.length > 0 && (
+                  <p className="text-xs text-gray-500 mt-1">
+                    Choisissez une sous-catégorie de préférence pour plus de précision
+                  </p>
+                )}
               </div>
             </div>
 
@@ -214,6 +253,7 @@ const ProductModal = ({ isOpen, onClose, product, onSuccess }) => {
                 onChange={handleInputChange}
                 rows="3"
                 className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-blue-500 focus:border-blue-500"
+                placeholder="Ex: Produit artisanal fabriqué à la main à Sfax, 100% coton, idéal pour l'été..."
               />
             </div>
 
@@ -232,6 +272,7 @@ const ProductModal = ({ isOpen, onClose, product, onSuccess }) => {
                   onChange={handleInputChange}
                   className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                   required
+                  placeholder="120.000"
                 />
               </div>
               
@@ -248,6 +289,7 @@ const ProductModal = ({ isOpen, onClose, product, onSuccess }) => {
                   value={formData.old_price || ''}
                   onChange={handleInputChange}
                   className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                  placeholder="150.000"
                 />
                 <p className="text-sm text-gray-500 mt-1">Laissez vide s'il n'y a pas de prix réduit</p>
               </div>
@@ -263,6 +305,7 @@ const ProductModal = ({ isOpen, onClose, product, onSuccess }) => {
                   onChange={handleInputChange}
                   min="0"
                   className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-blue-500 focus:border-blue-500"
+                  placeholder="50"
                 />
               </div>
             </div>
@@ -280,7 +323,7 @@ const ProductModal = ({ isOpen, onClose, product, onSuccess }) => {
                 value={formData.delivery_price || ''}
                 onChange={handleInputChange}
                 className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                placeholder="7.00"
+                placeholder="7.000"
               />
               <p className="text-sm text-gray-500 mt-1">Laissez vide pour utiliser le prix par défaut (7.00)</p>
             </div>
@@ -294,7 +337,7 @@ const ProductModal = ({ isOpen, onClose, product, onSuccess }) => {
                 onChange={handleImageUrlsChange}
                 rows="4"
                 className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-blue-500 focus:border-blue-500"
-                placeholder="https://example.com/image1.jpg&#10;https://example.com/image2.jpg"
+                placeholder="https://mon-site.tn/images/produit1.jpg\nhttps://mon-site.tn/images/produit2.jpg"
               />
               <p className="text-sm text-gray-500 mt-1">
                 Entrez une URL d'image par ligne

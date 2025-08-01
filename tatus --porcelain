@@ -1,0 +1,9 @@
+warning: in the working copy of 'src/App.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/components/Header.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/pages/HomePage.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/pages/ProductDetailPage.js', LF will be replaced by CRLF the next time Git touches it
+public/index.html
+src/App.js
+src/components/ProductModal.js
+src/pages/HomePage.js
+src/pages/ProductDetailPage.js

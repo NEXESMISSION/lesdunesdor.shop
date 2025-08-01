@@ -207,6 +207,26 @@ const ProductDetailPage = () => {
           
           {/* Product Image Gallery */}
           <div className="order-2 lg:order-1">
+            {/* Thumbnails on top */}
+            {hasImages && productImages.length > 1 && (
+              <div className="flex space-x-4 overflow-x-auto pb-4 mb-4">
+                {productImages.map((image, index) => (
+                  <img 
+                    key={index}
+                    src={image} 
+                    alt={`Vignette ${index + 1}`} 
+                    className={`w-20 h-20 object-cover rounded-md cursor-pointer border-2 flex-shrink-0 transition-all duration-200 ${
+                      activeImageIndex === index 
+                        ? 'border-solid-gold shadow-lg scale-105' 
+                        : 'border-gray-200 hover:border-gray-300 hover:scale-105'
+                    }`}
+                    onClick={() => setActiveImageIndex(index)}
+                  />
+                ))}
+              </div>
+            )}
+            
+            {/* Main Image */}
             <div className="mb-4">
               <img 
                 src={hasImages ? productImages[activeImageIndex] : 'https://placehold.co/600x600/f3f4f6/9ca3af?text=Produit'} 
@@ -214,21 +234,6 @@ const ProductDetailPage = () => {
                 className="w-full h-auto object-cover rounded-lg product-image-shadow"
               />
             </div>
-            {hasImages && productImages.length > 1 && (
-              <div className="flex space-x-4 overflow-x-auto pb-2">
-                {productImages.map((image, index) => (
-                  <img 
-                    key={index}
-                    src={image} 
-                    alt={`Vignette ${index + 1}`} 
-                    className={`w-24 h-24 object-cover rounded-md cursor-pointer border-2 flex-shrink-0 ${
-                      activeImageIndex === index ? 'thumbnail-active' : 'border-transparent'
-                    }`}
-                    onClick={() => setActiveImageIndex(index)}
-                  />
-                ))}
-              </div>
-            )}
           </div>
 
           {/* Product Details & Order Form */}
@@ -279,7 +284,7 @@ const ProductDetailPage = () => {
                   value={formData.fullName}
                   onChange={handleInputChange}
                   className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm form-input" 
-                  placeholder="Jean Dupont" 
+                  placeholder="Ahmed Ben Salem, Fatma Mansouri..." 
                   required 
                 />
               </div>
@@ -295,7 +300,7 @@ const ProductDetailPage = () => {
                   value={formData.phoneNumber}
                   onChange={handleInputChange}
                   className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm form-input" 
-                  placeholder="+33 6 12 34 56 78" 
+                  placeholder="+216 58 415 520" 
                   required 
                 />
               </div>
@@ -349,7 +354,7 @@ const ProductDetailPage = () => {
                   value={formData.address}
                   onChange={handleInputChange}
                   className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm form-input" 
-                  placeholder="123 Rue du Faubourg Saint-Honoré, 75008 Paris" 
+                  placeholder="123 Avenue Habib Bourguiba, Tunis 1000, Tunisie" 
                   required
                 ></textarea>
               </div>

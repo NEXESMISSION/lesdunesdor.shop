@@ -394,61 +394,73 @@ const AdminDashboard = () => {
           <h1 className="text-xl font-bold text-white">Admin Dashboard</h1>
         </div>
         
-        <nav className="mt-8">
+        <nav className="mt-8 flex-1">
           <div className="px-4 space-y-2">
             <button
-              onClick={() => setActiveSection('dashboard')}
-              className={`w-full flex items-center px-4 py-2 text-left rounded-lg transition-colors ${
+              onClick={() => {
+                setActiveSection('dashboard');
+                setIsSidebarOpen(false); // Close sidebar on mobile after selection
+              }}
+              className={`w-full flex items-center px-4 py-3 text-left rounded-lg transition-colors ${
                 activeSection === 'dashboard' 
                   ? 'bg-solid-gold text-white' 
                   : 'text-gray-600 hover:bg-gray-100'
               }`}
             >
               <i className="fas fa-chart-bar w-5 text-center mr-3"></i>
-              Tableau de Bord
+              <span className="flex-1">Tableau de Bord</span>
             </button>
             
             <button
-              onClick={() => setActiveSection('products')}
-              className={`w-full flex items-center px-4 py-2 text-left rounded-lg transition-colors ${
+              onClick={() => {
+                setActiveSection('products');
+                setIsSidebarOpen(false); // Close sidebar on mobile after selection
+              }}
+              className={`w-full flex items-center px-4 py-3 text-left rounded-lg transition-colors ${
                 activeSection === 'products' 
                   ? 'bg-solid-gold text-white' 
                   : 'text-gray-600 hover:bg-gray-100'
               }`}
             >
               <i className="fas fa-box w-5 text-center mr-3"></i>
-              Produits
-              <span className="ml-auto bg-gray-200 text-gray-800 text-xs px-2 py-1 rounded-full">
+              <span className="flex-1">Produits</span>
+              <span className="bg-gray-200 text-gray-800 text-xs px-2 py-1 rounded-full">
                 {products.length}
               </span>
             </button>
             
             <button
-              onClick={() => setActiveSection('orders')}
-              className={`w-full flex items-center px-4 py-2 text-left rounded-lg transition-colors ${
+              onClick={() => {
+                setActiveSection('orders');
+                setIsSidebarOpen(false); // Close sidebar on mobile after selection
+              }}
+              className={`w-full flex items-center px-4 py-3 text-left rounded-lg transition-colors ${
                 activeSection === 'orders' 
                   ? 'bg-solid-gold text-white' 
                   : 'text-gray-600 hover:bg-gray-100'
               }`}
             >
               <i className="fas fa-shopping-cart w-5 text-center mr-3"></i>
-              Commandes
-              <span className="ml-auto bg-gray-200 text-gray-800 text-xs px-2 py-1 rounded-full">
+              <span className="flex-1">Commandes</span>
+              <span className="bg-gray-200 text-gray-800 text-xs px-2 py-1 rounded-full">
                 {orders.length}
               </span>
             </button>
             
             <button
-              onClick={() => setActiveSection('categories')}
-              className={`w-full flex items-center px-4 py-2 text-left rounded-lg transition-colors ${
+              onClick={() => {
+                setActiveSection('categories');
+                setIsSidebarOpen(false); // Close sidebar on mobile after selection
+              }}
+              className={`w-full flex items-center px-4 py-3 text-left rounded-lg transition-colors ${
                 activeSection === 'categories' 
                   ? 'bg-solid-gold text-white' 
                   : 'text-gray-600 hover:bg-gray-100'
               }`}
             >
               <i className="fas fa-tags w-5 text-center mr-3"></i>
-              Catégories
-              <span className="ml-auto bg-gray-200 text-gray-800 text-xs px-2 py-1 rounded-full">
+              <span className="flex-1">Catégories</span>
+              <span className="bg-gray-200 text-gray-800 text-xs px-2 py-1 rounded-full">
                 {mainCategories.length}
               </span>
             </button>
@@ -456,15 +468,15 @@ const AdminDashboard = () => {
         </nav>
         
         <div className="absolute bottom-4 left-4 right-4">
-          <div className="text-xs text-gray-500 mb-2 px-4">
+          <div className="text-xs text-gray-500 mb-2 px-4 break-all">
             Connecté: {user?.email}
           </div>
           <button
             onClick={handleSignOut}
-            className="w-full flex items-center px-4 py-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+            className="w-full flex items-center px-4 py-3 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
           >
             <i className="fas fa-sign-out-alt w-5 text-center mr-3"></i>
-            Déconnexion
+            <span className="flex-1">Déconnexion</span>
           </button>
         </div>
       </aside>
@@ -475,15 +487,23 @@ const AdminDashboard = () => {
         <header className="bg-white shadow-sm border-b">
           <div className="px-4 sm:px-6 lg:px-8">
             <div className="flex justify-between items-center h-16">
-              <button
-                onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-                className="lg:hidden text-gray-500 hover:text-gray-600"
-              >
-                <i className="fas fa-bars text-xl"></i>
-              </button>
+              <div className="flex items-center space-x-4">
+                <button
+                  onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+                  className="lg:hidden text-gray-500 hover:text-gray-600 p-2"
+                >
+                  <i className="fas fa-bars text-xl"></i>
+                </button>
+                <h2 className="text-lg font-semibold text-gray-800 lg:hidden">
+                  {activeSection === 'dashboard' && 'Tableau de Bord'}
+                  {activeSection === 'products' && 'Produits'}
+                  {activeSection === 'orders' && 'Commandes'}
+                  {activeSection === 'categories' && 'Catégories'}
+                </h2>
+              </div>
               
               <div className="flex items-center space-x-4">
-                <span className="text-gray-600">Bienvenue, {user?.email}</span>
+                <span className="text-gray-600 hidden sm:block">Bienvenue, {user?.email}</span>
                 <button
                   onClick={loadDashboardData}
                   className="text-gray-600 hover:text-gray-800 p-2"
@@ -497,57 +517,57 @@ const AdminDashboard = () => {
         </header>
 
         {/* Main Content Area */}
-        <main className="p-4 sm:p-6 lg:p-8">
+        <main className="p-3 sm:p-4 lg:p-6 xl:p-8">
           {activeSection === 'dashboard' && (
-            <div className="space-y-6">
-              <h2 className="text-2xl font-bold text-gray-800">Tableau de Bord</h2>
+            <div className="space-y-4 sm:space-y-6">
+              <h2 className="text-xl sm:text-2xl font-bold text-gray-800">Tableau de Bord</h2>
               
               {/* KPI Cards */}
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <div className="bg-white p-6 rounded-lg shadow-sm border">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-6">
+                <div className="bg-white p-4 sm:p-6 rounded-lg shadow-sm border">
                   <div className="flex items-center">
                     <div className="p-2 bg-green-100 rounded-lg">
-                      <i className="fas fa-euro-sign text-green-600 text-xl"></i>
+                      <i className="fas fa-euro-sign text-green-600 text-lg sm:text-xl"></i>
                     </div>
-                    <div className="ml-4">
-                      <h3 className="text-sm font-medium text-gray-500">Ventes Totales</h3>
-                      <p className="text-2xl font-bold text-gray-800">{dashboardStats.totalSales.toFixed(2)} TND</p>
+                    <div className="ml-3 sm:ml-4">
+                      <h3 className="text-xs sm:text-sm font-medium text-gray-500">Ventes Totales</h3>
+                      <p className="text-lg sm:text-2xl font-bold text-gray-800">{dashboardStats.totalSales.toFixed(2)} TND</p>
                     </div>
                   </div>
                 </div>
                 
-                <div className="bg-white p-6 rounded-lg shadow-sm border">
+                <div className="bg-white p-4 sm:p-6 rounded-lg shadow-sm border">
                   <div className="flex items-center">
                     <div className="p-2 bg-blue-100 rounded-lg">
-                      <i className="fas fa-shopping-cart text-blue-600 text-xl"></i>
+                      <i className="fas fa-shopping-cart text-blue-600 text-lg sm:text-xl"></i>
                     </div>
-                    <div className="ml-4">
-                      <h3 className="text-sm font-medium text-gray-500">Commandes</h3>
-                      <p className="text-2xl font-bold text-gray-800">{dashboardStats.totalOrders}</p>
+                    <div className="ml-3 sm:ml-4">
+                      <h3 className="text-xs sm:text-sm font-medium text-gray-500">Commandes</h3>
+                      <p className="text-lg sm:text-2xl font-bold text-gray-800">{dashboardStats.totalOrders}</p>
                     </div>
                   </div>
                 </div>
                 
-                <div className="bg-white p-6 rounded-lg shadow-sm border">
+                <div className="bg-white p-4 sm:p-6 rounded-lg shadow-sm border">
                   <div className="flex items-center">
                     <div className="p-2 bg-yellow-100 rounded-lg">
-                      <i className="fas fa-users text-yellow-600 text-xl"></i>
+                      <i className="fas fa-users text-yellow-600 text-lg sm:text-xl"></i>
                     </div>
-                    <div className="ml-4">
-                      <h3 className="text-sm font-medium text-gray-500">Commandes Récentes</h3>
-                      <p className="text-2xl font-bold text-gray-800">{dashboardStats.newCustomers}</p>
+                    <div className="ml-3 sm:ml-4">
+                      <h3 className="text-xs sm:text-sm font-medium text-gray-500">Commandes Récentes</h3>
+                      <p className="text-lg sm:text-2xl font-bold text-gray-800">{dashboardStats.newCustomers}</p>
                     </div>
                   </div>
                 </div>
                 
-                <div className="bg-white p-6 rounded-lg shadow-sm border">
+                <div className="bg-white p-4 sm:p-6 rounded-lg shadow-sm border">
                   <div className="flex items-center">
                     <div className="p-2 bg-purple-100 rounded-lg">
-                      <i className="fas fa-box text-purple-600 text-xl"></i>
+                      <i className="fas fa-box text-purple-600 text-lg sm:text-xl"></i>
                     </div>
-                    <div className="ml-4">
-                      <h3 className="text-sm font-medium text-gray-500">Produits</h3>
-                      <p className="text-2xl font-bold text-gray-800">{dashboardStats.totalProducts}</p>
+                    <div className="ml-3 sm:ml-4">
+                      <h3 className="text-xs sm:text-sm font-medium text-gray-500">Produits</h3>
+                      <p className="text-lg sm:text-2xl font-bold text-gray-800">{dashboardStats.totalProducts}</p>
                     </div>
                   </div>
                 </div>
@@ -555,10 +575,10 @@ const AdminDashboard = () => {
 
               {/* Recent Orders */}
               <div className="bg-white rounded-lg shadow-sm border">
-                <div className="p-6 border-b">
-                  <h3 className="text-lg font-semibold text-gray-800">Commandes Récentes</h3>
+                <div className="p-4 sm:p-6 border-b">
+                  <h3 className="text-base sm:text-lg font-semibold text-gray-800">Commandes Récentes</h3>
                 </div>
-                <div className="p-6">
+                <div className="p-4 sm:p-6">
                   {orders.length === 0 ? (
                     <div className="text-center py-8 text-gray-500">
                       <i className="fas fa-shopping-cart text-4xl mb-4"></i>
@@ -566,29 +586,31 @@ const AdminDashboard = () => {
                       <p className="text-sm">Les commandes des clients apparaîtront ici</p>
                     </div>
                   ) : (
-                    orders.slice(0, 5).map((order) => (
-                      <div key={order.id} className="flex items-center justify-between py-3 border-b last:border-b-0">
-                        <div>
-                          <p className="font-medium text-gray-800">
-                            {order.customer_details?.fullName || 'Client Anonyme'}
-                          </p>
-                          <p className="text-sm text-gray-500">
-                            {new Date(order.created_at).toLocaleDateString('fr-FR')}
-                          </p>
+                    <div className="space-y-3">
+                      {orders.slice(0, 5).map((order) => (
+                        <div key={order.id} className="flex flex-col sm:flex-row sm:items-center sm:justify-between py-3 border-b last:border-b-0 space-y-2 sm:space-y-0">
+                          <div className="flex-1">
+                            <p className="font-medium text-gray-800">
+                              {order.customer_details?.fullName || 'Client Anonyme'}
+                            </p>
+                            <p className="text-sm text-gray-500">
+                              {new Date(order.created_at).toLocaleDateString('fr-FR')}
+                            </p>
+                          </div>
+                          <div className="flex flex-col sm:items-end space-y-1">
+                            <p className="font-bold text-gray-800">{order.total_amount?.toFixed(2)} TND</p>
+                            <span className={`text-xs px-2 py-1 rounded-full w-fit ${
+                              order.status === 'Nouvelle' ? 'bg-blue-100 text-blue-800' :
+                              order.status === 'En traitement' ? 'bg-yellow-100 text-yellow-800' :
+                              order.status === 'Expédiée' ? 'bg-green-100 text-green-800' :
+                              'bg-gray-100 text-gray-800'
+                            }`}>
+                              {order.status}
+                            </span>
+                          </div>
                         </div>
-                        <div className="text-right">
-                          <p className="font-bold text-gray-800">{order.total_amount?.toFixed(2)} TND</p>
-                          <span className={`text-xs px-2 py-1 rounded-full ${
-                            order.status === 'Nouvelle' ? 'bg-blue-100 text-blue-800' :
-                            order.status === 'En traitement' ? 'bg-yellow-100 text-yellow-800' :
-                            order.status === 'Expédiée' ? 'bg-green-100 text-green-800' :
-                            'bg-gray-100 text-gray-800'
-                          }`}>
-                            {order.status}
-                          </span>
-                        </div>
-                      </div>
-                    ))
+                      ))}
+                    </div>
                   )}
                 </div>
               </div>
@@ -610,12 +632,12 @@ const AdminDashboard = () => {
           )}
 
           {activeSection === 'products' && (
-            <div className="space-y-6">
-              <div className="flex justify-between items-center">
-                <h2 className="text-2xl font-bold text-gray-800">Gestion des Produits</h2>
+            <div className="space-y-4 sm:space-y-6">
+              <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center space-y-3 sm:space-y-0">
+                <h2 className="text-xl sm:text-2xl font-bold text-gray-800">Gestion des Produits</h2>
                 <button
                   onClick={() => setProductModal({ isOpen: true, product: null })}
-                  className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
+                  className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors w-full sm:w-auto"
                 >
                   <i className="fas fa-plus mr-2"></i>
                   Ajouter un Produit
@@ -624,8 +646,8 @@ const AdminDashboard = () => {
 
               {/* Product Filters */}
               <div className="bg-white rounded-lg shadow-sm border p-4">
-                <h3 className="text-lg font-semibold text-gray-800 mb-4">Filtres</h3>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <h3 className="text-base sm:text-lg font-semibold text-gray-800 mb-4">Filtres</h3>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                   {/* Search Filter */}
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">Rechercher</label>
@@ -738,19 +760,19 @@ const AdminDashboard = () => {
                         <table className="min-w-full divide-y divide-gray-200">
                           <thead className="bg-gray-50">
                             <tr>
-                              <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                              <th className="px-3 sm:px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 Produit
                               </th>
                               <th className="hidden md:table-cell px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 Catégorie
                               </th>
-                              <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                              <th className="px-3 sm:px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 Prix
                               </th>
                               <th className="hidden md:table-cell px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 Stock
                               </th>
-                              <th className="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                              <th className="px-3 sm:px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 Actions
                               </th>
                             </tr>
@@ -765,7 +787,7 @@ const AdminDashboard = () => {
                             ) : (
                               paginatedProducts.map(product => (
                                 <tr key={product.id}>
-                                  <td className="px-4 py-4 whitespace-nowrap">
+                                  <td className="px-3 sm:px-4 py-4 whitespace-nowrap">
                                     <div className="flex items-center">
                                       <div className="flex-shrink-0 h-10 w-10">
                                         <img 
@@ -774,8 +796,8 @@ const AdminDashboard = () => {
                                           alt={product.name} 
                                         />
                                       </div>
-                                      <div className="ml-4">
-                                        <div className="text-sm font-medium text-gray-900">{product.name}</div>
+                                      <div className="ml-3 sm:ml-4 min-w-0 flex-1">
+                                        <div className="text-sm font-medium text-gray-900 truncate">{product.name}</div>
                                         <div className="text-sm text-gray-500 truncate max-w-xs">{product.description}</div>
                                         <div className="md:hidden text-xs text-gray-500 mt-1">
                                           Cat: {getCategoryName(product.category_id)} | Stock: {product.stock}
@@ -788,7 +810,7 @@ const AdminDashboard = () => {
                                       {getCategoryName(product.category_id)}
                                     </div>
                                   </td>
-                                  <td className="px-4 py-4 whitespace-nowrap">
+                                  <td className="px-3 sm:px-4 py-4 whitespace-nowrap">
                                     <div className="text-sm font-medium text-gray-900">{product.price?.toFixed(2)} TND</div>
                                     {product.old_price && (
                                       <div className="text-xs text-gray-500 line-through">{product.old_price?.toFixed(2)} TND</div>
@@ -805,17 +827,19 @@ const AdminDashboard = () => {
                                       {product.stock}
                                     </span>
                                   </td>
-                                  <td className="px-4 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                  <td className="px-3 sm:px-4 py-4 whitespace-nowrap text-right text-sm font-medium">
                                     <div className="flex justify-end space-x-2">
                                       <button
                                         onClick={() => setProductModal({ isOpen: true, product })}
-                                        className="text-indigo-600 hover:text-indigo-900"
+                                        className="text-indigo-600 hover:text-indigo-900 p-1"
+                                        title="Modifier"
                                       >
                                         <i className="fas fa-edit"></i>
                                       </button>
                                       <button
                                         onClick={() => handleDeleteProduct(product.id)}
-                                        className="text-red-600 hover:text-red-900"
+                                        className="text-red-600 hover:text-red-900 p-1"
+                                        title="Supprimer"
                                       >
                                         <i className="fas fa-trash"></i>
                                       </button>
@@ -830,12 +854,12 @@ const AdminDashboard = () => {
                       
                       {/* Pagination */}
                       {totalPages > 1 && (
-                        <div className="px-6 py-4 border-t bg-gray-50">
-                          <div className="flex items-center justify-between">
-                            <p className="text-sm text-gray-600">
+                        <div className="px-4 sm:px-6 py-4 border-t bg-gray-50">
+                          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-3 sm:space-y-0">
+                            <p className="text-sm text-gray-600 text-center sm:text-left">
                               Page {productPagination.currentPage} sur {totalPages}
                             </p>
-                            <div className="flex space-x-2">
+                            <div className="flex justify-center sm:justify-end space-x-2">
                               <button
                                 onClick={() => setProductPagination({ 
                                   ...productPagination, 
@@ -868,13 +892,13 @@ const AdminDashboard = () => {
           )}
 
           {activeSection === 'orders' && (
-            <div className="space-y-6">
-              <h2 className="text-2xl font-bold text-gray-800">Gestion des Commandes</h2>
+            <div className="space-y-4 sm:space-y-6">
+              <h2 className="text-xl sm:text-2xl font-bold text-gray-800">Gestion des Commandes</h2>
 
               {/* Order Filters */}
               <div className="bg-white rounded-lg shadow-sm border p-4">
-                <h3 className="text-lg font-semibold text-gray-800 mb-4">Filtres</h3>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <h3 className="text-base sm:text-lg font-semibold text-gray-800 mb-4">Filtres</h3>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                   {/* Search Filter */}
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">Rechercher</label>
@@ -973,7 +997,7 @@ const AdminDashboard = () => {
                     <>
                       {/* Orders Table */}
                       <div className="overflow-x-auto">
-                        <div className="px-6 py-4 border-b bg-gray-50">
+                        <div className="px-4 sm:px-6 py-4 border-b bg-gray-50">
                           <p className="text-sm text-gray-600">
                             Affichage de {paginatedOrders.length} sur {filteredOrders.length} commandes
                           </p>
@@ -990,8 +1014,8 @@ const AdminDashboard = () => {
                           return (
                             <div key={date}>
                               {/* Date Header */}
-                              <div className="bg-gray-100 px-6 py-3 border-b">
-                                <h4 className="font-semibold text-gray-800">
+                              <div className="bg-gray-100 px-4 sm:px-6 py-3 border-b">
+                                <h4 className="font-semibold text-gray-800 text-sm sm:text-base">
                                   {new Date(date).toLocaleDateString('fr-FR', { 
                                     weekday: 'long', 
                                     year: 'numeric', 
@@ -1008,19 +1032,19 @@ const AdminDashboard = () => {
                               <table className="min-w-full divide-y divide-gray-200">
                                 <thead className="bg-gray-50">
                                   <tr>
-                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    <th className="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                       Commande
                                     </th>
-                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    <th className="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                       Client
                                     </th>
-                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    <th className="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                       Montant
                                     </th>
-                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    <th className="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                       Statut
                                     </th>
-                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    <th className="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                       Actions
                                     </th>
                                   </tr>
@@ -1028,7 +1052,7 @@ const AdminDashboard = () => {
                                 <tbody className="bg-white divide-y divide-gray-200">
                                   {dateOrders.map((order) => (
                                     <tr key={order.id} className="hover:bg-gray-50">
-                                      <td className="px-6 py-4 whitespace-nowrap">
+                                      <td className="px-4 sm:px-6 py-4 whitespace-nowrap">
                                         <div>
                                           <div className="text-sm font-medium text-gray-900">#{order.id}</div>
                                           <div className="text-sm text-gray-500">
@@ -1039,7 +1063,7 @@ const AdminDashboard = () => {
                                           </div>
                                         </div>
                                       </td>
-                                      <td className="px-6 py-4 whitespace-nowrap">
+                                      <td className="px-4 sm:px-6 py-4 whitespace-nowrap">
                                         <div>
                                           <div className="text-sm font-medium text-gray-900">
                                             {order.customer_details?.fullName || 'Client Anonyme'}
@@ -1049,10 +1073,10 @@ const AdminDashboard = () => {
                                           </div>
                                         </div>
                                       </td>
-                                      <td className="px-6 py-4 whitespace-nowrap text-sm font-bold text-gray-900">
+                                      <td className="px-4 sm:px-6 py-4 whitespace-nowrap text-sm font-bold text-gray-900">
                                         {order.total_amount?.toFixed(2)} TND
                                       </td>
-                                      <td className="px-6 py-4 whitespace-nowrap">
+                                      <td className="px-4 sm:px-6 py-4 whitespace-nowrap">
                                         <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
                                           order.status === 'Nouvelle' ? 'bg-blue-100 text-blue-800' :
                                           order.status === 'En traitement' ? 'bg-yellow-100 text-yellow-800' :
@@ -1063,16 +1087,18 @@ const AdminDashboard = () => {
                                           {order.status}
                                         </span>
                                       </td>
-                                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-2">
+                                      <td className="px-4 sm:px-6 py-4 whitespace-nowrap text-sm font-medium space-x-2">
                                         <button
                                           onClick={() => setOrderModal({ isOpen: true, order })}
-                                          className="text-blue-600 hover:text-blue-900"
+                                          className="text-blue-600 hover:text-blue-900 p-1"
+                                          title="Voir détails"
                                         >
                                           <i className="fas fa-eye"></i>
                                         </button>
                                         <button
                                           onClick={() => handleDeleteOrder(order.id)}
-                                          className="text-red-600 hover:text-red-900"
+                                          className="text-red-600 hover:text-red-900 p-1"
+                                          title="Supprimer"
                                         >
                                           <i className="fas fa-trash"></i>
                                         </button>
@@ -1088,12 +1114,12 @@ const AdminDashboard = () => {
                       
                       {/* Pagination */}
                       {totalPages > 1 && (
-                        <div className="px-6 py-4 border-t bg-gray-50">
-                          <div className="flex items-center justify-between">
-                            <p className="text-sm text-gray-600">
+                        <div className="px-4 sm:px-6 py-4 border-t bg-gray-50">
+                          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-3 sm:space-y-0">
+                            <p className="text-sm text-gray-600 text-center sm:text-left">
                               Page {orderPagination.currentPage} sur {totalPages}
                             </p>
-                            <div className="flex space-x-2">
+                            <div className="flex justify-center sm:justify-end space-x-2">
                               <button
                                 onClick={() => setOrderPagination({ 
                                   ...orderPagination, 
@@ -1126,12 +1152,12 @@ const AdminDashboard = () => {
           )}
 
           {activeSection === 'categories' && (
-            <div className="space-y-6">
-              <div className="flex justify-between items-center">
-                <h2 className="text-2xl font-bold text-gray-800">Gestion des Catégories</h2>
+            <div className="space-y-4 sm:space-y-6">
+              <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center space-y-3 sm:space-y-0">
+                <h2 className="text-xl sm:text-2xl font-bold text-gray-800">Gestion des Catégories</h2>
                 <button
                   onClick={() => openCategoryModal()}
-                  className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
+                  className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors w-full sm:w-auto"
                 >
                   <i className="fas fa-plus mr-2"></i>
                   Ajouter une Catégorie Principale
@@ -1162,7 +1188,7 @@ const AdminDashboard = () => {
                     <div key={mainCategory.id} className="bg-white rounded-lg shadow-sm border">
                       {/* Main Category Header */}
                       <div className="p-4 border-b bg-gray-50">
-                        <div className="flex items-center justify-between">
+                        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-3 sm:space-y-0">
                           <div className="flex items-center space-x-3">
                             <i className="fas fa-folder text-blue-600 text-xl"></i>
                             <div>
@@ -1175,21 +1201,21 @@ const AdminDashboard = () => {
                           <div className="flex items-center space-x-2">
                             <button
                               onClick={() => openCategoryModal(null, mainCategory)}
-                              className="text-green-600 hover:text-green-900 text-sm"
+                              className="text-green-600 hover:text-green-900 text-sm p-2"
                               title="Ajouter une sous-catégorie"
                             >
                               <i className="fas fa-plus"></i>
                             </button>
                             <button
                               onClick={() => openCategoryModal(mainCategory)}
-                              className="text-blue-600 hover:text-blue-900"
+                              className="text-blue-600 hover:text-blue-900 p-2"
                               title="Modifier"
                             >
                               <i className="fas fa-edit"></i>
                             </button>
                             <button
                               onClick={() => handleDeleteCategory(mainCategory.id, mainCategory.name)}
-                              className="text-red-600 hover:text-red-900"
+                              className="text-red-600 hover:text-red-900 p-2"
                               title="Supprimer"
                             >
                               <i className="fas fa-trash"></i>
@@ -1201,27 +1227,27 @@ const AdminDashboard = () => {
                       {/* Subcategories */}
                       {mainCategory.subcategories && mainCategory.subcategories.length > 0 && (
                         <div className="p-4">
-                          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+                          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
                             {mainCategory.subcategories.map((subcategory) => (
                               <div key={subcategory.id} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-                                <div className="flex items-center space-x-2">
-                                  <i className="fas fa-tag text-gray-500"></i>
-                                  <span className="text-sm font-medium text-gray-700">{subcategory.name}</span>
-                                  <span className="text-xs text-gray-500">
+                                <div className="flex items-center space-x-2 min-w-0 flex-1">
+                                  <i className="fas fa-tag text-gray-500 flex-shrink-0"></i>
+                                  <span className="text-sm font-medium text-gray-700 truncate">{subcategory.name}</span>
+                                  <span className="text-xs text-gray-500 flex-shrink-0">
                                     ({getProductsCount(subcategory.id)})
                                   </span>
                                 </div>
-                                <div className="flex items-center space-x-1">
+                                <div className="flex items-center space-x-1 flex-shrink-0">
                                   <button
                                     onClick={() => openCategoryModal(subcategory)}
-                                    className="text-blue-600 hover:text-blue-900 text-sm"
+                                    className="text-blue-600 hover:text-blue-900 text-sm p-1"
                                     title="Modifier"
                                   >
                                     <i className="fas fa-edit"></i>
                                   </button>
                                   <button
                                     onClick={() => handleDeleteCategory(subcategory.id, subcategory.name)}
-                                    className="text-red-600 hover:text-red-900 text-sm"
+                                    className="text-red-600 hover:text-red-900 text-sm p-1"
                                     title="Supprimer"
                                   >
                                     <i className="fas fa-trash"></i>
@@ -1258,9 +1284,9 @@ const AdminDashboard = () => {
 
       {/* Category Modal */}
       {categoryModal.isOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-2 sm:p-4">
           <div className="bg-white rounded-lg max-w-md w-full">
-            <div className="p-6">
+            <div className="p-4 sm:p-6">
               <div className="flex justify-between items-center mb-4">
                 <h3 className="text-lg font-semibold text-gray-800">
                   {categoryModal.category 
@@ -1272,7 +1298,7 @@ const AdminDashboard = () => {
                 </h3>
                 <button
                   onClick={closeCategoryModal}
-                  className="text-gray-500 hover:text-gray-700"
+                  className="text-gray-500 hover:text-gray-700 p-2"
                 >
                   <i className="fas fa-times"></i>
                 </button>
@@ -1292,18 +1318,18 @@ const AdminDashboard = () => {
                   />
                 </div>
 
-                <div className="flex justify-end space-x-3">
+                <div className="flex flex-col sm:flex-row justify-end space-y-3 sm:space-y-0 sm:space-x-3">
                   <button
                     type="button"
                     onClick={closeCategoryModal}
-                    className="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50"
+                    className="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 w-full sm:w-auto"
                   >
                     Annuler
                   </button>
                   <button
                     type="submit"
                     disabled={dataLoading}
-                    className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50"
+                    className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 w-full sm:w-auto"
                   >
                     {dataLoading ? 'Sauvegarde...' : (categoryModal.category ? 'Modifier' : 'Ajouter')}
                   </button>

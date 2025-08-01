@@ -50,34 +50,34 @@ const OrderModal = ({ isOpen, onClose, order, onSuccess }) => {
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
-      <div className="bg-white rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto">
-        <div className="p-6">
-          <div className="flex justify-between items-center mb-6">
-            <h2 className="text-2xl font-bold text-gray-800">
+    <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-2 sm:p-4">
+      <div className="bg-white rounded-lg max-w-2xl w-full max-h-[95vh] overflow-y-auto">
+        <div className="p-4 sm:p-6">
+          <div className="flex justify-between items-center mb-4 sm:mb-6">
+            <h2 className="text-xl sm:text-2xl font-bold text-gray-800">
               Commande #{order.id}
             </h2>
             <button
               onClick={onClose}
-              className="text-gray-500 hover:text-gray-700"
+              className="text-gray-500 hover:text-gray-700 p-2"
             >
               <i className="fas fa-times text-xl"></i>
             </button>
           </div>
 
-          <div className="space-y-6">
+          <div className="space-y-4 sm:space-y-6">
             {/* Order Status */}
             <div className="bg-gray-50 p-4 rounded-lg">
-              <h3 className="text-lg font-semibold text-gray-800 mb-3">Statut de la Commande</h3>
-              <div className="flex items-center space-x-4">
-                <span className={`px-3 py-1 text-sm font-medium rounded-full text-${statusColors[order.status]}-800 bg-${statusColors[order.status]}-100`}>
+              <h3 className="text-base sm:text-lg font-semibold text-gray-800 mb-3">Statut de la Commande</h3>
+              <div className="flex flex-col sm:flex-row sm:items-center space-y-3 sm:space-y-0 sm:space-x-4">
+                <span className={`px-3 py-1 text-sm font-medium rounded-full text-${statusColors[order.status]}-800 bg-${statusColors[order.status]}-100 w-fit`}>
                   {order.status}
                 </span>
-                <div className="flex items-center space-x-2">
+                <div className="flex flex-col sm:flex-row sm:items-center space-y-2 sm:space-y-0 sm:space-x-2">
                   <select
                     value={newStatus}
                     onChange={(e) => setNewStatus(e.target.value)}
-                    className="border border-gray-300 rounded-lg px-3 py-1 text-sm focus:ring-blue-500 focus:border-blue-500"
+                    className="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-blue-500 focus:border-blue-500 w-full sm:w-auto"
                   >
                     {statusOptions.map((status) => (
                       <option key={status} value={status}>
@@ -89,7 +89,7 @@ const OrderModal = ({ isOpen, onClose, order, onSuccess }) => {
                     <button
                       onClick={handleStatusUpdate}
                       disabled={loading}
-                      className="px-3 py-1 bg-blue-600 text-white text-sm rounded-lg hover:bg-blue-700 disabled:opacity-50"
+                      className="px-3 py-2 bg-blue-600 text-white text-sm rounded-lg hover:bg-blue-700 disabled:opacity-50 w-full sm:w-auto"
                     >
                       {loading ? 'Mise à jour...' : 'Mettre à jour'}
                     </button>
@@ -99,9 +99,9 @@ const OrderModal = ({ isOpen, onClose, order, onSuccess }) => {
             </div>
 
             {/* Order Information */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
               <div>
-                <h3 className="text-lg font-semibold text-gray-800 mb-3">Informations Client</h3>
+                <h3 className="text-base sm:text-lg font-semibold text-gray-800 mb-3">Informations Client</h3>
                 <div className="space-y-2">
                   <p><strong>Nom:</strong> {order.customer_details?.fullName || 'Non spécifié'}</p>
                   <p><strong>Téléphone:</strong> {order.customer_details?.phoneNumber || 'Non spécifié'}</p>
@@ -121,9 +121,9 @@ const OrderModal = ({ isOpen, onClose, order, onSuccess }) => {
             {/* Product Details */}
             {order.form_data && (
               <div>
-                <h3 className="text-lg font-semibold text-gray-800 mb-3">Produit Commandé</h3>
+                <h3 className="text-base sm:text-lg font-semibold text-gray-800 mb-3">Produit Commandé</h3>
                 <div className="bg-gray-50 p-4 rounded-lg">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                       <p><strong>Produit:</strong> {order.form_data.product_name || 'Non spécifié'}</p>
                       <p><strong>Quantité:</strong> {order.form_data.quantity || 1}</p>
@@ -149,10 +149,10 @@ const OrderModal = ({ isOpen, onClose, order, onSuccess }) => {
             </details>
           </div>
 
-          <div className="flex justify-end space-x-3 pt-6 mt-6 border-t">
+          <div className="flex justify-end pt-4 sm:pt-6 mt-4 sm:mt-6 border-t">
             <button
               onClick={onClose}
-              className="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50"
+              className="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 w-full sm:w-auto"
             >
               Fermer
             </button>

@@ -222,23 +222,23 @@ const ProductModal = ({ isOpen, onClose, product, onSuccess }) => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
-      <div className="bg-white rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto">
-        <div className="p-6">
-          <div className="flex justify-between items-center mb-6">
-            <h2 className="text-2xl font-bold text-gray-800">
+    <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-2 sm:p-4">
+      <div className="bg-white rounded-lg max-w-4xl w-full max-h-[95vh] overflow-y-auto">
+        <div className="p-4 sm:p-6">
+          <div className="flex justify-between items-center mb-4 sm:mb-6">
+            <h2 className="text-xl sm:text-2xl font-bold text-gray-800">
               {product ? 'Modifier le Produit' : 'Ajouter un Produit'}
             </h2>
             <button
               onClick={onClose}
-              className="text-gray-500 hover:text-gray-700 transition-colors"
+              className="text-gray-500 hover:text-gray-700 transition-colors p-2"
             >
               <i className="fas fa-times text-xl"></i>
             </button>
           </div>
 
-          <form onSubmit={handleSubmit} className="space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
                   Nom du Produit *
@@ -314,7 +314,7 @@ const ProductModal = ({ isOpen, onClose, product, onSuccess }) => {
               />
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
                   Prix (TND) *
@@ -385,7 +385,7 @@ const ProductModal = ({ isOpen, onClose, product, onSuccess }) => {
               <h3 className="text-lg font-medium text-gray-800">Gestion des Images</h3>
               
               {/* Add Single Image */}
-              <div className="flex gap-2">
+              <div className="flex flex-col sm:flex-row gap-2">
                 <input
                   type="url"
                   value={newImageUrl}
@@ -396,7 +396,7 @@ const ProductModal = ({ isOpen, onClose, product, onSuccess }) => {
                 <button
                   type="button"
                   onClick={addImageUrl}
-                  className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
+                  className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors w-full sm:w-auto"
                 >
                   <i className="fas fa-plus mr-1"></i>
                   Ajouter
@@ -408,7 +408,7 @@ const ProductModal = ({ isOpen, onClose, product, onSuccess }) => {
                 <label className="block text-sm font-medium text-gray-700 mb-1">
                   Ajouter Plusieurs Images (une URL par ligne)
                 </label>
-                <div className="flex gap-2">
+                <div className="flex flex-col sm:flex-row gap-2">
                   <textarea
                     value={imageUrls}
                     onChange={handleImageUrlsChange}
@@ -419,7 +419,7 @@ const ProductModal = ({ isOpen, onClose, product, onSuccess }) => {
                   <button
                     type="button"
                     onClick={addBulkImages}
-                    className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors self-start"
+                    className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors w-full sm:w-auto self-start"
                   >
                     <i className="fas fa-upload mr-1"></i>
                     Ajouter Tout
@@ -475,12 +475,12 @@ const ProductModal = ({ isOpen, onClose, product, onSuccess }) => {
                           </div>
 
                           {/* Controls */}
-                          <div className="flex gap-1">
+                          <div className="flex gap-1 flex-shrink-0">
                             <button
                               type="button"
                               onClick={() => moveImageUp(index)}
                               disabled={index === 0}
-                              className="p-1 text-gray-500 hover:text-gray-700 disabled:opacity-50 disabled:cursor-not-allowed"
+                              className="p-2 text-gray-500 hover:text-gray-700 disabled:opacity-50 disabled:cursor-not-allowed"
                               title="Monter"
                             >
                               <i className="fas fa-arrow-up"></i>
@@ -489,7 +489,7 @@ const ProductModal = ({ isOpen, onClose, product, onSuccess }) => {
                               type="button"
                               onClick={() => moveImageDown(index)}
                               disabled={index === imageList.length - 1}
-                              className="p-1 text-gray-500 hover:text-gray-700 disabled:opacity-50 disabled:cursor-not-allowed"
+                              className="p-2 text-gray-500 hover:text-gray-700 disabled:opacity-50 disabled:cursor-not-allowed"
                               title="Descendre"
                             >
                               <i className="fas fa-arrow-down"></i>
@@ -497,7 +497,7 @@ const ProductModal = ({ isOpen, onClose, product, onSuccess }) => {
                             <button
                               type="button"
                               onClick={() => removeImage(index)}
-                              className="p-1 text-red-500 hover:text-red-700"
+                              className="p-2 text-red-500 hover:text-red-700"
                               title="Supprimer"
                             >
                               <i className="fas fa-trash"></i>
@@ -511,18 +511,18 @@ const ProductModal = ({ isOpen, onClose, product, onSuccess }) => {
               )}
             </div>
 
-            <div className="flex justify-end space-x-3 pt-4 border-t">
+            <div className="flex flex-col sm:flex-row justify-end space-y-3 sm:space-y-0 sm:space-x-3 pt-4 border-t">
               <button
                 type="button"
                 onClick={onClose}
-                className="px-6 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors"
+                className="px-6 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors w-full sm:w-auto"
               >
                 Annuler
               </button>
               <button
                 type="submit"
                 disabled={loading}
-                className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 transition-colors"
+                className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 transition-colors w-full sm:w-auto"
               >
                 {loading ? (
                   <>

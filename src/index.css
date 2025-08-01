@@ -217,3 +217,160 @@ input[type="range"]:focus {
     transform: translateX(0);
   }
 }
+
+/* Mobile-specific improvements for admin dashboard */
+@media (max-width: 768px) {
+  /* Improve touch targets for mobile */
+  button, .btn {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  
+  /* Better table responsiveness */
+  .table-responsive {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  /* Improve modal spacing on mobile */
+  .modal-content {
+    margin: 1rem;
+    max-height: calc(100vh - 2rem);
+  }
+  
+  /* Better form inputs on mobile */
+  input, select, textarea {
+    font-size: 16px; /* Prevents zoom on iOS */
+  }
+  
+  /* Improve sidebar navigation on mobile */
+  .sidebar-nav button {
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+  }
+  
+  /* Better spacing for mobile cards */
+  .card, .bg-white {
+    margin-bottom: 1rem;
+  }
+  
+  /* Improve mobile pagination */
+  .pagination {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  
+  /* Better mobile filters */
+  .filter-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  /* Improve mobile buttons */
+  .btn-mobile {
+    width: 100%;
+    margin-bottom: 0.5rem;
+  }
+  
+  /* Better mobile table cells */
+  .table-cell-mobile {
+    padding: 0.5rem;
+    font-size: 0.875rem;
+  }
+  
+  /* Improve mobile modals */
+  .modal-mobile {
+    padding: 1rem;
+    margin: 0.5rem;
+  }
+  
+  /* Better mobile form layouts */
+  .form-mobile {
+    gap: 1rem;
+  }
+  
+  /* Improve mobile action buttons */
+  .action-buttons-mobile {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+  
+  /* Better mobile status badges */
+  .status-badge-mobile {
+    font-size: 0.75rem;
+    padding: 0.25rem 0.5rem;
+  }
+}
+
+/* Tablet-specific improvements */
+@media (min-width: 769px) and (max-width: 1024px) {
+  /* Better tablet layout */
+  .tablet-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  /* Improve tablet sidebar */
+  .sidebar-tablet {
+    width: 280px;
+  }
+  
+  /* Better tablet modals */
+  .modal-tablet {
+    max-width: 90vw;
+  }
+}
+
+/* Touch-friendly improvements for all devices */
+@media (hover: none) and (pointer: coarse) {
+  /* Larger touch targets */
+  button, .btn, a {
+    min-height: 48px;
+    min-width: 48px;
+  }
+  
+  /* Better touch feedback */
+  button:active, .btn:active {
+    transform: scale(0.98);
+  }
+  
+  /* Improve scrolling */
+  .scroll-container {
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  /* Better touch interactions */
+  .touch-friendly {
+    padding: 0.75rem;
+    margin: 0.25rem;
+  }
+}
+
+/* High DPI display improvements */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  /* Sharper icons and borders */
+  .icon, .fas, .far, .fab {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+/* Print styles for admin dashboard */
+@media print {
+  .sidebar, .header, .modal, button {
+    display: none !important;
+  }
+  
+  .main-content {
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  
+  .table {
+    border-collapse: collapse;
+  }
+  
+  .table th, .table td {
+    border: 1px solid #000;
+    padding: 0.5rem;
+  }
+}

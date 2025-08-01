@@ -162,7 +162,7 @@ const LandingPage = () => {
                 
                 {/* Hero Content */}
                 <div ref={heroContentRef} className="relative z-20 p-4 sm:p-6 max-w-4xl mx-auto scroll-animate is-visible">
-                    <h1 className="font-playfair font-bold text-4xl sm:text-5xl md:text-7xl lg:text-8xl tracking-tight text-shadow-custom">
+                    <h1 className="font-playfair font-bold text-4xl sm:text-5xl md:text-7xl lg:text-8xl tracking-tight">
                         Meubles D'Or
                     </h1>
                     <p className="mt-3 sm:mt-4 text-base sm:text-lg md:text-xl font-light tracking-wider text-white/90 max-w-2xl mx-auto text-shadow-custom px-4">

@@ -162,16 +162,16 @@ const ProductDetailPage = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       <Helmet>
-        <title>{product.name} - Les Dunes d'Or</title>
-        <meta name="description" content={product.description?.substring(0, 160) || "Découvrez ce produit exclusif de Les Dunes d'Or"} />
-        <meta name="keywords" content={`${product.name}, produits luxe, design tunisie, les dunes d'or`} />
+        <title>{product.name} - Meubles D'Or</title>
+        <meta name="description" content={product.description?.substring(0, 160) || "Découvrez ce produit exclusif de Meubles D'Or"} />
+        <meta name="keywords" content={`${product.name}, produits luxe, design tunisie, meubles d'or`} />
         <link rel="canonical" href={`https://lesdunesdor.shop/product/${product.id}`} />
-        <meta property="og:title" content={`${product.name} - Les Dunes d'Or`} />
-        <meta property="og:description" content={product.description?.substring(0, 160) || "Découvrez ce produit exclusif de Les Dunes d'Or"} />
+        <meta property="og:title" content={`${product.name} - Meubles D'Or`} />
+        <meta property="og:description" content={product.description?.substring(0, 160) || "Découvrez ce produit exclusif de Meubles D'Or"} />
         <meta property="og:image" content={hasImages ? productImages[0] : 'https://lesdunesdor.shop/og-image.jpg'} />
         <meta property="og:url" content={`https://lesdunesdor.shop/product/${product.id}`} />
         <meta property="og:type" content="product" />
-        <meta property="og:site_name" content="Les Dunes d'Or" />
+        <meta property="og:site_name" content="Meubles D'Or" />
         
         {/* Product structured data */}
         <script type="application/ld+json">
@@ -181,11 +181,11 @@ const ProductDetailPage = () => {
             "name": product.name,
             "image": hasImages ? productImages.map(img => img) : ['https://lesdunesdor.shop/og-image.jpg'],
             "description": product.description,
-            "sku": `LD-${product.id}`,
-            "mpn": `LD-${product.id}`,
+            "sku": `MD-${product.id}`,
+            "mpn": `MD-${product.id}`,
             "brand": {
               "@type": "Brand",
-              "name": "Les Dunes d'Or"
+              "name": "Meubles D'Or"
             },
             "offers": {
               "@type": "Offer",
@@ -207,32 +207,78 @@ const ProductDetailPage = () => {
           
           {/* Product Image Gallery */}
           <div className="order-2 lg:order-1">
-            {/* Thumbnails on top */}
-            {hasImages && productImages.length > 1 && (
-              <div className="flex space-x-4 overflow-x-auto pb-4 mb-4">
+            {/* Thumbnails on top - show even for single images */}
+            {hasImages && (
+              <div className="flex space-x-3 overflow-x-auto pb-4 mb-6 scroll-smooth">
                 {productImages.map((image, index) => (
-                  <img 
+                  <div 
                     key={index}
-                    src={image} 
-                    alt={`Vignette ${index + 1}`} 
-                    className={`w-20 h-20 object-cover rounded-md cursor-pointer border-2 flex-shrink-0 transition-all duration-200 ${
-                      activeImageIndex === index 
-                        ? 'border-solid-gold shadow-lg scale-105' 
-                        : 'border-gray-200 hover:border-gray-300 hover:scale-105'
-                    }`}
-                    onClick={() => setActiveImageIndex(index)}
-                  />
+                    className="relative flex-shrink-0"
+                  >
+                    <img 
+                      src={image} 
+                      alt={`Vignette ${index + 1}`} 
+                      className={`w-24 h-24 object-cover rounded-lg cursor-pointer border-3 transition-all duration-300 ease-in-out shadow-md hover:shadow-lg ${
+                        activeImageIndex === index 
+                          ? 'border-amber-500 shadow-amber-200 scale-105 ring-2 ring-amber-300' 
+                          : 'border-gray-200 hover:border-gray-300 hover:scale-105'
+                      }`}
+                      onClick={() => setActiveImageIndex(index)}
+                      onError={(e) => {
+                        e.target.onerror = null;
+                        e.target.src = 'https://placehold.co/400x400/f3f4f6/9ca3af?text=Image+Non+Disponible';
+                      }}
+                      loading="lazy"
+                    />
+                    {activeImageIndex === index && (
+                      <div className="absolute -top-1 -right-1 w-4 h-4 bg-amber-500 rounded-full border-2 border-white"></div>
+                    )}
+                  </div>
                 ))}
               </div>
             )}
             
             {/* Main Image */}
-            <div className="mb-4">
-              <img 
-                src={hasImages ? productImages[activeImageIndex] : 'https://placehold.co/600x600/f3f4f6/9ca3af?text=Produit'} 
-                alt="Image Principale du Produit" 
-                className="w-full h-auto object-cover rounded-lg product-image-shadow"
-              />
+            <div className="mb-4 relative">
+              <div className="aspect-square bg-gray-100 rounded-lg overflow-hidden shadow-lg">
+                <img 
+                  src={hasImages ? productImages[activeImageIndex] : 'https://placehold.co/600x600/f3f4f6/9ca3af?text=Produit'} 
+                  alt="Image Principale du Produit" 
+                  className="w-full h-full object-cover transition-all duration-300 ease-in-out hover:scale-105"
+                  onError={(e) => {
+                    e.target.onerror = null;
+                    e.target.src = 'https://placehold.co/600x600/f3f4f6/9ca3af?text=Image+Non+Disponible';
+                  }}
+                  loading="eager"
+                />
+              </div>
+              {/* Image counter */}
+              {hasImages && productImages.length > 1 && (
+                <div className="absolute bottom-4 right-4 bg-black bg-opacity-50 text-white px-3 py-1 rounded-full text-sm font-medium">
+                  {activeImageIndex + 1} / {productImages.length}
+                </div>
+              )}
+              {/* Navigation arrows for images */}
+              {hasImages && productImages.length > 1 && (
+                <>
+                  <button
+                    onClick={() => setActiveImageIndex(activeImageIndex === 0 ? productImages.length - 1 : activeImageIndex - 1)}
+                    className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-80 hover:bg-opacity-100 p-2 rounded-full shadow-md transition-all duration-200"
+                  >
+                    <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7"></path>
+                    </svg>
+                  </button>
+                  <button
+                    onClick={() => setActiveImageIndex(activeImageIndex === productImages.length - 1 ? 0 : activeImageIndex + 1)}
+                    className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-80 hover:bg-opacity-100 p-2 rounded-full shadow-md transition-all duration-200"
+                  >
+                    <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7"></path>
+                    </svg>
+                  </button>
+                </>
+              )}
             </div>
           </div>
 

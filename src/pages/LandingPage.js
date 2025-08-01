@@ -85,11 +85,17 @@ const LandingPage = () => {
                     heroContentRef.current.style.filter = 'blur(0px)';
                     heroContentRef.current.style.transform = 'scale(1)';
                 } else {
-                    // On desktop: keep the original animations
-                    const heroProgress = Math.min(1, scrollY / vh);
-                    heroContentRef.current.style.opacity = 1 - heroProgress * 1.5;
-                    heroContentRef.current.style.filter = `blur(${heroProgress * 20}px)`;
-                    heroContentRef.current.style.transform = `scale(${1 - heroProgress * 0.1})`;
+                    // On desktop: delay the blur effect significantly
+                    const heroProgress = Math.min(1, (scrollY - vh * 0.5) / (vh * 0.8));
+                    if (heroProgress > 0) {
+                        heroContentRef.current.style.opacity = 1 - heroProgress * 0.8;
+                        heroContentRef.current.style.filter = `blur(${heroProgress * 8}px)`;
+                        heroContentRef.current.style.transform = `scale(${1 - heroProgress * 0.05})`;
+                    } else {
+                        heroContentRef.current.style.opacity = 1;
+                        heroContentRef.current.style.filter = 'blur(0px)';
+                        heroContentRef.current.style.transform = 'scale(1)';
+                    }
                 }
             }
 
@@ -100,13 +106,13 @@ const LandingPage = () => {
                     whyUsContentRef.current.style.filter = 'blur(0px)';
                     whyUsContentRef.current.style.transform = 'scale(1)';
                 } else {
-                    // On desktop: keep the original animations
-                    const whyUsScrollStart = vh;
+                    // On desktop: delay the blur effect significantly
+                    const whyUsScrollStart = vh * 1.5; // Start much later
                     if (scrollY > whyUsScrollStart) {
-                        const whyUsProgress = Math.min(1, (scrollY - whyUsScrollStart) / vh);
-                        whyUsContentRef.current.style.opacity = 1 - whyUsProgress * 1.5;
-                        whyUsContentRef.current.style.filter = `blur(${whyUsProgress * 20}px)`;
-                        whyUsContentRef.current.style.transform = `scale(${1 - whyUsProgress * 0.1})`;
+                        const whyUsProgress = Math.min(1, (scrollY - whyUsScrollStart) / (vh * 0.8));
+                        whyUsContentRef.current.style.opacity = 1 - whyUsProgress * 0.8;
+                        whyUsContentRef.current.style.filter = `blur(${whyUsProgress * 8}px)`;
+                        whyUsContentRef.current.style.transform = `scale(${1 - whyUsProgress * 0.05})`;
                     } else {
                         whyUsContentRef.current.style.opacity = 1;
                         whyUsContentRef.current.style.filter = 'blur(0px)';
@@ -152,7 +158,7 @@ const LandingPage = () => {
                     }}
                 >
                     <h1 className="font-playfair text-4xl sm:text-6xl md:text-8xl lg:text-9xl font-bold tracking-tight text-white text-center" style={{ fontFamily: 'Playfair Display, serif' }}>
-                        Les Dunes d'Or
+                        Meubles D'Or
                     </h1>
                     <p className="mt-2 sm:mt-4 text-base sm:text-xl md:text-2xl font-light tracking-wider max-w-2xl text-white text-center px-4">
                         Élégance Intemporelle pour Votre Intérieur &mdash; Où le Luxe Rencontre le Confort.
@@ -166,8 +172,8 @@ const LandingPage = () => {
                 </div>
             </section>
 
-            {/* Section 2: Why Choose Us */}
-            <section id="why-us-section" className="w-full min-h-screen flex items-center justify-center bg-[#FDFBF5] py-16 sm:py-20 lg:py-24">
+            {/* Section 2: Why Choose Us - Redesigned */}
+            <section id="why-us-section" className="w-full min-h-screen flex items-center justify-center bg-gradient-to-br from-amber-50 via-white to-amber-50 py-16 sm:py-20 lg:py-24">
                 <div 
                     ref={whyUsContentRef}
                     className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20"
@@ -176,54 +182,107 @@ const LandingPage = () => {
                         transition: 'transform 0.1s linear, opacity 0.1s linear, filter 0.1s linear'
                     }}
                 >
-                    <div className="text-center mb-12 sm:mb-16 lg:mb-20">
-                        <h2 className="font-playfair text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-6 sm:mb-8 lg:mb-10" style={{ fontFamily: 'Playfair Display, serif' }}>Pourquoi Nous Choisir</h2>
-                        <p className="text-base sm:text-lg lg:text-xl text-gray-600 max-w-4xl mx-auto px-4 leading-relaxed">
-                            Nous nous consacrons à la curation d'une collection inégalée de mobilier et d'accessoires d'intérieur qui incarnent la sophistication, la qualité et le style intemporel.
+                    <div className="text-center mb-16 sm:mb-20 lg:mb-24">
+                        <h2 className="font-playfair text-4xl sm:text-5xl md:text-6xl font-bold text-gray-900 mb-6 sm:mb-8" style={{ fontFamily: 'Playfair Display, serif' }}>
+                            L'Excellence de Meubles D'Or
+                        </h2>
+                        <div className="w-24 h-1 bg-gradient-to-r from-amber-400 to-amber-600 mx-auto mb-8"></div>
+                        <p className="text-lg sm:text-xl lg:text-2xl text-gray-600 max-w-4xl mx-auto px-4 leading-relaxed font-light">
+                            Découvrez pourquoi les connaisseurs choisissent Meubles D'Or pour transformer leurs intérieurs
                         </p>
                     </div>
                     
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-12 sm:gap-16 lg:gap-20 text-center">
-                        <div className="flex flex-col items-center space-y-6 sm:space-y-8 lg:space-y-10">
-                            <div className="w-20 h-20 sm:w-24 sm:h-24 lg:w-28 lg:h-28 bg-amber-100/50 rounded-full flex items-center justify-center shadow-lg">
-                                <svg className="w-10 h-10 sm:w-12 sm:h-12 lg:w-14 lg:h-14 text-amber-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M5 3v4M3 5h4M4 17v4M2 19h4M17 3v4M16 5h4M19 17v4M18 19h4M12 9a3 3 0 100 6 3 3 0 000-6z"></path>
-                                </svg>
+                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 sm:gap-12 lg:gap-16">
+                        {/* Feature 1 */}
+                        <div className="group relative bg-white rounded-2xl p-8 sm:p-10 shadow-lg hover:shadow-2xl transition-all duration-500 ease-in-out transform hover:-translate-y-2 border border-gray-100">
+                            <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                                <div className="w-16 h-16 bg-gradient-to-br from-amber-400 to-amber-600 rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
+                                    <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 3v4M3 5h4M4 17v4M2 19h4M17 3v4M16 5h4M19 17v4M18 19h4M12 9a3 3 0 100 6 3 3 0 000-6z"></path>
+                                    </svg>
+                                </div>
                             </div>
-                            <div className="space-y-4 sm:space-y-6 lg:space-y-8">
-                                <h3 className="font-playfair text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900" style={{ fontFamily: 'Playfair Display, serif' }}>Artisanat Exquis</h3>
-                                <p className="text-sm sm:text-base lg:text-lg text-gray-600 px-4 sm:px-6 lg:px-8 leading-relaxed max-w-sm mx-auto">
-                                    Chaque pièce de mobilier est fabriquée avec les matériaux les plus fins et une attention méticuleuse aux détails.
+                            <div className="text-center pt-8">
+                                <h3 className="font-playfair text-2xl sm:text-3xl font-bold text-gray-900 mb-4" style={{ fontFamily: 'Playfair Display, serif' }}>
+                                    Artisanat d'Exception
+                                </h3>
+                                <p className="text-gray-600 leading-relaxed text-sm sm:text-base">
+                                    Chaque pièce est créée par des artisans passionnés utilisant des techniques traditionnelles et des matériaux nobles sélectionnés avec soin.
                                 </p>
                             </div>
                         </div>
-                        
-                        <div className="flex flex-col items-center space-y-6 sm:space-y-8 lg:space-y-10">
-                            <div className="w-20 h-20 sm:w-24 sm:h-24 lg:w-28 lg:h-28 bg-amber-100/50 rounded-full flex items-center justify-center shadow-lg">
-                                <svg className="w-10 h-10 sm:w-12 sm:h-12 lg:w-14 lg:h-14 text-amber-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
-                                </svg>
+
+                        {/* Feature 2 */}
+                        <div className="group relative bg-white rounded-2xl p-8 sm:p-10 shadow-lg hover:shadow-2xl transition-all duration-500 ease-in-out transform hover:-translate-y-2 border border-gray-100">
+                            <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                                <div className="w-16 h-16 bg-gradient-to-br from-amber-400 to-amber-600 rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
+                                    <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+                                    </svg>
+                                </div>
                             </div>
-                            <div className="space-y-4 sm:space-y-6 lg:space-y-8">
-                                <h3 className="font-playfair text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900" style={{ fontFamily: 'Playfair Display, serif' }}>Design Intemporel</h3>
-                                <p className="text-sm sm:text-base lg:text-lg text-gray-600 px-4 sm:px-6 lg:px-8 leading-relaxed max-w-sm mx-auto">
-                                    Nous croyons en un style qui transcende les tendances, vous offrant une élégance qui durera toute une vie.
+                            <div className="text-center pt-8">
+                                <h3 className="font-playfair text-2xl sm:text-3xl font-bold text-gray-900 mb-4" style={{ fontFamily: 'Playfair Display, serif' }}>
+                                    Design Intemporel
+                                </h3>
+                                <p className="text-gray-600 leading-relaxed text-sm sm:text-base">
+                                    Nos créations transcendent les modes éphémères pour vous offrir une élégance qui s'harmonise avec tous les styles et toutes les époques.
                                 </p>
                             </div>
                         </div>
-                        
-                        <div className="flex flex-col items-center space-y-6 sm:space-y-8 lg:space-y-10">
-                            <div className="w-20 h-20 sm:w-24 sm:h-24 lg:w-28 lg:h-28 bg-amber-100/50 rounded-full flex items-center justify-center shadow-lg">
-                                <svg className="w-10 h-10 sm:w-12 sm:h-12 lg:w-14 lg:h-14 text-amber-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0c0 2.21-1.79 4-4 4s-4-1.79-4-4 1.79-4 4-4 4 1.79 4 4zM2 12h2m16 0h2"></path>
-                                </svg>
+
+                        {/* Feature 3 */}
+                        <div className="group relative bg-white rounded-2xl p-8 sm:p-10 shadow-lg hover:shadow-2xl transition-all duration-500 ease-in-out transform hover:-translate-y-2 border border-gray-100">
+                            <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                                <div className="w-16 h-16 bg-gradient-to-br from-amber-400 to-amber-600 rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
+                                    <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0c0 2.21-1.79 4-4 4s-4-1.79-4-4 1.79-4 4-4 4 1.79 4 4zM2 12h2m16 0h2"></path>
+                                    </svg>
+                                </div>
                             </div>
-                            <div className="space-y-4 sm:space-y-6 lg:space-y-8">
-                                <h3 className="font-playfair text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900" style={{ fontFamily: 'Playfair Display, serif' }}>Service Personnalisé</h3>
-                                <p className="text-sm sm:text-base lg:text-lg text-gray-600 px-4 sm:px-6 lg:px-8 leading-relaxed max-w-sm mx-auto">
-                                    Notre équipe dédiée est là pour vous aider à créer l'espace de vos rêves avec conseils et accompagnement.
+                            <div className="text-center pt-8">
+                                <h3 className="font-playfair text-2xl sm:text-3xl font-bold text-gray-900 mb-4" style={{ fontFamily: 'Playfair Display, serif' }}>
+                                    Service Sur Mesure
+                                </h3>
+                                <p className="text-gray-600 leading-relaxed text-sm sm:text-base">
+                                    Notre équipe d'experts vous accompagne dans chaque étape, de la conception à l'installation, pour créer l'espace de vos rêves.
                                 </p>
                             </div>
+                        </div>
+                    </div>
+
+                    {/* Additional Features Row */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-12 mt-16 sm:mt-20">
+                        <div className="bg-gradient-to-r from-amber-50 to-white rounded-2xl p-8 sm:p-10 border border-amber-100">
+                            <div className="flex items-center mb-6">
+                                <div className="w-12 h-12 bg-amber-100 rounded-full flex items-center justify-center mr-4">
+                                    <svg className="w-6 h-6 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                    </svg>
+                                </div>
+                                <h4 className="font-playfair text-xl font-bold text-gray-900" style={{ fontFamily: 'Playfair Display, serif' }}>
+                                    Garantie Qualité
+                                </h4>
+                            </div>
+                            <p className="text-gray-600 leading-relaxed">
+                                Tous nos meubles bénéficient d'une garantie exceptionnelle, témoignant de notre engagement envers la qualité et la durabilité.
+                            </p>
+                        </div>
+
+                        <div className="bg-gradient-to-r from-amber-50 to-white rounded-2xl p-8 sm:p-10 border border-amber-100">
+                            <div className="flex items-center mb-6">
+                                <div className="w-12 h-12 bg-amber-100 rounded-full flex items-center justify-center mr-4">
+                                    <svg className="w-6 h-6 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                                    </svg>
+                                </div>
+                                <h4 className="font-playfair text-xl font-bold text-gray-900" style={{ fontFamily: 'Playfair Display, serif' }}>
+                                    Livraison Rapide
+                                </h4>
+                            </div>
+                            <p className="text-gray-600 leading-relaxed">
+                                Service de livraison et d'installation professionnel pour une expérience sans souci, partout au Maroc.
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -248,7 +307,7 @@ const LandingPage = () => {
                         <div className="max-w-lg space-y-6 sm:space-y-8">
                             <h2 className="font-playfair text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-6 sm:mb-8" style={{ fontFamily: 'Playfair Display, serif' }}>L'Art de Vivre</h2>
                             <p className="text-base sm:text-lg text-gray-600 leading-relaxed">
-                                Chez Les Dunes d'Or, nous croyons que votre intérieur est le reflet de votre âme. Notre collection de mobilier et d'accessoires d'intérieur n'est pas simplement un assortiment d'objets, mais une galerie soigneusement organisée d'expériences en attente d'être découvertes. Chaque table, chaque chaise, chaque accessoire est choisi pour sa capacité à inspirer, à réconforter et à devenir une partie intemporelle de votre histoire personnelle. Transformez votre espace en un sanctuaire d'élégance et de confort.
+                                Chez Meubles D'Or, nous croyons que votre intérieur est le reflet de votre âme. Notre collection de mobilier et d'accessoires d'intérieur n'est pas simplement un assortiment d'objets, mais une galerie soigneusement organisée d'expériences en attente d'être découvertes. Chaque table, chaque chaise, chaque accessoire est choisi pour sa capacité à inspirer, à réconforter et à devenir une partie intemporelle de votre histoire personnelle. Transformez votre espace en un sanctuaire d'élégance et de confort.
                             </p>
                         </div>
                     </div>
@@ -259,7 +318,7 @@ const LandingPage = () => {
             <footer className="bg-black text-white relative z-10">
                 <div className="border-t border-gray-700/50">
                     <div className="container mx-auto py-8 sm:py-12 px-4 sm:px-6 lg:px-8 text-center">
-                        <p className="text-sm sm:text-base">&copy; {new Date().getFullYear()} Les Dunes d'Or. Tous Droits Réservés.</p>
+                        <p className="text-sm sm:text-base">&copy; {new Date().getFullYear()} Meubles D'Or. Tous Droits Réservés.</p>
                     </div>
                 </div>
             </footer>

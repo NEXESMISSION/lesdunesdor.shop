@@ -15,6 +15,10 @@ const ProductDetailPage = () => {
   const [activeImageIndex, setActiveImageIndex] = useState(0);
   const [quantity, setQuantity] = useState(1);
   const [relatedProducts, setRelatedProducts] = useState([]);
+  const [isImageModalOpen, setIsImageModalOpen] = useState(false);
+  const [modalImageIndex, setModalImageIndex] = useState(0);
+  const [touchStart, setTouchStart] = useState(null);
+  const [touchEnd, setTouchEnd] = useState(null);
   const [formData, setFormData] = useState({
     fullName: '',
     phoneNumber: '',
@@ -46,7 +50,17 @@ const ProductDetailPage = () => {
     };
 
     loadProduct();
+    
+    // Scroll to top when product changes
+    window.scrollTo(0, 0);
   }, [productId]);
+
+  useEffect(() => {
+    document.addEventListener('keydown', handleKeyDown);
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [isImageModalOpen, modalImageIndex]);
 
   const handleInputChange = (e) => {
     setFormData({
@@ -61,6 +75,69 @@ const ProductDetailPage = () => {
       setQuantity(newValue);
     } else {
       setQuantity(1);
+    }
+  };
+
+  const openImageModal = (index) => {
+    setModalImageIndex(index);
+    setIsImageModalOpen(true);
+  };
+
+  const closeImageModal = () => {
+    setIsImageModalOpen(false);
+  };
+
+  const nextImage = () => {
+    if (hasImages) {
+      setModalImageIndex((modalImageIndex + 1) % productImages.length);
+    }
+  };
+
+  const previousImage = () => {
+    if (hasImages) {
+      setModalImageIndex(modalImageIndex === 0 ? productImages.length - 1 : modalImageIndex - 1);
+    }
+  };
+
+  const handleKeyDown = (e) => {
+    if (!isImageModalOpen) return;
+    
+    switch (e.key) {
+      case 'Escape':
+        closeImageModal();
+        break;
+      case 'ArrowRight':
+        nextImage();
+        break;
+      case 'ArrowLeft':
+        previousImage();
+        break;
+      default:
+        break;
+    }
+  };
+
+  const onTouchStart = (e) => {
+    setTouchEnd(null);
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+
+  const onTouchMove = (e) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const onTouchEnd = () => {
+    if (!touchStart || !touchEnd) return;
+    
+    const distance = touchStart - touchEnd;
+    const isLeftSwipe = distance > 50;
+    const isRightSwipe = distance < -50;
+
+    if (isLeftSwipe && productImages.length > 1) {
+      nextImage();
+    }
+    if (isRightSwipe && productImages.length > 1) {
+      previousImage();
     }
   };
 
@@ -244,7 +321,8 @@ const ProductDetailPage = () => {
                 <img 
                   src={hasImages ? productImages[activeImageIndex] : 'https://placehold.co/600x600/f3f4f6/9ca3af?text=Produit'} 
                   alt="Image Principale du Produit" 
-                  className="w-full h-full object-cover transition-all duration-300 ease-in-out hover:scale-105"
+                  className="w-full h-full object-cover transition-all duration-300 ease-in-out hover:scale-105 cursor-pointer"
+                  onClick={() => openImageModal(activeImageIndex)}
                   onError={(e) => {
                     e.target.onerror = null;
                     e.target.src = 'https://placehold.co/600x600/f3f4f6/9ca3af?text=Image+Non+Disponible';
@@ -489,6 +567,96 @@ const ProductDetailPage = () => {
           </div>
         )}
       </main>
+
+      {/* Image Modal */}
+      {isImageModalOpen && hasImages && (
+        <div className="fixed inset-0 bg-black bg-opacity-90 z-50 flex items-center justify-center p-4">
+          <div className="relative max-w-4xl max-h-full w-full h-full flex items-center justify-center"
+               onTouchStart={onTouchStart}
+               onTouchMove={onTouchMove}
+               onTouchEnd={onTouchEnd}
+          >
+            {/* Close Button */}
+            <button
+              onClick={closeImageModal}
+              className="absolute top-4 right-4 z-10 bg-white bg-opacity-20 hover:bg-opacity-30 text-white rounded-full p-3 transition-all duration-200"
+            >
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path>
+              </svg>
+            </button>
+
+            {/* Previous Arrow */}
+            {productImages.length > 1 && (
+              <button
+                onClick={previousImage}
+                className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-20 hover:bg-opacity-30 text-white p-3 rounded-full transition-all duration-200"
+              >
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7"></path>
+                </svg>
+              </button>
+            )}
+
+            {/* Next Arrow */}
+            {productImages.length > 1 && (
+              <button
+                onClick={nextImage}
+                className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-20 hover:bg-opacity-30 text-white p-3 rounded-full transition-all duration-200"
+              >
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7"></path>
+                </svg>
+              </button>
+            )}
+
+            {/* Image */}
+            <img
+              src={productImages[modalImageIndex]}
+              alt={`Image ${modalImageIndex + 1}`}
+              className="max-w-full max-h-full object-contain"
+              onError={(e) => {
+                e.target.onerror = null;
+                e.target.src = 'https://placehold.co/600x600/f3f4f6/9ca3af?text=Image+Non+Disponible';
+              }}
+            />
+
+            {/* Image Counter */}
+            {productImages.length > 1 && (
+              <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-black bg-opacity-50 text-white px-4 py-2 rounded-full text-sm font-medium">
+                {modalImageIndex + 1} / {productImages.length}
+              </div>
+            )}
+
+            {/* Thumbnails at bottom */}
+            {productImages.length > 1 && (
+              <div className="absolute bottom-16 left-1/2 transform -translate-x-1/2 flex space-x-2">
+                {productImages.map((image, index) => (
+                  <button
+                    key={index}
+                    onClick={() => setModalImageIndex(index)}
+                    className={`w-12 h-12 rounded-lg overflow-hidden border-2 transition-all duration-200 ${
+                      modalImageIndex === index 
+                        ? 'border-white' 
+                        : 'border-transparent hover:border-white hover:border-opacity-50'
+                    }`}
+                  >
+                    <img
+                      src={image}
+                      alt={`Thumbnail ${index + 1}`}
+                      className="w-full h-full object-cover"
+                      onError={(e) => {
+                        e.target.onerror = null;
+                        e.target.src = 'https://placehold.co/100x100/f3f4f6/9ca3af?text=Image';
+                      }}
+                    />
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+      )}
 
       <Footer />
     </div>

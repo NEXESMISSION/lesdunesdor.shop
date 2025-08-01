@@ -330,15 +330,15 @@ const HomePage = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       <Helmet>
-        <title>Les Dunes d'Or | Collection Exclusive de Produits de Luxe</title>
-        <meta name="description" content="Découvrez notre collection exclusive de produits de luxe et design. Livraison dans toute la Tunisie." />
-        <meta name="keywords" content="produits de luxe, design tunisie, bijoux tunisie, mobilier haut de gamme, accessoires luxe" />
+        <title>Meubles D'Or | Collection Exclusive de Mobilier de Luxe</title>
+        <meta name="description" content="Découvrez notre collection exclusive de mobilier et d'accessoires d'intérieur de luxe. Artisanat d'exception et design intemporel." />
+        <meta name="keywords" content="meubles de luxe, mobilier haut de gamme, design intérieur tunisie, meubles d'or, décoration luxe, artisanat tunisie" />
         <link rel="canonical" href="https://lesdunesdor.shop/" />
         <script type="application/ld+json">
           {JSON.stringify({
             "@context": "https://schema.org",
             "@type": "WebSite",
-            "name": "Les Dunes d'Or",
+            "name": "Meubles D'Or",
             "url": "https://lesdunesdor.shop/",
             "potentialAction": {
               "@type": "SearchAction",

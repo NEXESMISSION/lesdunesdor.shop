@@ -17,9 +17,13 @@ const Header = () => {
       <div className="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-24">
           <div className="flex-shrink-0">
-            <Link to="/" className="flex items-center">
-              <img src="/dunes.png" alt="Meubles D'Or Logo" className="h-16 w-auto" />
-              <span className="ml-3 text-xl font-bold text-gray-800" style={{ fontFamily: 'Playfair Display, serif' }}>
+            <Link to="/" className="flex items-center group">
+              <img 
+                src="/meubledor logo.png" 
+                alt="Meubles D'Or Logo" 
+                className="h-20 w-auto transition-transform duration-300 group-hover:scale-105" 
+              />
+              <span className="ml-4 text-2xl font-bold text-gray-800 hidden sm:block" style={{ fontFamily: 'Playfair Display, serif' }}>
                 Meubles D'Or
               </span>
             </Link>
@@ -30,14 +34,14 @@ const Header = () => {
               className={`transition ${
                 isActivePage('/') 
                   ? 'font-semibold text-solid-gold' 
-                  : 'text-gray-600 hover-text-gold'
+                  : 'text-gray-600 hover:text-gold'
               }`}
             >
               Accueil
             </Link>
           </nav>
           <button 
-            className="md:hidden text-gray-600 hover-text-gold transition"
+            className="md:hidden text-gray-600 hover:text-gold transition"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           >
             <i className="fas fa-bars text-xl"></i>
@@ -52,7 +56,7 @@ const Header = () => {
               className={`block py-2 px-4 rounded ${
                 isActivePage('/') 
                   ? 'font-semibold text-solid-gold bg-gray-50' 
-                  : 'text-gray-600 hover-text-gold hover-bg-gray-50'
+                  : 'text-gray-600 hover:text-gold hover:bg-gray-50'
               }`}
               onClick={() => setIsMobileMenuOpen(false)}
             >

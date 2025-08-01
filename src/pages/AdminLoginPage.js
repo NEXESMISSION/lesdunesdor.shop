@@ -58,9 +58,9 @@ const AdminLoginPage = () => {
           <div className="flex justify-center mb-8">
             <Link to="/">
               <img 
-                src="/dunes.png" 
-                alt="Les Dunes Logo" 
-                className="h-16 w-auto filter invert" 
+                src="/meubledor logo.png" 
+                alt="Meubles D'Or Logo" 
+                className="h-16 w-auto" 
               />
             </Link>
           </div>

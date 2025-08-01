@@ -10,20 +10,24 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* Company Info */}
           <div>
-            <h3 className="text-lg font-semibold text-white mb-4">Les Dunes d'Or</h3>
+            <div className="flex items-center mb-4">
+              <img 
+                src="/meubledor logo.png" 
+                alt="Meubles D'Or Logo" 
+                className="h-12 w-auto mr-3" 
+              />
+              <h3 className="text-lg font-semibold text-white">Meubles D'Or</h3>
+            </div>
             <p className="mb-4 text-sm">
-              Découvrez notre collection exclusive de produits de luxe et design. 
-              Livraison dans toute la Tunisie.
+              Découvrez notre collection exclusive de mobilier et d'accessoires d'intérieur de luxe. 
+              Artisanat d'exception et design intemporel.
             </p>
             <div className="flex space-x-4">
-              <a href="https://facebook.com" className="text-gray-400 hover:text-white">
+              <a href="https://facebook.com" className="text-gray-400 hover:text-white transition-colors">
                 <i className="fab fa-facebook-f"></i>
               </a>
-              <a href="https://instagram.com" className="text-gray-400 hover:text-white">
+              <a href="https://instagram.com" className="text-gray-400 hover:text-white transition-colors">
                 <i className="fab fa-instagram"></i>
-              </a>
-              <a href="https://twitter.com" className="text-gray-400 hover:text-white">
-                <i className="fab fa-twitter"></i>
               </a>
             </div>
           </div>
@@ -47,11 +51,6 @@ const Footer = () => {
                   Contact
                 </Link>
               </li>
-              <li>
-                <Link to="/admin/login" className="text-gray-400 hover:text-white transition-colors">
-                  Administration
-                </Link>
-              </li>
             </ul>
           </div>
           
@@ -60,23 +59,15 @@ const Footer = () => {
             <h3 className="text-lg font-semibold text-white mb-4">Contact</h3>
             <ul className="space-y-2 text-sm">
               <li className="flex items-start">
-                <i className="fas fa-map-marker-alt mt-1 mr-2 text-solid-gold"></i>
-                <span>123 Rue de Tunis, Tunis 1000, Tunisie</span>
-              </li>
-              <li className="flex items-start">
                 <i className="fas fa-phone-alt mt-1 mr-2 text-solid-gold"></i>
                 <span>+216 58 415 520</span>
-              </li>
-              <li className="flex items-start">
-                <i className="fas fa-envelope mt-1 mr-2 text-solid-gold"></i>
-                <span>contact@lesdunesdor.shop</span>
               </li>
             </ul>
           </div>
         </div>
         
         <div className="border-t border-gray-800 mt-8 pt-8 text-sm text-center">
-          <p>© {currentYear} Les Dunes d'Or. Tous Droits Réservés.</p>
+          <p>© {currentYear} Meubles D'Or. Tous Droits Réservés.</p>
         </div>
       </div>
     </footer>

@@ -478,7 +478,7 @@ const ProductDetailPage = () => {
             <div className="bg-white p-6 rounded-lg shadow-md border border-gray-200">
               <p className="text-gray-600 leading-relaxed mb-4 md:mb-6">
                 Pour commander, veuillez entrer vos informations ci-dessous ou nous appeler au{' '}
-                <strong className="text-gray-800">58 415 520</strong>.
+                <strong className="text-gray-800">58 678 330</strong>.
               </p>
               <form onSubmit={handleSubmit} className="space-y-4">
               <div>
@@ -508,7 +508,7 @@ const ProductDetailPage = () => {
                   value={formData.phoneNumber}
                   onChange={handleInputChange}
                   className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm form-input" 
-                  placeholder="+216 58 415 520" 
+                  placeholder="+216 58 678 330" 
                   required 
                 />
               </div>
@@ -791,10 +791,10 @@ const ProductDetailPage = () => {
                     <strong>Appelez-nous :</strong>
                   </p>
                   <a 
-                    href="tel:+21658678330" 
+                    href="tel:+21658415520" 
                     className="text-lg font-bold text-black hover:text-gray-700 transition-colors"
                   >
-                    +216 58 678 330
+                    +216 58 415 520
                   </a>
                 </div>
                 <button 

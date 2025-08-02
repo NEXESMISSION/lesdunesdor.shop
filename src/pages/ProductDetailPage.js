@@ -318,12 +318,99 @@ const ProductDetailPage = () => {
       {/* Main Content */}
       <main className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 mt-8 mb-16">
         
-        {/* Product Image Gallery - Now on top */}
-        <div className="mb-8">
-          {hasImages && (
-            <div className="flex gap-4">
-              {/* Thumbnails on the left side */}
-              <div className="hidden md:flex flex-col gap-2 w-20 overflow-y-auto max-h-96">
+        {/* Product Details & Order Form - New Side by Side Layout */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          {/* Left Column - Product Image Gallery */}
+          <div>
+            {hasImages && (
+              <div className="flex gap-4">
+                {/* Thumbnails on the left side */}
+                <div className="hidden md:flex flex-col gap-2 w-20 overflow-y-auto max-h-96">
+                  {productImages.map((image, index) => (
+                    <div 
+                      key={index}
+                      className="relative flex-shrink-0"
+                    >
+                      <img 
+                        src={image} 
+                        alt={`Vignette ${index + 1}`} 
+                        className={`w-20 h-20 object-cover rounded-lg cursor-pointer border-2 transition-all duration-300 ease-in-out ${
+                          activeImageIndex === index 
+                            ? 'border-amber-500 shadow-lg scale-105' 
+                            : 'border-gray-200 hover:border-gray-300 hover:scale-105'
+                        }`}
+                        onClick={() => setActiveImageIndex(index)}
+                        onError={(e) => {
+                          e.target.onerror = null;
+                          e.target.src = 'https://placehold.co/400x400/f3f4f6/9ca3af?text=Image+Non+Disponible';
+                        }}
+                        loading="lazy"
+                      />
+                      {activeImageIndex === index && (
+                        <div className="absolute -top-1 -right-1 w-3 h-3 bg-amber-500 rounded-full border border-white"></div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+                
+                {/* Main Image */}
+                <div className="flex-1 relative">
+                  <div className="aspect-square bg-gray-100 rounded-xl overflow-hidden shadow-lg">
+                    <img 
+                      src={hasImages ? productImages[activeImageIndex] : 'https://placehold.co/600x600/f3f4f6/9ca3af?text=Produit'} 
+                      alt="Image Principale du Produit" 
+                      className="w-full h-full object-cover transition-all duration-300 ease-in-out hover:scale-105 cursor-pointer"
+                      onClick={() => openImageModal(activeImageIndex)}
+                      onError={(e) => {
+                        e.target.onerror = null;
+                        e.target.src = 'https://placehold.co/600x600/f3f4f6/9ca3af?text=Image+Non+Disponible';
+                      }}
+                      loading="eager"
+                    />
+                    
+                    {/* Discount badge on top corner */}
+                    {discount > 0 && (
+                      <div className="absolute top-4 right-4 bg-red-500 text-white text-sm font-bold px-2 py-1 rounded-lg shadow-lg">
+                        -{discount}%
+                      </div>
+                    )}
+                  </div>
+                  
+                  {/* Image counter */}
+                  {hasImages && productImages.length > 1 && (
+                    <div className="absolute bottom-4 right-4 bg-black bg-opacity-50 text-white px-3 py-1 rounded-full text-sm font-medium">
+                      {activeImageIndex + 1} / {productImages.length}
+                    </div>
+                  )}
+                  
+                  {/* Navigation arrows for images */}
+                  {hasImages && productImages.length > 1 && (
+                    <>
+                      <button
+                        onClick={() => setActiveImageIndex(activeImageIndex === 0 ? productImages.length - 1 : activeImageIndex - 1)}
+                        className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-80 hover:bg-opacity-100 p-2 rounded-full shadow-md transition-all duration-200"
+                      >
+                        <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7"></path>
+                        </svg>
+                      </button>
+                      <button
+                        onClick={() => setActiveImageIndex(activeImageIndex === productImages.length - 1 ? 0 : activeImageIndex + 1)}
+                        className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-80 hover:bg-opacity-100 p-2 rounded-full shadow-md transition-all duration-200"
+                      >
+                        <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7"></path>
+                        </svg>
+                      </button>
+                    </>
+                  )}
+                </div>
+              </div>
+            )}
+            
+            {/* Mobile thumbnails - horizontal scroll */}
+            {hasImages && (
+              <div className="md:hidden flex space-x-4 overflow-x-auto pb-4 mt-4 scroll-smooth">
                 {productImages.map((image, index) => (
                   <div 
                     key={index}
@@ -350,136 +437,50 @@ const ProductDetailPage = () => {
                   </div>
                 ))}
               </div>
+            )}
+            
+            {/* Product info that appears under the image on the left column */}
+            <div className="mt-6">
+              <h1 className="text-3xl md:text-4xl font-bold text-gray-800 mb-2 product-name-serif">
+                {product.name}
+              </h1>
               
-              {/* Main Image */}
-              <div className="flex-1 relative">
-                <div className="aspect-square bg-gray-100 rounded-xl overflow-hidden shadow-lg">
-                  <img 
-                    src={hasImages ? productImages[activeImageIndex] : 'https://placehold.co/600x600/f3f4f6/9ca3af?text=Produit'} 
-                    alt="Image Principale du Produit" 
-                    className="w-full h-full object-cover transition-all duration-300 ease-in-out hover:scale-105 cursor-pointer"
-                    onClick={() => openImageModal(activeImageIndex)}
-                    onError={(e) => {
-                      e.target.onerror = null;
-                      e.target.src = 'https://placehold.co/600x600/f3f4f6/9ca3af?text=Image+Non+Disponible';
-                    }}
-                    loading="eager"
-                  />
-                  
-                  {/* Discount badge on top corner */}
-                  {discount > 0 && (
-                    <div className="absolute top-4 right-4 bg-red-500 text-white text-sm font-bold px-2 py-1 rounded-lg shadow-lg">
-                      -{discount}%
-                    </div>
-                  )}
-                </div>
-                
-                {/* Image counter */}
-                {hasImages && productImages.length > 1 && (
-                  <div className="absolute bottom-4 right-4 bg-black bg-opacity-50 text-white px-3 py-1 rounded-full text-sm font-medium">
-                    {activeImageIndex + 1} / {productImages.length}
+              {/* Stars */}
+              <div className="flex text-yellow-400 my-2">
+                {[...Array(5)].map((_, i) => (
+                  <i key={i} className="fas fa-star"></i>
+                ))}
+              </div>
+
+              {/* Prices and Discount */}
+              <div className="flex flex-col items-start mb-4">
+                {product.old_price && (
+                  <div className="flex items-center gap-2 mb-1">
+                    <p className="text-xl text-red-500 line-through" style={{ textDecorationColor: 'red' }}>
+                      {product.old_price.toFixed(2)} TND
+                    </p>
+                    {discount > 0 && (
+                      <span className="bg-red-100 text-red-600 text-sm font-semibold px-2.5 py-0.5 rounded-full">
+                        -{discount}%
+                      </span>
+                    )}
                   </div>
                 )}
-                
-                {/* Navigation arrows for images */}
-                {hasImages && productImages.length > 1 && (
-                  <>
-                    <button
-                      onClick={() => setActiveImageIndex(activeImageIndex === 0 ? productImages.length - 1 : activeImageIndex - 1)}
-                      className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-80 hover:bg-opacity-100 p-2 rounded-full shadow-md transition-all duration-200"
-                    >
-                      <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7"></path>
-                      </svg>
-                    </button>
-                    <button
-                      onClick={() => setActiveImageIndex(activeImageIndex === productImages.length - 1 ? 0 : activeImageIndex + 1)}
-                      className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-80 hover:bg-opacity-100 p-2 rounded-full shadow-md transition-all duration-200"
-                    >
-                      <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7"></path>
-                      </svg>
-                    </button>
-                  </>
-                )}
+                <p className="text-3xl font-bold text-black">
+                  {product.price?.toFixed(2)} TND
+                </p>
               </div>
             </div>
-          )}
-          
-          {/* Mobile thumbnails - horizontal scroll */}
-          {hasImages && (
-            <div className="md:hidden flex space-x-4 overflow-x-auto pb-4 mt-4 scroll-smooth">
-              {productImages.map((image, index) => (
-                <div 
-                  key={index}
-                  className="relative flex-shrink-0"
-                >
-                  <img 
-                    src={image} 
-                    alt={`Vignette ${index + 1}`} 
-                    className={`w-20 h-20 object-cover rounded-lg cursor-pointer border-2 transition-all duration-300 ease-in-out ${
-                      activeImageIndex === index 
-                        ? 'border-amber-500 shadow-lg scale-105' 
-                        : 'border-gray-200 hover:border-gray-300 hover:scale-105'
-                    }`}
-                    onClick={() => setActiveImageIndex(index)}
-                    onError={(e) => {
-                      e.target.onerror = null;
-                      e.target.src = 'https://placehold.co/400x400/f3f4f6/9ca3af?text=Image+Non+Disponible';
-                    }}
-                    loading="lazy"
-                  />
-                  {activeImageIndex === index && (
-                    <div className="absolute -top-1 -right-1 w-3 h-3 bg-amber-500 rounded-full border border-white"></div>
-                  )}
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
-
-        {/* Product Details & Order Form */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-          <div className="flex flex-col justify-center">
-            <h1 className="text-3xl md:text-4xl font-bold text-gray-800 mb-2 product-name-serif">
-              {product.name}
-            </h1>
-            
-            {/* Stars */}
-            <div className="flex text-yellow-400 my-2">
-              {[...Array(5)].map((_, i) => (
-                <i key={i} className="fas fa-star"></i>
-              ))}
-            </div>
-
-            {/* Prices and Discount */}
-            <div className="flex flex-col items-start mb-4">
-              {product.old_price && (
-                <div className="flex items-center gap-2 mb-1">
-                  <p className="text-xl text-red-500 line-through" style={{ textDecorationColor: 'red' }}>
-                    {product.old_price.toFixed(2)} TND
-                  </p>
-                  {discount > 0 && (
-                    <span className="bg-red-100 text-red-600 text-sm font-semibold px-2.5 py-0.5 rounded-full">
-                      -{discount}%
-                    </span>
-                  )}
-                </div>
-              )}
-              <p className="text-3xl font-bold text-black">
-                {product.price?.toFixed(2)} TND
-              </p>
-            </div>
-
-            <p className="text-gray-600 leading-relaxed mb-4 md:mb-6">
-              Pour commander, veuillez entrer vos informations ci-dessous ou nous appeler au{' '}
-              <strong className="text-gray-800">58 415 520</strong>.
-            </p>
           </div>
 
-          {/* Order Form */}
+          {/* Right Column - Order Form */}
           <div>
-            <form onSubmit={handleSubmit} className="space-y-4">
+            <div className="bg-white p-6 rounded-lg shadow-md border border-gray-200">
+              <p className="text-gray-600 leading-relaxed mb-4 md:mb-6">
+                Pour commander, veuillez entrer vos informations ci-dessous ou nous appeler au{' '}
+                <strong className="text-gray-800">58 415 520</strong>.
+              </p>
+              <form onSubmit={handleSubmit} className="space-y-4">
               <div>
                 <label htmlFor="fullName" className="block text-sm font-medium text-gray-700">
                   Nom Complet
@@ -611,6 +612,7 @@ const ProductDetailPage = () => {
             </form>
           </div>
         </div>
+        </div> {/* End of grid layout div */}
         
         {/* Description Section */}
         {product.description && (
@@ -812,4 +814,4 @@ const ProductDetailPage = () => {
   );
 };
 
-export default ProductDetailPage; 
+export default ProductDetailPage;

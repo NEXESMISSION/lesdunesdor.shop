@@ -284,12 +284,12 @@ const LandingPage = () => {
                 {/* Hero Content */}
                 <div ref={heroContentRef} className="relative z-20 p-4 sm:p-6 max-w-4xl mx-auto scroll-animate is-visible" style={{ marginTop: '2rem' }}>
                     {/* Logo */}
-                    <div className="mb-6 sm:mb-8 md:mb-10 flex justify-center">
+                    <div className="mb-0 flex justify-center" style={{ marginBottom: '-50px' }}>
                         <div className="logo-shine">
                             <img 
-                                src="/meubledor-logo.png" 
+                                src="/meubledor-logo-new.png" 
                                 alt="Meubles D'Or Logo" 
-                                className="h-16 sm:h-20 md:h-24 lg:h-28 xl:h-32 w-auto object-contain"
+                                className="h-20 sm:h-24 md:h-32 lg:h-40 xl:h-48 w-auto object-contain"
                             />
                         </div>
                     </div>

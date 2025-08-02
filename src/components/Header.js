@@ -19,11 +19,11 @@ const Header = () => {
           <div className="flex-shrink-0">
             <Link to="/store" className="flex items-center group">
               <img 
-                src="/meubledor-logo.png" 
+                src="/meubledor-logo-new.png" 
                 alt="Meubles D'Or Logo" 
                 className="h-14 w-auto transition-transform duration-300 group-hover:scale-105" 
               />
-              <span className="ml-3 text-lg font-bold text-gray-800 hidden sm:block" style={{ fontFamily: 'Playfair Display, serif' }}>
+              <span className="ml-1 text-lg font-bold text-gray-800 hidden sm:block" style={{ fontFamily: 'Playfair Display, serif' }}>
                 Meubles D'Or
               </span>
             </Link>

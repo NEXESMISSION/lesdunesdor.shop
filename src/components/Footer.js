@@ -12,9 +12,9 @@ const Footer = () => {
           <div>
             <div className="flex items-center mb-4">
               <img 
-                src="/meubledor-logo.png" 
+                src="/meubledor-logo-new.png" 
                 alt="Meubles D'Or Logo" 
-                className="h-10 w-auto mr-3" 
+                className="h-14 w-auto mr-3" 
               />
               <h3 className="text-lg font-semibold text-white">Meubles D'Or</h3>
             </div>

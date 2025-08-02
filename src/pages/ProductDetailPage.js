@@ -791,10 +791,10 @@ const ProductDetailPage = () => {
                     <strong>Appelez-nous :</strong>
                   </p>
                   <a 
-                    href="tel:+21658415520" 
+                    href="tel:+21658678330" 
                     className="text-lg font-bold text-black hover:text-gray-700 transition-colors"
                   >
-                    +216 58 415 520
+                    +216 58 678 330
                   </a>
                 </div>
                 <button 

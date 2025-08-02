@@ -3,7 +3,7 @@ import Footer from '../components/Footer';
 
 const ContactPage = () => {
   const handleCallUs = () => {
-    window.location.href = 'tel:+21658415520';
+    window.location.href = 'tel:+21658678330';
   };
 
   return (
@@ -37,7 +37,7 @@ const ContactPage = () => {
               📞 Appelez-nous maintenant
             </button>
             <p className="text-sm text-gray-500 mt-4">
-              +216 58 415 520
+              +216 58 678 330
             </p>
           </div>
         </div>

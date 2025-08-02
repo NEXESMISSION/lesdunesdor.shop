@@ -283,9 +283,12 @@ const LandingPage = () => {
                 
                 {/* Hero Content */}
                 <div ref={heroContentRef} className="relative z-20 p-4 sm:p-6 max-w-4xl mx-auto scroll-animate is-visible" style={{ marginTop: '2rem' }}>
+                    {/* Mobile-only negative margin container to move content up */}
+                    <div className="sm:hidden" style={{ marginTop: '-90px' }}></div>
                     {/* Logo */}
-                    <div className="mb-8 sm:mb-0 flex justify-center">
-                        <div className="logo-shine sm:-mb-12 md:-mb-20 lg:-mb-50 xl:-mb-50">
+                    <div className="flex justify-center">
+                        <div className="logo-shine mt-[-70px] sm:mt-0" style={{ marginBottom: '-30px', position: 'relative' }}>
+                            <div className="hidden sm:block" style={{ position: 'absolute', height: '100%', width: '100%', top: '30px' }}></div>
                             <img 
                                 src="/meubledor-logo-new.png" 
                                 alt="Meubles D'Or Logo" 

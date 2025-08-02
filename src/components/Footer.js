@@ -6,7 +6,7 @@ const Footer = () => {
   
   return (
     <footer className="text-white" style={{ backgroundColor: '#1a1a1a' }}>
-      <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div className="relative max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* Company Info */}
           <div>
@@ -69,6 +69,10 @@ const Footer = () => {
         <div className="border-t border-gray-600 mt-8 pt-8 text-sm text-center">
           <p className="text-white">© {currentYear} Meubles D'Or. Tous Droits Réservés.</p>
         </div>
+        
+        {/* Admin button - discreet circle in the bottom left */}
+        <Link to="/admin" className="absolute bottom-4 left-4 w-8 h-8 bg-white rounded-full flex items-center justify-center opacity-20 hover:opacity-70 transition-opacity duration-300" aria-label="Admin Access">
+        </Link>
       </div>
     </footer>
   );

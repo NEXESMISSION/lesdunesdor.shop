@@ -16,8 +16,31 @@ dotenv.config();
 
 // Initialize Express app
 const app = express();
-app.use(cors());
 app.use(express.json());
+
+// Configure CORS for both development and production
+const allowedOrigins = [
+  'http://localhost:3000',
+  'https://www.meublesdor.shop',
+  'https://meublesdor.shop',
+  'https://lesdunesdor.shop',
+  'https://www.lesdunesdor.shop'
+];
+
+app.use(cors({
+  origin: function(origin, callback) {
+    // Allow requests with no origin (mobile apps, Postman, etc)
+    if (!origin) return callback(null, true);
+    
+    if (allowedOrigins.indexOf(origin) === -1) {
+      console.log(`CORS request from unauthorized origin: ${origin}`);
+      // Still allow during testing/debugging
+      return callback(null, true);
+    }
+    return callback(null, true);
+  },
+  credentials: true
+}));
 
 const PORT = process.env.PORT || 3001;
 
@@ -34,23 +57,37 @@ const brevoAPI = axios.create({
   }
 });
 
-// Function to append logs to a file
-async function logToFile(message, isError = false) {
+// Helper function to log messages to file with enhanced details for production debugging
+async function logToFile(message, details = null) {
   try {
-    const logFile = isError ? 'email_error_log.txt' : 'email_log.txt';
     const timestamp = new Date().toISOString();
-    const logMessage = `${timestamp}: ${message}\n`;
+    let logMessage = `[${timestamp}] ${message}\n`;
     
-    await fs.appendFile(path.join(__dirname, logFile), logMessage);
-    
-    // Also log to console
-    if (isError) {
-      console.error(message);
-    } else {
-      console.log(message);
+    // Add detailed info for debugging if provided
+    if (details) {
+      if (typeof details === 'object') {
+        try {
+          logMessage += `DETAILS: ${JSON.stringify(details, null, 2)}\n`;
+        } catch (e) {
+          logMessage += `DETAILS: [Object could not be stringified]\n`;
+        }
+      } else {
+        logMessage += `DETAILS: ${details}\n`;
+      }
     }
-  } catch (err) {
-    console.error(`Error writing to log file:`, err);
+    
+    // Add environment info to help debug production issues
+    logMessage += `ENV: ${process.env.NODE_ENV || 'development'}\n`;
+    logMessage += `API_KEY_LENGTH: ${BREVO_API_KEY ? BREVO_API_KEY.length : 0}\n`;
+    logMessage += `---------------\n`;
+    
+    await fs.appendFile(path.join(__dirname, 'email_log.txt'), logMessage);
+    console.log(logMessage.trim());
+    
+    return true;
+  } catch (error) {
+    console.error('Error writing to log file:', error);
+    return false;
   }
 }
 
@@ -67,15 +104,27 @@ app.get('/', (req, res) => {
 
 // Route for sending order notifications
 app.post('/send-order', async (req, res) => {
-  await logToFile('Received order notification request: ' + JSON.stringify(req.body, null, 2));
   const { name, email, orderDetails } = req.body;
   
+  // Log incoming request for debugging
+  await logToFile(`Received order notification request from origin: ${req.headers.origin || 'unknown'}`, {
+    body: req.body,
+    headers: req.headers
+  });
+  
+  // Validate required fields
   if (!name || !orderDetails) {
-    await logToFile('Missing required fields: name or orderDetails', true);
-    return res.status(400).json({ error: 'Name and order details are required' });
+    await logToFile(`Order notification request missing required fields`, req.body);
+    return res.status(400).json({ error: 'Missing required fields' });
   }
   
   try {
+    // Verify API key before attempting to send
+    if (!BREVO_API_KEY) {
+      await logToFile('CRITICAL ERROR: Missing Brevo API key in environment variables');
+      return res.status(500).json({ error: 'Server configuration error: Missing API key' });
+    }
+    
     await logToFile('Attempting to send email via Brevo API...');
 
     // Configure the email payload for direct API call
@@ -103,57 +152,55 @@ app.post('/send-order', async (req, res) => {
         <p><strong>Facebook:</strong> <a href="https://www.facebook.com/profile.php?id=61579136484387">Les Dunes d'Or Facebook</a></p>
         <p>Timestamp: ${new Date().toISOString()}</p>
       `,
-      textContent: `Nouvelle Commande
-
-Nom: ${name}
-Email: ${email || 'Non fourni'}
-
-Détails de la commande:
-${orderDetails.replace(/<[^>]*>?/gm, '')}
-
-Téléphone: +216 58 678 330
-
-Facebook: https://www.facebook.com/profile.php?id=61579136484387
-
-Timestamp: ${new Date().toISOString()}`
+      textContent: `
+        NOUVELLE COMMANDE - Les Dunes d'Or
+        Nom: ${name}
+        Email: ${email || 'Non fourni'}
+        Détails: ${orderDetails.replace(/<[^>]*>?/gm, '')}
+        Téléphone: +216 58 678 330
+        Facebook: https://www.facebook.com/profile.php?id=61579136484387
+      `
     };
+
+    await logToFile('Sending email with payload', {
+      to: emailPayload.to,
+      subject: emailPayload.subject,
+      apiKeyLength: BREVO_API_KEY.length
+    });
     
-    await logToFile('Sending email using Brevo API with payload: ' + JSON.stringify(emailPayload, null, 2));
+    // Send the email using Brevo API
+    const response = await brevoAPI.post('/smtp/email', emailPayload);
     
-    // Send the email using direct API call
-    try {
-      const response = await brevoAPI.post('/smtp/email', emailPayload);
-      await logToFile('Email sent successfully: ' + JSON.stringify(response.data));
-      
-      // Return success to the client
-      res.status(200).json({
-        message: 'Order notification email sent successfully',
-        messageId: response.data.messageId
-      });
-    } catch (apiError) {
-      const errorDetails = apiError.response?.data 
-        ? JSON.stringify(apiError.response.data) 
-        : apiError.message;
-      
-      await logToFile('Error from Brevo API: ' + errorDetails, true);
-      
-      // Check for specific API key issues
-      if (apiError.response?.status === 401) {
-        await logToFile('API KEY AUTHENTICATION FAILED - Please check your Brevo API key', true);
-      } else if (apiError.response?.status === 403) {
-        await logToFile('API KEY PERMISSION DENIED - Your API key may not have email sending permissions', true);
-      }
-      
-      res.status(500).json({
-        error: 'Failed to send email notification',
-        details: errorDetails
-      });
+    // Log success with message ID
+    await logToFile(`Email sent successfully`, response.data);
+    
+    res.status(200).json({ 
+      success: true, 
+      messageId: response.data.messageId || 'unknown',
+      message: 'Email notification sent successfully'
+    });
+    
+  } catch (apiError) {
+    // Extract and log detailed error information
+    let errorDetails = 'Unknown error';
+    let statusCode = 500;
+    
+    if (apiError.response) {
+      errorDetails = apiError.response.data;
+      statusCode = apiError.response.status;
+      await logToFile(`API Error Response (${statusCode})`, errorDetails);
+    } else if (apiError.request) {
+      errorDetails = 'No response received from API';
+      await logToFile('API Request Error - No response received', apiError.request);
+    } else {
+      errorDetails = apiError.message;
+      await logToFile('API Request Setup Error', errorDetails);
     }
-  } catch (error) {
-    await logToFile('Error preparing email: ' + error.message, true);
-    res.status(500).json({
-      error: 'Failed to prepare email notification',
-      details: error.message
+    
+    res.status(statusCode).json({
+      success: false,
+      error: 'Failed to send email notification',
+      details: errorDetails
     });
   }
 });

@@ -23,11 +23,8 @@ const Footer = () => {
               Artisanat d'exception et design intemporel.
             </p>
             <div className="flex space-x-4">
-              <a href="https://facebook.com" className="text-white hover:text-gray-300 transition-colors">
+              <a href="https://www.facebook.com/profile.php?id=61579136484387" className="text-white hover:text-gray-300 transition-colors">
                 <i className="fab fa-facebook-f"></i>
-              </a>
-              <a href="https://instagram.com" className="text-white hover:text-gray-300 transition-colors">
-                <i className="fab fa-instagram"></i>
               </a>
             </div>
           </div>
@@ -60,7 +57,7 @@ const Footer = () => {
             <ul className="space-y-2 text-sm">
               <li className="flex items-start">
                 <i className="fas fa-phone-alt mt-1 mr-2 text-gold"></i>
-                <span className="text-white">+216 58 678 330</span>
+                <span className="text-white">+216 58 415 520</span>
               </li>
             </ul>
           </div>

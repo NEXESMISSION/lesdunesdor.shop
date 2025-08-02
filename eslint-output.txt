@@ -1,0 +1,6 @@
+[0m[0m
+[0m[4mC:\Users\saif\Desktop\MOCKUPS DIGIPLUS\les dunes dor4\les-dunes-app\src\pages\ProductDetailPage.js[24m[0m
+[0m  [2m681:6[22m  [31merror[39m  Parsing error: Expected corresponding JSX closing tag for <div>. (681:6)[0m
+[0m[0m
+[0m[31m[1m✖ 1 problem (1 error, 0 warnings)[22m[39m[0m
+[0m[31m[1m[22m[39m[0m

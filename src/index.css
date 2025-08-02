@@ -1,0 +1,376 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+/* Google Fonts: Inter */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+/* Google Fonts: Serif fonts for product names */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Merriweather:wght@300;400;700&display=swap');
+
+/* Font Awesome for Icons */
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css');
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: #f8f9fa;
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Serif Font Classes */
+.font-serif {
+  font-family: 'Playfair Display', serif;
+}
+
+.font-serif-alt {
+  font-family: 'Merriweather', serif;
+}
+
+/* Product name specific styling */
+.product-name-serif {
+  font-family: 'Playfair Display', serif;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+/* Product Card Hover Effects */
+.product-card {
+  transition: all 0.3s ease;
+}
+.product-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Gold Gradient Styles */
+.bg-gold-gradient {
+  background: linear-gradient(100deg, #BF953F, #FCF6BA, #B38728, #FBF5B7, #AA771C);
+  background-size: 200% 200%;
+  transition: background-position 0.5s ease;
+}
+.bg-gold-gradient:hover {
+  background-position: right center;
+}
+
+/* Darker Gold Gradient for Better Text Visibility */
+.bg-gold-gradient-dark {
+  background: linear-gradient(100deg, #C27A18, #D08F23, #FBD152, #FBD557, #C27A18);
+  background-size: 200% 200%;
+  transition: background-position 0.5s ease;
+}
+.bg-gold-gradient-dark:hover {
+  background-position: right center;
+}
+
+/* Custom Range Slider with Gold Gradient */
+input[type="range"], .slider-gold {
+  -webkit-appearance: none;
+  height: 6px;
+  border-radius: 5px;
+  background: linear-gradient(100deg, #BF953F, #FCF6BA, #B38728, #FBF5B7, #AA771C);
+  background-size: 200% 200%;
+  cursor: pointer;
+}
+
+.slider-gold {
+  height: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #AA771C;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+input[type="range"]::-webkit-slider-thumb:hover {
+  background: #BF953F;
+  transform: scale(1.1);
+}
+
+input[type="range"]::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border: none;
+  border-radius: 50%;
+  background: #AA771C;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+input[type="range"]::-moz-range-thumb:hover {
+  background: #BF953F;
+  transform: scale(1.1);
+}
+
+input[type="range"]::-ms-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #AA771C;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+input[type="range"]::-ms-thumb:hover {
+  background: #BF953F;
+  transform: scale(1.1);
+}
+
+input[type="range"]:focus {
+  outline: none;
+}
+
+/* Gold Text Colors */
+.text-solid-gold {
+  color: #AA771C;
+}
+.hover-text-gold:hover {
+  color: #AA771C;
+}
+.category-link:hover, .subcategory-link:hover {
+  color: #AA771C;
+}
+
+/* Collapsible Sections */
+.collapsible-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease-out;
+}
+
+/* Product Image Shadow */
+.product-image-shadow {
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+/* Thumbnail Active State */
+.thumbnail-active {
+  border-color: #AA771C;
+  box-shadow: 0 0 0 2px #AA771C;
+}
+
+/* Form Input Focus States */
+.form-input:focus {
+  border-color: #AA771C;
+  box-shadow: 0 0 0 2px rgba(170, 119, 28, 0.3);
+  outline: none;
+}
+
+/* Sidebar Animation */
+.sidebar {
+  transition: transform 0.3s ease-in-out;
+}
+
+/* KPI Card Hover */
+.kpi-card {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.kpi-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+/* Modal Styles */
+.modal-backdrop {
+  transition: opacity 0.3s ease;
+}
+.modal-content {
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+/* Dark Theme for Admin Login */
+.admin-login-body {
+  background-color: #111827;
+}
+.login-card {
+  background-color: #1f2937;
+}
+.admin-form-input {
+  background-color: #374151;
+  border-color: #4b5563;
+}
+.admin-form-input:focus {
+  border-color: #AA771C;
+  box-shadow: 0 0 0 2px rgba(170, 119, 28, 0.3);
+  outline: none;
+}
+
+/* Filter sidebar mobile */
+#filter-sidebar {
+  transition: transform 0.3s ease-in-out;
+}
+@media (max-width: 1023px) {
+  .sidebar {
+    transform: translateX(-100%);
+  }
+  .sidebar.open {
+    transform: translateX(0);
+  }
+}
+
+/* Mobile-specific improvements for admin dashboard */
+@media (max-width: 768px) {
+  /* Improve touch targets for mobile */
+  button, .btn {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  
+  /* Better table responsiveness */
+  .table-responsive {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  /* Improve modal spacing on mobile */
+  .modal-content {
+    margin: 1rem;
+    max-height: calc(100vh - 2rem);
+  }
+  
+  /* Better form inputs on mobile */
+  input, select, textarea {
+    font-size: 16px; /* Prevents zoom on iOS */
+  }
+  
+  /* Improve sidebar navigation on mobile */
+  .sidebar-nav button {
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+  }
+  
+  /* Better spacing for mobile cards */
+  .card, .bg-white {
+    margin-bottom: 1rem;
+  }
+  
+  /* Improve mobile pagination */
+  .pagination {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  
+  /* Better mobile filters */
+  .filter-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  /* Improve mobile buttons */
+  .btn-mobile {
+    width: 100%;
+    margin-bottom: 0.5rem;
+  }
+  
+  /* Better mobile table cells */
+  .table-cell-mobile {
+    padding: 0.5rem;
+    font-size: 0.875rem;
+  }
+  
+  /* Improve mobile modals */
+  .modal-mobile {
+    padding: 1rem;
+    margin: 0.5rem;
+  }
+  
+  /* Better mobile form layouts */
+  .form-mobile {
+    gap: 1rem;
+  }
+  
+  /* Improve mobile action buttons */
+  .action-buttons-mobile {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+  
+  /* Better mobile status badges */
+  .status-badge-mobile {
+    font-size: 0.75rem;
+    padding: 0.25rem 0.5rem;
+  }
+}
+
+/* Tablet-specific improvements */
+@media (min-width: 769px) and (max-width: 1024px) {
+  /* Better tablet layout */
+  .tablet-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  /* Improve tablet sidebar */
+  .sidebar-tablet {
+    width: 280px;
+  }
+  
+  /* Better tablet modals */
+  .modal-tablet {
+    max-width: 90vw;
+  }
+}
+
+/* Touch-friendly improvements for all devices */
+@media (hover: none) and (pointer: coarse) {
+  /* Larger touch targets */
+  button, .btn, a {
+    min-height: 48px;
+    min-width: 48px;
+  }
+  
+  /* Better touch feedback */
+  button:active, .btn:active {
+    transform: scale(0.98);
+  }
+  
+  /* Improve scrolling */
+  .scroll-container {
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  /* Better touch interactions */
+  .touch-friendly {
+    padding: 0.75rem;
+    margin: 0.25rem;
+  }
+}
+
+/* High DPI display improvements */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  /* Sharper icons and borders */
+  .icon, .fas, .far, .fab {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+/* Print styles for admin dashboard */
+@media print {
+  .sidebar, .header, .modal, button {
+    display: none !important;
+  }
+  
+  .main-content {
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  
+  .table {
+    border-collapse: collapse;
+  }
+  
+  .table th, .table td {
+    border: 1px solid #000;
+    padding: 0.5rem;
+  }
+}

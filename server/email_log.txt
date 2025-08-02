@@ -1,0 +1,118 @@
+
+2025-08-02T19:59:56.961Z - Email sent successfully to non-fourni@example.com
+Order details: {"name":"mohamed saif allah elleuchi","email":"non-fourni@example.com","orderSummary":"\n            <h3>Détails du Produit:</h3>\n            <p>Produit: Table Basse gold 3</p>\n           ..."}
+2025-08-02T20:00:55.752Z - Email sent successfully to non-fourni@example.com
+Order details: {"name":"mohamed saif allah elleuchi","email":"non-fourni@example.com","orderSummary":"\n            <h3>Détails du Produit:</h3>\n            <p>Produit: Table Basse gold 3</p>\n           ..."}
+2025-08-02T20:04:07.717Z - Email sent successfully to non-fourni@example.com
+Order details: {"name":"mohamed saif allah elleuchi","email":"non-fourni@example.com","orderSummary":"\n            <h3>Détails du Produit:</h3>\n            <p>Produit: Table Basse gold 2</p>\n           ..."}
+2025-08-02T20:04:58.807Z - Email sent successfully to non-fourni@example.com
+Order details: {"name":"saf saifz","email":"non-fourni@example.com","orderSummary":"\n            <h3>Détails du Produit:</h3>\n            <p>Produit: Table Basse gold 3</p>\n           ..."}2025-08-02T20:22:55.221Z: Received order notification request: {
+  "name": "mohamed saif allah elleuchi",
+  "email": "non-fourni@example.com",
+  "orderDetails": "\n            <h3>Détails du Produit:</h3>\n            <p>Produit: Table Basse gold 3</p>\n            <p>Quantité: 1</p>\n            <p>Prix unitaire: 1300 TND</p>\n            <p>Sous-total: 1300 TND</p>\n            <p>Frais de livraison: 7 TND</p>\n            <p>Total: 1307 TND</p>\n            \n            <h3>Détails du Client:</h3>\n            <p>Nom: mohamed saif allah elleuchi</p>\n            <p>Téléphone: +21658415500</p>\n            <p>Adresse: sfax,gremda\nsfax,gremda</p>\n          "
+}
+2025-08-02T20:22:55.233Z: Attempting to send email via Brevo API...
+2025-08-02T20:22:55.244Z: Sending email using Brevo API with payload: {
+  "sender": {
+    "name": "Les Dunes d'Or",
+    "email": "contact@lesdunesdor.shop"
+  },
+  "to": [
+    {
+      "email": "quikasalami@gmail.com",
+      "name": "Admin"
+    }
+  ],
+  "cc": [
+    {
+      "email": "contact@lesdunesdor.shop",
+      "name": "Les Dunes d'Or"
+    }
+  ],
+  "replyTo": {
+    "email": "contact@lesdunesdor.shop",
+    "name": "Les Dunes d'Or"
+  },
+  "subject": "📦 NOUVELLE COMMANDE - Les Dunes d'Or #1754166175244",
+  "htmlContent": "\n        <h2>Nouvelle Commande Reçue</h2>\n        <p><strong>Nom:</strong> mohamed saif allah elleuchi</p>\n        <p><strong>Email:</strong> non-fourni@example.com</p>\n        <p><strong>Détails:</strong></p>\n        <div>\n            <h3>Détails du Produit:</h3>\n            <p>Produit: Table Basse gold 3</p>\n            <p>Quantité: 1</p>\n            <p>Prix unitaire: 1300 TND</p>\n            <p>Sous-total: 1300 TND</p>\n            <p>Frais de livraison: 7 TND</p>\n            <p>Total: 1307 TND</p>\n            \n            <h3>Détails du Client:</h3>\n            <p>Nom: mohamed saif allah elleuchi</p>\n            <p>Téléphone: +21658415500</p>\n            <p>Adresse: sfax,gremda\nsfax,gremda</p>\n          </div>\n        <p><strong>Téléphone:</strong> <a href=\"tel:+21658678330\">+216 58 678 330</a></p>\n        <p><strong>Facebook:</strong> <a href=\"https://www.facebook.com/profile.php?id=61579136484387\">Les Dunes d'Or Facebook</a></p>\n        <p>Timestamp: 2025-08-02T20:22:55.244Z</p>\n      ",
+  "textContent": "Nouvelle Commande\n\nNom: mohamed saif allah elleuchi\nEmail: non-fourni@example.com\n\nDétails de la commande:\n\n            Détails du Produit:\n            Produit: Table Basse gold 3\n            Quantité: 1\n            Prix unitaire: 1300 TND\n            Sous-total: 1300 TND\n            Frais de livraison: 7 TND\n            Total: 1307 TND\n            \n            Détails du Client:\n            Nom: mohamed saif allah elleuchi\n            Téléphone: +21658415500\n            Adresse: sfax,gremda\nsfax,gremda\n          \n\nTéléphone: +216 58 678 330\n\nFacebook: https://www.facebook.com/profile.php?id=61579136484387\n\nTimestamp: 2025-08-02T20:22:55.244Z"
+}
+2025-08-02T20:22:55.848Z: Email sent successfully: {"messageId":"<202508022022.26009249052@smtp-relay.mailin.fr>"}
+2025-08-02T20:37:42.153Z: Received order notification request: {
+  "name": "saf saifz",
+  "email": "non-fourni@example.com",
+  "orderDetails": "\n            <h3>Détails du Produit:</h3>\n            <p>Produit: Table Basse gold 2</p>\n            <p>Quantité: 1</p>\n            <p>Prix unitaire: 1230 TND</p>\n            <p>Sous-total: 1230 TND</p>\n            <p>Frais de livraison: 7 TND</p>\n            <p>Total: 1237 TND</p>\n            \n            <h3>Détails du Client:</h3>\n            <p>Nom: saf saifz</p>\n            <p>Téléphone: +21658415520</p>\n            <p>Adresse: sfax,gremda\nsfax,gremda</p>\n          "
+}
+2025-08-02T20:37:42.154Z: Attempting to send email via Brevo API...
+2025-08-02T20:37:42.155Z: Sending email using Brevo API with payload: {
+  "sender": {
+    "name": "Les Dunes d'Or",
+    "email": "quikasalami@gmail.com"
+  },
+  "to": [
+    {
+      "email": "quikasalami@gmail.com",
+      "name": "Admin"
+    }
+  ],
+  "replyTo": {
+    "email": "quikasalami@gmail.com",
+    "name": "Les Dunes d'Or"
+  },
+  "subject": "📦 NOUVELLE COMMANDE - Les Dunes d'Or #1754167062155",
+  "htmlContent": "\n        <h2>Nouvelle Commande Reçue</h2>\n        <p><strong>Nom:</strong> saf saifz</p>\n        <p><strong>Email:</strong> non-fourni@example.com</p>\n        <p><strong>Détails:</strong></p>\n        <div>\n            <h3>Détails du Produit:</h3>\n            <p>Produit: Table Basse gold 2</p>\n            <p>Quantité: 1</p>\n            <p>Prix unitaire: 1230 TND</p>\n            <p>Sous-total: 1230 TND</p>\n            <p>Frais de livraison: 7 TND</p>\n            <p>Total: 1237 TND</p>\n            \n            <h3>Détails du Client:</h3>\n            <p>Nom: saf saifz</p>\n            <p>Téléphone: +21658415520</p>\n            <p>Adresse: sfax,gremda\nsfax,gremda</p>\n          </div>\n        <p><strong>Téléphone:</strong> <a href=\"tel:+21658678330\">+216 58 678 330</a></p>\n        <p><strong>Facebook:</strong> <a href=\"https://www.facebook.com/profile.php?id=61579136484387\">Les Dunes d'Or Facebook</a></p>\n        <p>Timestamp: 2025-08-02T20:37:42.155Z</p>\n      ",
+  "textContent": "Nouvelle Commande\n\nNom: saf saifz\nEmail: non-fourni@example.com\n\nDétails de la commande:\n\n            Détails du Produit:\n            Produit: Table Basse gold 2\n            Quantité: 1\n            Prix unitaire: 1230 TND\n            Sous-total: 1230 TND\n            Frais de livraison: 7 TND\n            Total: 1237 TND\n            \n            Détails du Client:\n            Nom: saf saifz\n            Téléphone: +21658415520\n            Adresse: sfax,gremda\nsfax,gremda\n          \n\nTéléphone: +216 58 678 330\n\nFacebook: https://www.facebook.com/profile.php?id=61579136484387\n\nTimestamp: 2025-08-02T20:37:42.155Z"
+}
+2025-08-02T20:37:42.711Z: Email sent successfully: {"messageId":"<202508022037.19873317914@smtp-relay.mailin.fr>"}
+2025-08-02T20:38:37.600Z: Received order notification request: {
+  "name": "saf saifz",
+  "email": "non-fourni@example.com",
+  "orderDetails": "\n            <h3>Détails du Produit:</h3>\n            <p>Produit: Table Basse gold 2</p>\n            <p>Quantité: 1</p>\n            <p>Prix unitaire: 1230 TND</p>\n            <p>Sous-total: 1230 TND</p>\n            <p>Frais de livraison: 7 TND</p>\n            <p>Total: 1237 TND</p>\n            \n            <h3>Détails du Client:</h3>\n            <p>Nom: saf saifz</p>\n            <p>Téléphone: +21658415520</p>\n            <p>Adresse: sfax,gremda\nsfax,gremda</p>\n          "
+}
+2025-08-02T20:38:37.600Z: Attempting to send email via Brevo API...
+2025-08-02T20:38:37.601Z: Sending email using Brevo API with payload: {
+  "sender": {
+    "name": "Les Dunes d'Or",
+    "email": "quikasalami@gmail.com"
+  },
+  "to": [
+    {
+      "email": "quikasalami@gmail.com",
+      "name": "Admin"
+    }
+  ],
+  "replyTo": {
+    "email": "quikasalami@gmail.com",
+    "name": "Les Dunes d'Or"
+  },
+  "subject": "📦 NOUVELLE COMMANDE - Les Dunes d'Or #1754167117601",
+  "htmlContent": "\n        <h2>Nouvelle Commande Reçue</h2>\n        <p><strong>Nom:</strong> saf saifz</p>\n        <p><strong>Email:</strong> non-fourni@example.com</p>\n        <p><strong>Détails:</strong></p>\n        <div>\n            <h3>Détails du Produit:</h3>\n            <p>Produit: Table Basse gold 2</p>\n            <p>Quantité: 1</p>\n            <p>Prix unitaire: 1230 TND</p>\n            <p>Sous-total: 1230 TND</p>\n            <p>Frais de livraison: 7 TND</p>\n            <p>Total: 1237 TND</p>\n            \n            <h3>Détails du Client:</h3>\n            <p>Nom: saf saifz</p>\n            <p>Téléphone: +21658415520</p>\n            <p>Adresse: sfax,gremda\nsfax,gremda</p>\n          </div>\n        <p><strong>Téléphone:</strong> <a href=\"tel:+21658678330\">+216 58 678 330</a></p>\n        <p><strong>Facebook:</strong> <a href=\"https://www.facebook.com/profile.php?id=61579136484387\">Les Dunes d'Or Facebook</a></p>\n        <p>Timestamp: 2025-08-02T20:38:37.601Z</p>\n      ",
+  "textContent": "Nouvelle Commande\n\nNom: saf saifz\nEmail: non-fourni@example.com\n\nDétails de la commande:\n\n            Détails du Produit:\n            Produit: Table Basse gold 2\n            Quantité: 1\n            Prix unitaire: 1230 TND\n            Sous-total: 1230 TND\n            Frais de livraison: 7 TND\n            Total: 1237 TND\n            \n            Détails du Client:\n            Nom: saf saifz\n            Téléphone: +21658415520\n            Adresse: sfax,gremda\nsfax,gremda\n          \n\nTéléphone: +216 58 678 330\n\nFacebook: https://www.facebook.com/profile.php?id=61579136484387\n\nTimestamp: 2025-08-02T20:38:37.601Z"
+}
+2025-08-02T20:38:37.981Z: Email sent successfully: {"messageId":"<202508022038.87837476001@smtp-relay.mailin.fr>"}
+2025-08-02T20:40:44.888Z: Received order notification request: {
+  "name": "saf saifz",
+  "email": "non-fourni@example.com",
+  "orderDetails": "\n            <h3>Détails du Produit:</h3>\n            <p>Produit: Table Basse gold 1 </p>\n            <p>Quantité: 1</p>\n            <p>Prix unitaire: 1270 TND</p>\n            <p>Sous-total: 1270 TND</p>\n            <p>Frais de livraison: 7 TND</p>\n            <p>Total: 1277 TND</p>\n            \n            <h3>Détails du Client:</h3>\n            <p>Nom: saf saifz</p>\n            <p>Téléphone: +21658415520</p>\n            <p>Adresse: sfax,gremda\nsfax,gremda</p>\n          "
+}
+2025-08-02T20:40:44.888Z: Attempting to send email via Brevo API...
+2025-08-02T20:40:44.889Z: Sending email using Brevo API with payload: {
+  "sender": {
+    "name": "Les Dunes d'Or",
+    "email": "quikasalami@gmail.com"
+  },
+  "to": [
+    {
+      "email": "quikasalami@gmail.com",
+      "name": "Admin"
+    }
+  ],
+  "replyTo": {
+    "email": "quikasalami@gmail.com",
+    "name": "Les Dunes d'Or"
+  },
+  "subject": "📦 NOUVELLE COMMANDE - Les Dunes d'Or #1754167244889",
+  "htmlContent": "\n        <h2>Nouvelle Commande Reçue</h2>\n        <p><strong>Nom:</strong> saf saifz</p>\n        <p><strong>Email:</strong> non-fourni@example.com</p>\n        <p><strong>Détails:</strong></p>\n        <div>\n            <h3>Détails du Produit:</h3>\n            <p>Produit: Table Basse gold 1 </p>\n            <p>Quantité: 1</p>\n            <p>Prix unitaire: 1270 TND</p>\n            <p>Sous-total: 1270 TND</p>\n            <p>Frais de livraison: 7 TND</p>\n            <p>Total: 1277 TND</p>\n            \n            <h3>Détails du Client:</h3>\n            <p>Nom: saf saifz</p>\n            <p>Téléphone: +21658415520</p>\n            <p>Adresse: sfax,gremda\nsfax,gremda</p>\n          </div>\n        <p><strong>Téléphone:</strong> <a href=\"tel:+21658678330\">+216 58 678 330</a></p>\n        <p><strong>Facebook:</strong> <a href=\"https://www.facebook.com/profile.php?id=61579136484387\">Les Dunes d'Or Facebook</a></p>\n        <p>Timestamp: 2025-08-02T20:40:44.889Z</p>\n      ",
+  "textContent": "Nouvelle Commande\n\nNom: saf saifz\nEmail: non-fourni@example.com\n\nDétails de la commande:\n\n            Détails du Produit:\n            Produit: Table Basse gold 1 \n            Quantité: 1\n            Prix unitaire: 1270 TND\n            Sous-total: 1270 TND\n            Frais de livraison: 7 TND\n            Total: 1277 TND\n            \n            Détails du Client:\n            Nom: saf saifz\n            Téléphone: +21658415520\n            Adresse: sfax,gremda\nsfax,gremda\n          \n\nTéléphone: +216 58 678 330\n\nFacebook: https://www.facebook.com/profile.php?id=61579136484387\n\nTimestamp: 2025-08-02T20:40:44.889Z"
+}
+2025-08-02T20:40:45.342Z: Email sent successfully: {"messageId":"<202508022040.67806948204@smtp-relay.mailin.fr>"}
